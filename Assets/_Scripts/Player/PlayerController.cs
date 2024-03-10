@@ -1,30 +1,64 @@
 using Player;
 using UnityEngine;
 using System;
+using System.Linq;
 using Random = UnityEngine.Random;
 
 namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        
+        
+        private Inputs _inputs;
+        
+        [Header("Settings")] [SerializeField] private Transform _cam;
         [SerializeField] private Rigidbody _rb;
         [SerializeField] private Animator _anim;
-        private GatherInputs _inputsActions;
+        [SerializeField] private GatherInputs _inputsActions;
         
     
         private void Awake()
         {
-            _inputsActions = GetComponent<GatherInputs>();
+            if (_inputsActions == null || _rb == null || _anim == null)
+            {
+                _inputsActions = GetComponent<GatherInputs>();
+                _rb = GetComponent<Rigidbody>();
+                _anim = GetComponent<Animator>();
+            }
+            
         }
         
         private void Update()
         {
             GatherInputs();
+            
+            HandleGround();
+            
+            Move();
+            
+            
         }
         
         private void GatherInputs()
         {
+            _inputs.X = _inputsActions.move.x;
+            _inputs.Z = _inputsActions.move.y;
             
+            _dir = new Vector3(_inputs.X, 0, _inputs.Z);
+            
+            // Set look direction only if dir is not zero, to avoid snapping back to original and ajust with camera
+            var CameraForward = _cam.forward;
+            CameraForward.y = 0;
+            CameraForward.Normalize();
+            var CameraRight = _cam.right;
+            CameraRight.y = 0;
+            CameraRight.Normalize();
+            _dir = CameraForward * _inputs.Z + CameraRight * _inputs.X;
+            
+            if (_dir != Vector3.zero) _anim.transform.forward = _dir;
+            
+
         }
         
         #region Detection
@@ -50,15 +84,25 @@ namespace Player
             if (!IsGrounded && grounded)
             {
                 IsGrounded = true;
+                
+                //_hasJumped = false;
+                //PlayRandomClip(_landClips); TODO
+                //_currentMovementLerpSpeed = 100;
+                _anim.SetBool("IsGrounded", true);
                 OnTouchedGround?.Invoke();
+                
             }
             else if (IsGrounded && !grounded)
             {
                 IsGrounded = false;
                 _anim.SetBool("IsGrounded", false);
+                transform.SetParent(null);
             }
             
         }
+        
+        
+        
         
         private Vector3 WallDetectPosition => _anim.transform.position + Vector3.up + _anim.transform.forward * _wallCheckOffset;
         
@@ -74,6 +118,70 @@ namespace Player
         
         #endregion
         
+        #region Movement
         
+        [Header("Movement")] [SerializeField] private float _movementSpeed = 5;
+        [SerializeField] private float _acceleration = 5;
+        [SerializeField] private float _maxWalkingPenalty = 5;
+        [SerializeField] private float _currentMovementLerpSpeed = 100;
+        private float _currentWalkingPenalty;
+        
+        private Vector3 _dir;
+        
+        private void Move() {
+            _currentMovementLerpSpeed = Mathf.MoveTowards(_currentMovementLerpSpeed, 100, 20 * Time.deltaTime);
+
+            var normalizedDir = _dir.normalized;
+
+            // Slowly increase max speed
+            if (_dir != Vector3.zero) _currentWalkingPenalty += _acceleration * Time.deltaTime;
+            else _currentWalkingPenalty -= _acceleration * Time.deltaTime;
+            _currentWalkingPenalty = Mathf.Clamp(_currentWalkingPenalty, _maxWalkingPenalty, 1);
+
+            // Set current y vel and add walking penalty
+            var targetVel = new Vector3(normalizedDir.x, _rb.velocity.y, normalizedDir.z) * _currentWalkingPenalty * _movementSpeed;
+
+            // Set vel
+            var idealVel = new Vector3(targetVel.x, _rb.velocity.y, targetVel.z);
+            
+            /*// Go the same orientation as the camera
+            var camForward = _cam.forward;
+            var camRight = _cam.right;
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward.Normalize();
+            camRight.Normalize();
+            
+            idealVel = camForward * idealVel.z + camRight * idealVel.x;*/
+
+            _rb.velocity = Vector3.MoveTowards(_rb.velocity, idealVel, _currentMovementLerpSpeed * Time.deltaTime);
+
+            _anim.SetBool("Walking", _dir != Vector3.zero && IsGrounded);
+        }
+        
+        
+        
+        
+        #endregion
+        
+
+    
+
+        #region Audio
+
+        [Header("Audio")] [SerializeField] private AudioSource _source;
+        [SerializeField] private AudioClip[] _landClips;
+        [SerializeField] private AudioClip[] _dashClips;
+
+        private void PlayRandomClip(AudioClip[] clips) {
+            _source.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.2f);
+        }
+
+        #endregion
+
+        private struct Inputs {
+            public float X, Z;
+            public int RawX, RawZ;
+        }
     }
 }
