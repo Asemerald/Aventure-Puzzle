@@ -47,10 +47,11 @@ namespace Player
             
             _dir = new Vector3(_inputs.X, 0, _inputs.Z);
             
-            // Set look direction only if dir is not zero, to avoid snapping back to original and ajust with camera
+            // Set look direction only if dir is not zero, to avoid snapping back to original and adjust with camera
             var CameraForward = _cam.forward;
             CameraForward.y = 0;
             CameraForward.Normalize();
+            
             var CameraRight = _cam.right;
             CameraRight.y = 0;
             CameraRight.Normalize();
@@ -144,15 +145,6 @@ namespace Player
             // Set vel
             var idealVel = new Vector3(targetVel.x, _rb.velocity.y, targetVel.z);
             
-            /*// Go the same orientation as the camera
-            var camForward = _cam.forward;
-            var camRight = _cam.right;
-            camForward.y = 0;
-            camRight.y = 0;
-            camForward.Normalize();
-            camRight.Normalize();
-            
-            idealVel = camForward * idealVel.z + camRight * idealVel.x;*/
 
             _rb.velocity = Vector3.MoveTowards(_rb.velocity, idealVel, _currentMovementLerpSpeed * Time.deltaTime);
 
@@ -171,7 +163,7 @@ namespace Player
 
         [Header("Audio")] [SerializeField] private AudioSource _source;
         [SerializeField] private AudioClip[] _landClips;
-        [SerializeField] private AudioClip[] _dashClips;
+        [SerializeField] private AudioClip[] _stepClips;
 
         private void PlayRandomClip(AudioClip[] clips) {
             _source.PlayOneShot(clips[Random.Range(0, clips.Length)], 0.2f);

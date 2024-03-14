@@ -270,19 +270,19 @@ MonoBehaviour:
   _inputsActions: {fileID: 46370912}
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   _grounderOffset: -1
   _grounderRadius: 0.2
   _wallCheckOffset: 0.5
   _wallCheckRadius: 0.38
   IsGrounded: 0
-  _movementSpeed: 5
-  _acceleration: 5
-  _maxWalkingPenalty: 5
+  _movementSpeed: 8
+  _acceleration: 2
+  _maxWalkingPenalty: 1000
   _currentMovementLerpSpeed: 100
   _source: {fileID: 0}
   _landClips: []
-  _dashClips: []
+  _stepClips: []
 --- !u!54 &46370905
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -965,8 +965,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314169528}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -6.1237245, y: 6.600001, z: -6.123724}
+  m_LocalRotation: {x: 0.30839735, y: 0.3607333, z: -0.12774237, w: 0.8708872}
+  m_LocalPosition: {x: -5.495251, y: 7.8932037, z: -5.4952517}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1075,14 +1075,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500910038}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -6.1237245, y: 6.600001, z: -6.123724}
+  m_LocalRotation: {x: 0.30839732, y: 0.36073327, z: -0.12774235, w: 0.87088716}
+  m_LocalPosition: {x: -5.495251, y: 7.8932037, z: -5.4952517}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 687252788}
   m_Father: {fileID: 775041672}
-  m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 39, y: 45, z: 0}
 --- !u!114 &1500910040
 MonoBehaviour:
   m_ObjectHideFlags: 0
