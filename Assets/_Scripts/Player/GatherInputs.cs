@@ -11,8 +11,6 @@ namespace Player
         public Vector2 look;
         public bool jump;
         public bool sprint;
-        public bool aim;
-        public bool shoot;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -43,16 +41,7 @@ namespace Player
         {
             SprintInput(value.isPressed);
         }
-		
-        public void OnAim(InputValue value)
-        {
-            AimValue(value.isPressed);
-        }
-		
-        public void OnShoot(InputValue value)
-        {
-            ShootInput(value.isPressed);
-        }
+        
         
 
 
@@ -75,16 +64,7 @@ namespace Player
         {
             sprint = newSprintState;
         }
-		
-        public void AimValue(bool newAimState)
-        {
-            aim = newAimState;
-        }
-		
-        public void ShootInput(bool newShootState)
-        {
-            shoot = newShootState;
-        }
+        
 
         private void OnApplicationFocus(bool hasFocus)
         {
