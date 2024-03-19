@@ -1,17 +1,18 @@
-Méthodo / Nomenclature projet Unity
+# Méthodo / Nomenclature projet Unity
 
 
-1. GIT  
+## 1. GIT  
 
-1.1 Les Branches : 
+### 1.1 Les Branches : 
 
-	Pour les branches, on travaille sur avec une Main, une branche Develop et des branches Feature. 
 
-La Main sera là pour répertorier les versions et milestones dans leur état final, et sera donc mise à jour peu fréquemment. 
+&emsp;&emsp;&emsp;&emsp;Pour les branches, on travaille sur avec une Main, une branche Develop et des branches Feature : 
 
-La branche Develop sera elle la version actuelle sur laquelle on travaille, la Main temporaire en quelque sorte. 
+- La <span style="color: green"> Main </span> sera là pour répertorier les versions et milestones dans leur état final, et sera donc mise à jour peu fréquemment. 
 
-Les branches Feature quant à elle seront créées par vos soins avant d’intégrer chaque feature, puis merge dans la branche Develop et fermé quand la feature a été terminé. 
+- La branche Develop sera elle la version actuelle sur laquelle on travaille, la Main temporaire en quelque sorte. 
+
+- Les branches Feature quant à elle seront créées par vos soins avant d’intégrer chaque feature, puis merge dans la branche Develop et fermé quand la feature a été terminé. 
 
 
 
