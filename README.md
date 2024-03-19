@@ -32,22 +32,22 @@ Une fois l’intégration **terminée**, vous pouvez merge **AddAssetsLvl2_T** d
 
 ### 1.2 Nomenclature des Commits : 
 <br />
-&emsp;&emsp;&emsp;&emsp;Lors de vos commits, vous serez amené à ajouter un titre et une description au commit. Afin de mieux suivre les updates et les travaux de chacuns sur le projet, il est important d’avoir des commits clairs et concis. <br /><br /> 
+&emsp;&emsp;&emsp;&emsp;Lors de vos **commits**, vous serez amené à ajouter un **titre** et une **description** au **commit**. Afin de mieux suivre les **updates** et les **travaux** de chacuns sur le projet, il est **important** d’avoir des commits **clairs** et **concis**. <br />
 
 
 <ins>Exemple avec 2 cas possibles :</ins>
 
 • Modification/Ajout de Prefabs/Models/Textures/Scripts/… : 
-Nommez le commit avec le nom du dossier et y préciser simplement le contenu ajouté.
+Nommez le **commit** avec le **nom** du **dossier** et y **préciser** **simplement** le contenu **ajouté** sans **oublier** le **tag** de l'issue lié.
 
 • Modification/Ajout de LD/Intégration : 
-Nommez le commit avec le nom de la scène modifiée ainsi que le/les modules modifiés.
+Nommez le **commit** avec le nom de la **scène** **modifiée** ainsi que le/les modules modifiés sans **oublier** le **tag** de l'issue lié.
 
 >[!IMPORTANT]
-> Soyez concis dans le titre du commit et ajoutez des détails dans la partie description. Précisez la version de cette modification si possible.
+> Soyez concis dans le **titre** du commit et ajoutez des **détails** dans la partie **description**. Précisez la **version** de cette modification si possible.
 
 >[!CAUTION]
-> SURTOUT N'OUBLIEZ PAS LE # DE L'ISSUE LIÉ A VOTRE COMMIT DANS LE TITRE OU LA DESCRIPTION.
+> SURTOUT N'OUBLIEZ PAS LE **#** DE L'ISSUE LIÉ A VOTRE **COMMIT** DANS LE **TITRE** OU LA **DESCRIPTION**.
 
 
 
@@ -63,24 +63,25 @@ Nommez le commit avec le nom de la scène modifiée ainsi que le/les modules mod
 ![Image a pas reproduire](https://media.discordapp.net/attachments/747378568572567562/1219683844916248697/image4.png?ex=660c3219&is=65f9bd19&hm=04f643013f8142aa902ee03b643b54dad5c590b77dfc775cebdafcef3913459e&=&format=webp&quality=lossless)  
 
 >[!CAUTION]
-> Les erreurs ici ? Des noms qui ne veulent rien dire et trop de fichiers changés d’un coup dû à des commits toute les semaines.
+> Les erreurs ici ? Des noms qui ne veulent **rien** **dire** et **trop** **de** **fichiers** **changés** d’un coup dû à des commits toute les semaines. <br /> <br /> 
 
 
 
 
 
 
-1.3 Les bon réflexes : 
+### 1.3 Les bon réflexes : <br /> <br /> 
 
 	
-Grâce à eux, vous viendrez moins souvent me dire que votre scène est corrompue  : 
+&emsp;&emsp;&emsp;&emsp;Grâce à eux, vous viendrez moins souvent me dire que votre scène est corrompue  : 
 
-Prendre l’habitude de fetch et pull votre branche à chaque fois que vous commencez à travailler.
+- Prendre l’habitude de **fetch** et **pull** votre branche à chaque fois que vous commencez à travailler.
 
-Faire des commit le plus souvent possible.
+- Faire des **commit** le plus **souvent** **possible**.
 
-Ne pas merge dans la Develop avant d’avoir entièrement fini son ajout afin de garder un bon contrôle sur les éventuels conflits.
+- Ne pas merge dans la **Develop** avant d’avoir entièrement fini son ajout et son issue afin de garder un bon contrôle sur les **éventuels** conflits.
 
-Travailler au maximum sur des préfabs afin de simplifier la production.
+- Travailler au maximum sur des **préfabs** afin de **simplifier** la production.
 
-Pensez à être concis mais efficace quand vous créer une branche feature, et n’oubliez pas de mettre vos initiales pour savoir qui travaille dessus. Ex : AddAnimToPlayer_S.
+>[!IMPORTANT]
+>Pensez à être **concis** mais **efficace** quand vous créer une branche feature, et n’oubliez pas de mettre vos **initiales** pour savoir qui travaille dessus. Ex : **AddAnimToPlayer_S**.
