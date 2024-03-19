@@ -30,9 +30,34 @@ Une fois l’intégration **terminée**, vous pouvez merge **AddAssetsLvl2_T** d
     
   <br />
 
-### 1.2 Nomenclature des Commits : 
+### 1.3 Les issues : 
 <br />
-&emsp;&emsp;&emsp;&emsp;Lors de vos **commits**, vous serez amené à ajouter un **titre** et une **description** au **commit**. Afin de mieux suivre les **updates** et les **travaux** de chacuns sur le projet, il est **important** d’avoir des commits **clairs** et **concis**. <br />
+
+&emsp;&emsp;&emsp;&emsp;Les **Issues** github sont un bon moyen de garder en mémoire les choses importantes à **ajouter**, **changer** ou encore **implémenter** avant différentes **milestones**. Vous les retrouverez ici :  <br /> <br />
+
+![Image montrant ou se situe les issues Github](https://media.discordapp.net/attachments/747378568572567562/1219690261563572366/image3.png?ex=660c3813&is=65f9c313&hm=52c5a659f570722e6bbfbc3d1c4c09c9414e5acca08ffcf16af79287d5539adb&=&format=webp&quality=lossless&width=1125&height=676)  <br /> <br /> 
+
+
+Les **issues** se présenteront tel quels	: <br /> <br />
+
+![Image montrant ou se situe les issues Github](https://media.discordapp.net/attachments/747378568572567562/1219690044659339395/image2.png?ex=660c37df&is=65f9c2df&hm=e793ae68cc4c08ca4d780d515bf1bf71ad7afb050d298887406d0630e3f19d5f&=&format=webp&quality=lossless&width=1440&height=305) <br /> <br /> 
+
+Il est possible via cet onglet de chercher dans les issues par leur **nom**, mais aussi par **labels**, **milestones** ou **personne** **associés** que nous verront plus tard. 
+
+Pour **créer** une issue, il vous suffit de **cliquer** sur le bouton “**Nouvelle** **issue**”, et de la rédiger avec cette **méthodologie** : 
+
+![créer issue](https://media.discordapp.net/attachments/747378568572567562/1219690044949004329/image1.png?ex=660c37df&is=65f9c2df&hm=d0593feb763717afe83540375a5d498fa4d92e02e03b295872a6724e20c84a3e&=&format=webp&quality=lossless) <br /> <br />
+
+Ici encore on retrouvera un **texte** et une **description** à ajouter, ici vous pouvez être plus **précis** dans le titre, mais les **détails** devront se trouver dans la **description**, vous pouvez même ajouter des **images** etc. 
+>[!NOTE]
+> A **droite** on trouvera un panel qui permet rapidement de **détailler** encore plus l’issue grâce à des labels, la milestone associé et qui est assigné a l'issue. 
+
+
+
+### 1.3 Les Commits : 
+<br />
+
+&emsp;&emsp;&emsp;&emsp;Lors de vos **commits**, vous serez amené à ajouter un **titre** et une **description** au **commit**. Afin de mieux suivre les **updates** et les **travaux** de chacuns sur le projet, il est **important** d’avoir des commits __clairs__ et **concis**. <br /> <br />
 
 
 <ins>Exemple avec 2 cas possibles :</ins>
@@ -70,7 +95,7 @@ Nommez le **commit** avec le nom de la **scène** **modifiée** ainsi que le/les
 
 
 
-### 1.3 Les bon réflexes : <br /> <br /> 
+### 1.4 Les bon réflexes : <br /> <br /> 
 
 	
 &emsp;&emsp;&emsp;&emsp;Grâce à eux, vous viendrez moins souvent me dire que votre scène est corrompue  : 
