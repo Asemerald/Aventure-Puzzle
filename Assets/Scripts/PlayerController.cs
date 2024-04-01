@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
+    [SerializeField] GameObject currentGrabbedObject;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -86,6 +88,18 @@ public class PlayerController : MonoBehaviour
                 //Fonction attacker / interagir
                 Attack();
             }
+            else if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
+            {
+                GrabObject();
+            }
+            else if(InputsBrain.Instance.interract.WasReleasedThisFrame())
+            {
+                if(currentGrabbedObject != null)
+                {
+                    currentGrabbedObject.transform.parent = null;
+                    currentGrabbedObject = null;
+                }
+            }
         }
 
         
@@ -105,12 +119,31 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    void GrabObject()
     {
-        if (!IsGrounded())
-            rb.velocity += Vector3.down * fallSpeed;
+        if(currentGrabbedObject == null)
+        {
+            Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+            if (hitted.Length > 0)
+            {
+                float closest = 10;
+                int index = 0;
+                for (int i = 0; i < hitted.Length; i++)
+                {
+                    if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
+                    {
+                        index = i;
+                        closest = Vector3.Distance(hitted[i].transform.position, transform.position);
+                    }
+                }
+                currentGrabbedObject = hitted[index].gameObject;
+            }
 
-        Move();
+            return;
+        }
+
+        if (currentGrabbedObject.transform.parent != transform)
+            currentGrabbedObject.transform.parent = transform;
     }
 
     void HUDUpdate()
@@ -161,6 +194,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (!IsGrounded())
+            rb.velocity += Vector3.down * fallSpeed;
+
+        Move();
+    }
+
     private void Move()
     {
         // calculate move vector on slopes
@@ -208,12 +249,12 @@ public class PlayerController : MonoBehaviour
     }
 
     #region Boolean
-    private bool IsGrounded()
+    bool IsGrounded()
     {
         return Physics.CheckSphere(feet.position, 0.3f, ground);
     }
 
-    private bool OnSlope()
+    bool OnSlope()
     {
         if (Physics.Raycast(feet.position, Vector3.down, out slopeHit, 0.3f))
         {
@@ -226,6 +267,15 @@ public class PlayerController : MonoBehaviour
                 return false;
         }
         return false;
+    }
+
+    bool CanGrabObject()
+    {
+        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        if(hitted.Length > 0)
+            return true;
+        else
+            return false;
     }
 
     #endregion
