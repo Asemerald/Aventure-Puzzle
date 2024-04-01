@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             if (InputsBrain.Instance.interract.WasPressedThisFrame())
             {
-                //Changer le sens des cartes
+                TarotInventory.Instance.SwitchCardState();
             }
         }
         else

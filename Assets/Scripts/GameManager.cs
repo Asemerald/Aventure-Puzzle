@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            TarotInventory.Instance.ApplyCard();
             HUD.Instance.tarotInventory.SetActive(false);
             Time.timeScale = 1;
         }

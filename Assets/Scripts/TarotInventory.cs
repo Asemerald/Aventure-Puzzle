@@ -8,6 +8,9 @@ public class TarotInventory : MonoBehaviour
     public static TarotInventory Instance {  get; private set; }
 
     [SerializeField] int selectedCard = 0;
+    [SerializeField] CardTemplate[] cards;
+
+    [SerializeField] CardTemplate currendCard;
 
     bool selectingCard;
 
@@ -20,6 +23,7 @@ public class TarotInventory : MonoBehaviour
     private void Start()
     {
         SelectCardHUD();
+        currendCard = cards[selectedCard];
     }
 
     private void Update()
@@ -31,6 +35,45 @@ public class TarotInventory : MonoBehaviour
             StartCoroutine(SelectCard(true));
         else if (InputsBrain.Instance.move.ReadValue<Vector2>().x < 0 && ! selectingCard)
             StartCoroutine(SelectCard(false));
+    }
+
+    public void SwitchCardState()
+    {
+        Debug.Log("Change state");
+
+        switch (currendCard.state)
+        {
+            case CardTemplate.CardState.None:
+                currendCard.state = CardTemplate.CardState.Endroit;
+                break;
+            case CardTemplate.CardState.Endroit:
+                currendCard.state = CardTemplate.CardState.Envers;
+                break;
+            case CardTemplate.CardState.Envers:
+                currendCard.state = CardTemplate.CardState.None;
+                break;
+        }
+    }
+
+    public void ApplyCard()
+    {
+
+        for(int i = 0; i < cards.Length; i++)
+        {
+            currendCard = cards[selectedCard];
+            switch (cards[selectedCard].state)
+            {
+                case CardTemplate.CardState.None:
+                    cards[selectedCard].NoCard();
+                    break;
+                case CardTemplate.CardState.Endroit:
+                    cards[selectedCard].CardUpside();
+                    break;
+                case CardTemplate.CardState.Envers:
+                    cards[selectedCard].CardUpsideDown();
+                    break;
+            }
+        }
     }
 
     void SelectCardHUD()
@@ -52,9 +95,11 @@ public class TarotInventory : MonoBehaviour
         else if (selectedCard < 0)
             selectedCard = 2;
 
+        currendCard = cards[selectedCard];
+
         SelectCardHUD();
 
-        yield return new WaitForSecondsRealtime(.3f);
+        yield return new WaitForSecondsRealtime(.25f);
 
         selectingCard = false;
     }
