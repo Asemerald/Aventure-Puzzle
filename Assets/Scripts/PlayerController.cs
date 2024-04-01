@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.HID;
 
 public class PlayerController : MonoBehaviour
 {
@@ -57,6 +55,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.inTarotInventory)
+            return;
+
         CheckMethods();
         MyInputs();
         
@@ -71,12 +72,13 @@ public class PlayerController : MonoBehaviour
 
         if (InputsBrain.Instance.tarot.WasPressedThisFrame())
         {
-            //Fonction ouvrir table
+            TarotInventory();
         }
 
         if (InputsBrain.Instance.interract.WasPressedThisFrame())
         {
             //Fonction attacker / interagir
+            Attack();
         }
     }
 
@@ -92,6 +94,16 @@ public class PlayerController : MonoBehaviour
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
+    }
+
+    void TarotInventory()
+    {
+        GameManager.Instance.CheckTarotInventory();
+
+        if (GameManager.Instance.inTarotInventory)
+            HUD.Instance.tarotInventory.SetActive(true);
+        else
+            HUD.Instance.tarotInventory.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -175,11 +187,15 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        slashVFX.Play();
+        //slashVFX.Play();
         Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, attackBoxSize, transform.rotation, collidingLayers);
         if (hitted.Length > 0)
         {
-            Debug.Log("Player has hit " + hitted.Length);
+            foreach(Collider c in hitted)
+            {
+                if (c.GetComponent<Feedbacks>())
+                    c.GetComponent<Feedbacks>().Feedback();
+            }
         }
     }
 
