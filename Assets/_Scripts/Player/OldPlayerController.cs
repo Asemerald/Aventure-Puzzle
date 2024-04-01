@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace Player
 {
-    public class PlayerController : MonoBehaviour
+    public class OldPlayerController : MonoBehaviour
     {
         
         
