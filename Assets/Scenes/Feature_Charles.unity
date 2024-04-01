@@ -198,6 +198,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38474891}
   m_CullTransparentMesh: 1
+--- !u!1 &110482400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110482402}
+  - component: {fileID: 110482401}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &110482401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110482400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e7ebdf47c5d024880f92d90951da28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inTarotInventory: 0
+--- !u!4 &110482402
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110482400}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239216013
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,6 +743,7 @@ GameObject:
   - component: {fileID: 760832635}
   - component: {fileID: 760832634}
   - component: {fileID: 760832633}
+  - component: {fileID: 760832637}
   m_Layer: 5
   m_Name: HUD
   m_TagString: Untagged
@@ -789,6 +835,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &760832637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760832632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb6d84d8364fe846b4820a41ea98588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tarotInventory: {fileID: 369502408}
+  tarotSelect: {fileID: 2084047099}
+  cardsPos:
+  - {fileID: 871287856}
+  - {fileID: 905139459}
+  - {fileID: 38474892}
 --- !u!1 &776886284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2119,7 +2183,7 @@ MonoBehaviour:
   m_TargetMovementOnly: 1
   m_ScreenX: 0.5
   m_ScreenY: 0.5
-  m_CameraDistance: 15
+  m_CameraDistance: 25
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
@@ -2298,6 +2362,7 @@ GameObject:
   - component: {fileID: 1673575541}
   - component: {fileID: 1673575544}
   - component: {fileID: 1673575543}
+  - component: {fileID: 1673575546}
   - component: {fileID: 1673575545}
   m_Layer: 3
   m_Name: Player
@@ -2449,6 +2514,19 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+--- !u!114 &1673575546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1673575540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6fd6ebf1b3adc439d0fe2feb0c6b36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedCard: 0
 --- !u!1 &1801733852
 GameObject:
   m_ObjectHideFlags: 0
@@ -2514,7 +2592,7 @@ Transform:
   m_GameObject: {fileID: 1801733852}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -7.5000005, y: 11.606602, z: -7.5000005}
+  m_LocalPosition: {x: -12.500001, y: 18.677671, z: -12.500001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2649,7 +2727,7 @@ Transform:
   m_GameObject: {fileID: 2009721091}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: -7.5000005, y: 11.606602, z: -7.5000005}
+  m_LocalPosition: {x: -12.500001, y: 18.677671, z: -12.500001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3207,3 +3285,4 @@ SceneRoots:
   - {fileID: 1801733854}
   - {fileID: 760832636}
   - {fileID: 779792438}
+  - {fileID: 110482402}

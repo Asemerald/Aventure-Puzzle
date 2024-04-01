@@ -55,31 +55,40 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        MyInputs();
+        
         if (GameManager.Instance.inTarotInventory)
             return;
 
         CheckMethods();
-        MyInputs();
-        
-
         HUDUpdate();
     }
 
     void MyInputs()
     {
-        moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
-        move = moveInputs.x * camRight + moveInputs.y * camForward;
-
         if (InputsBrain.Instance.tarot.WasPressedThisFrame())
+            GameManager.Instance.CheckTarotInventory();
+
+        if (GameManager.Instance.inTarotInventory)
         {
-            TarotInventory();
+            if (InputsBrain.Instance.interract.WasPressedThisFrame())
+            {
+                //Changer le sens des cartes
+            }
+        }
+        else
+        {
+            moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
+            move = moveInputs.x * camRight + moveInputs.y * camForward;
+
+            if (InputsBrain.Instance.interract.WasPressedThisFrame())
+            {
+                //Fonction attacker / interagir
+                Attack();
+            }
         }
 
-        if (InputsBrain.Instance.interract.WasPressedThisFrame())
-        {
-            //Fonction attacker / interagir
-            Attack();
-        }
+        
     }
 
     void CheckMethods()
@@ -94,16 +103,6 @@ public class PlayerController : MonoBehaviour
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
-    }
-
-    void TarotInventory()
-    {
-        GameManager.Instance.CheckTarotInventory();
-
-        if (GameManager.Instance.inTarotInventory)
-            HUD.Instance.tarotInventory.SetActive(true);
-        else
-            HUD.Instance.tarotInventory.SetActive(false);
     }
 
     private void FixedUpdate()

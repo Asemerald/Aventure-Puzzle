@@ -8,6 +8,7 @@ public class HUD : MonoBehaviour
 
     public GameObject tarotInventory;
     public Transform tarotSelect;
+    public Transform[] cardsPos;
 
     private void Awake()
     {

@@ -19,8 +19,14 @@ public class GameManager : MonoBehaviour
         inTarotInventory = !inTarotInventory;
 
         if (inTarotInventory)
+        {
+            HUD.Instance.tarotInventory.SetActive(true);
             Time.timeScale = 0;
+        }
         else
+        {
+            HUD.Instance.tarotInventory.SetActive(false);
             Time.timeScale = 1;
+        }
     }
 }
