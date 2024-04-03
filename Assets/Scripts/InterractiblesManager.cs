@@ -20,7 +20,7 @@ public class InterractiblesManager : MonoBehaviour
         {
             if(i.cardInteract == card)
             {
-                i.currentState = newState;
+                i.currentCardState = newState;
                 switch (newState)
                 {
                     case CardTemplate.CardState.None:

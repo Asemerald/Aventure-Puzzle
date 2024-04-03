@@ -60,17 +60,16 @@ public class TarotInventory : MonoBehaviour
 
         for(int i = 0; i < cards.Length; i++)
         {
-            currendCard = cards[selectedCard];
-            switch (cards[selectedCard].state)
+            switch (cards[i].state)
             {
                 case CardTemplate.CardState.None:
-                    cards[selectedCard].NoCard();
+                    cards[i].NoCard();
                     break;
                 case CardTemplate.CardState.Endroit:
-                    cards[selectedCard].CardUpside();
+                    cards[i].CardUpside();
                     break;
                 case CardTemplate.CardState.Envers:
-                    cards[selectedCard].CardUpsideDown();
+                    cards[i].CardUpsideDown();
                     break;
             }
         }

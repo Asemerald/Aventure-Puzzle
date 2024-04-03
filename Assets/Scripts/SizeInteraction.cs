@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractSizeTest : InteractibleTemplate
+public class SizeInteraction : InteractibleTemplate
 {
     [Header("Size Settings")]
     [SerializeField] Vector3 initialSize;

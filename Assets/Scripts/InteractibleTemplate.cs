@@ -8,7 +8,7 @@ public abstract class InteractibleTemplate : MonoBehaviour
     public enum CardDirectModification { None, Fire, Death, Size }
     public CardDirectModification cardInteract;
 
-    public CardTemplate.CardState currentState;
+    public CardTemplate.CardState currentCardState;
 
     public virtual void BaseState()
     {

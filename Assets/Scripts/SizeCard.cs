@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SizeCardTest : CardTemplate
+public class SizeCard : CardTemplate
 {
 
     //All the children will have access to the parent function and variable without needing to declare it
