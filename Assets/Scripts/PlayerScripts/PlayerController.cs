@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         MyInputs();
         
-        if (GameManager.Instance.inTarotInventory)
+        if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
@@ -68,6 +69,11 @@ public class PlayerController : MonoBehaviour
 
     void MyInputs()
     {
+        if(InputsBrain.Instance.pause.WasPressedThisFrame())
+            GameManager.Instance.PauseGame();
+
+        if(GameManager.Instance.gameIsPause) return;
+
         if (InputsBrain.Instance.tarot.WasPressedThisFrame())
             GameManager.Instance.CheckTarotInventory();
 

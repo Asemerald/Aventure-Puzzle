@@ -9,7 +9,7 @@ public class InputsBrain : MonoBehaviour
 
     InputsController inputs;
     [HideInInspector]
-    public InputAction move, tarot, interract;
+    public InputAction move, tarot, interract, pause;
 
     private void Awake()
     {
@@ -24,6 +24,7 @@ public class InputsBrain : MonoBehaviour
         move = inputs.Player.Move;
         tarot = inputs.Player.Tarot;
         interract = inputs.Player.Interact;
+        pause = inputs.Player.Pause;
 
         inputs.Enable();
     }

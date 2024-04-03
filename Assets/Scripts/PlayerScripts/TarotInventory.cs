@@ -28,7 +28,7 @@ public class TarotInventory : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.inTarotInventory)
+        if (!GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
             return;
 
         if (InputsBrain.Instance.move.ReadValue<Vector2>().x > 0 && !selectingCard)
@@ -53,6 +53,9 @@ public class TarotInventory : MonoBehaviour
                 currendCard.state = CardTemplate.CardState.None;
                 break;
         }
+
+        for(int i = 0; i < cards.Length; i++)
+            HUD.Instance.UpdateHUDCard(i, cards[i].state.ToString());
     }
 
     public void ApplyCard()
