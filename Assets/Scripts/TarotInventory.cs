@@ -39,7 +39,7 @@ public class TarotInventory : MonoBehaviour
 
     public void SwitchCardState()
     {
-        Debug.Log("Change state");
+        Debug.Log("Tarot Inventory : Change state");
 
         switch (currendCard.state)
         {

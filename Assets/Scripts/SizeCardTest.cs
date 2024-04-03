@@ -9,36 +9,23 @@ public class SizeCardTest : CardTemplate
 
     public override void NoCard()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Size");
-        foreach (var item in objects)
-        {
-            item.transform.localScale = Vector3.one * 2;
-        }
+        InterractiblesManager.Instance.ApplyChanges(InteractibleTemplate.CardDirectModification.Size, CardState.None);
 
         base.NoCard();
     }
 
     public override void CardUpside()
     {
-        //Using base dot the name of the original function, u play the original function
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Size");
-        foreach (var item in objects)
-        {
-            item.transform.localScale = Vector3.one * 3;
-        }
+        InterractiblesManager.Instance.ApplyChanges(InteractibleTemplate.CardDirectModification.Size, CardState.Endroit);
 
         base.CardUpside();
     }
 
     public override void CardUpsideDown()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("Size");
-        foreach (var item in objects)
-        {
-            item.transform.localScale = Vector3.one * 1;
-        }
+        InterractiblesManager.Instance.ApplyChanges(InteractibleTemplate.CardDirectModification.Size, CardState.Envers);
 
-        base.CardUpside();
+        base.CardUpsideDown();
     }
 
     public void ExempleFunction()

@@ -83,12 +83,12 @@ public class PlayerController : MonoBehaviour
             moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
             move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            if (InputsBrain.Instance.interract.WasPressedThisFrame())
+            /*if (InputsBrain.Instance.interract.WasPressedThisFrame())
             {
                 //Fonction attacker / interagir
                 Attack();
-            }
-            else if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
+            }*/
+            if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
             {
                 GrabObject();
             }
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .1f)
+        if (move.magnitude > .1f && currentGrabbedObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    void Attack()
+    /*void Attack()
     {
         //slashVFX.Play();
         Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, attackBoxSize, transform.rotation, collidingLayers);
@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
                     c.GetComponent<Feedbacks>().Feedback();
             }
         }
-    }
+    }*/
 
     public void TakeDamage()
     {
