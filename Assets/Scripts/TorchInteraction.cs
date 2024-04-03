@@ -8,7 +8,8 @@ public class TorchInteraction : InteractibleTemplate
     [SerializeField] GameObject fireBox;
     [SerializeField] Vector3 fireboxLitSize;
     [SerializeField] Vector3 fireboxBurningSize;
-
+    [SerializeField] LayerMask burningLayers;
+    [SerializeField] Transform fireBoxPos;
     public enum TorchState { Extinguished, LitUp, Burning, Ember }
     public TorchState state;
 
@@ -35,6 +36,38 @@ public class TorchInteraction : InteractibleTemplate
         fireBox.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (state != TorchState.Burning) return;
+
+        if (CollidindSomething())
+        {
+            Debug.Log("Torch Interaction : Debugging burn area");
+            Collider[] hits = Physics.OverlapBox(fireBoxPos.position + new Vector3(0, fireboxLitSize.y / 2, 0), fireboxBurningSize, transform.rotation, burningLayers);
+            foreach(Collider collider in hits)
+            {
+                //Code pour faire bruler les trucs
+                if (collider.GetComponent<PlantsInteraction>())
+                {
+                    collider.GetComponent<PlantsInteraction>().BurnPlant();
+                }
+
+                //Code pour allumer une torche
+                if (collider.GetComponent<TorchInteraction>())
+                {
+                    LitUpTorch(collider.GetComponent<TorchInteraction>());
+                }
+            }
+        }
+    }
+
+    void LitUpTorch(TorchInteraction t)
+    {
+        if (t.state != TorchState.Extinguished) return;
+        t.state = TorchState.LitUp;
+        t.UpsideState();
+    }
+
     public void SetOnFire()
     {
         switch (currentCardState)
@@ -51,5 +84,20 @@ public class TorchInteraction : InteractibleTemplate
         }
 
         fireBox.SetActive(true);
+    }
+
+    bool CollidindSomething()
+    {
+        return Physics.OverlapBox(fireBoxPos.position + new Vector3(0, fireboxLitSize.y / 2, 0), fireboxBurningSize, transform.rotation, burningLayers).Length > 0 ? true : false ;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(fireBoxPos.localPosition + new Vector3(0, fireboxLitSize.y / 2, 0), fireboxLitSize);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(fireBoxPos.localPosition + new Vector3(0, fireboxBurningSize.y / 2, 0), fireboxBurningSize);
     }
 }
