@@ -7,6 +7,15 @@ public class PlantsInteraction : InteractibleTemplate
     public enum PlantState { Grown, NotGrown, Dead, Burned, Growing}
     [Header("Plants Settings")]
     public PlantState state;
+    
+    private Collider collider;
+    private MeshRenderer meshRenderer;
+
+    private void Start()
+    {
+        collider = GetComponent<Collider>();
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
 
     public override void BaseState()
     {
@@ -19,8 +28,8 @@ public class PlantsInteraction : InteractibleTemplate
         if (state == PlantState.Burned || state == PlantState.NotGrown) return;
 
         state = PlantState.Dead;
-        GetComponent<Collider>().enabled = false;
-        GetComponent<MeshRenderer>().enabled = true;
+        collider.enabled = false;
+        meshRenderer.enabled = true;
         
     }
 
@@ -28,8 +37,8 @@ public class PlantsInteraction : InteractibleTemplate
     {
         if (state != PlantState.Growing)
         {
-            GetComponent<Collider>().enabled = true;
-            GetComponent<MeshRenderer>().enabled = true;
+            collider.enabled = true;
+            meshRenderer.enabled = true;
         }
 
         state = PlantState.Growing;
@@ -40,8 +49,8 @@ public class PlantsInteraction : InteractibleTemplate
         if (state == PlantState.Grown)
         {
             state = PlantState.Burned;
-            GetComponent<Collider>().enabled = false;
-            GetComponent<MeshRenderer>().enabled = false;
+            collider.enabled = false;
+            meshRenderer.enabled = false;
         }
     }
 }
