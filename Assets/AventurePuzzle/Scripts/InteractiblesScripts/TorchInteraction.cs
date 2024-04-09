@@ -5,7 +5,7 @@ using UnityEngine;
 public class TorchInteraction : InteractibleTemplate
 {
     [Header("Torch Settings")]
-    [SerializeField] GameObject fireBox;
+    public GameObject fireBox;
     [SerializeField] Vector3 fireboxLitSize;
     [SerializeField] Vector3 fireboxBurningSize;
     [SerializeField] LayerMask burningLayers;
