@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             HUD.Instance.tarotInventory.SetActive(true);
             Time.timeScale = 0;
+            TarotInventory.Instance.UpdateHUDState();
         }
         else
         {
