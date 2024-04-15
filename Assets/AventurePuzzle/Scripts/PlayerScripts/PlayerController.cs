@@ -132,13 +132,6 @@ public class PlayerController : MonoBehaviour
             UnGrabObject();
         else
             closestMoveableObject = null;
-
-
-        if (currentGrabbedObject != null)
-        {
-            currentGrabbedObject.velocity = rb.velocity;
-            currentGrabbedObject.mass = 1;
-        }
     }
 
     void UnGrabObject()
@@ -153,6 +146,7 @@ public class PlayerController : MonoBehaviour
         if(currentGrabbedObject == null && closestMoveableObject != null)
         {
             currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
+            currentGrabbedObject.mass = 1;
             return;
         }
     }
@@ -192,6 +186,9 @@ public class PlayerController : MonoBehaviour
             rb.velocity += Vector3.down * fallSpeed;
 
         Move();
+
+        if (currentGrabbedObject != null)
+            currentGrabbedObject.velocity = rb.velocity;
     }
 
     private void Move()
