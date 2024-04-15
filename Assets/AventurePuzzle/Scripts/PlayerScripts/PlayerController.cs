@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Rigidbody currentGrabbedObject;
     [SerializeField] MoveableObject closestMoveableObject;
+
+    float currentSpeed;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -182,10 +185,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
+
         if (!IsGrounded())
             rb.velocity += Vector3.down * fallSpeed;
-
-        Move();
 
         if (currentGrabbedObject != null)
             currentGrabbedObject.velocity = rb.velocity;
@@ -196,11 +199,26 @@ public class PlayerController : MonoBehaviour
         // calculate move vector on slopes
         slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
 
-        // apply forces
-        if (!OnSlope())
-            rb.velocity += (move * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (move.magnitude > 0.01f ? accel : decel));
+        Vector3 movement = new Vector3();
+
+        if(!OnSlope())
+            movement = move * maxSpeed;
         else
-            rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (slopeMove.magnitude > 0.01f ? accel : decel));
+            movement = slopeMove * maxSpeed;
+
+        float acceleration = movement.magnitude > .01f ? accel : decel;
+
+        movement = movement - rb.velocity;
+
+        var force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
+
+        // apply forces
+        //if (!OnSlope())
+            rb.AddForce(force, ForceMode.Acceleration);
+            //rb.velocity += (move * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (move.magnitude > 0.01f ? accel : decel));
+        //else
+            //rb.AddForce(slopeMove.normalized + movement, ForceMode.Acceleration);
+            //rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (slopeMove.magnitude > 0.01f ? accel : decel));
     }
 
     private void CameraOffset()
