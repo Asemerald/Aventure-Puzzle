@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;
 
     [SerializeField] GameObject currentGrabbedObject;
-
+    [SerializeField] MoveableObject closestMoveableObject;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -59,12 +59,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MyInputs();
+        HUDUpdate();
         
         if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
-        HUDUpdate();
     }
 
     void MyInputs()
@@ -80,9 +80,7 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.inTarotInventory)
         {
             if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
                 TarotInventory.Instance.SwitchCardState();
-            }
         }
         else
         {
@@ -90,19 +88,14 @@ public class PlayerController : MonoBehaviour
             move = moveInputs.x * camRight + moveInputs.y * camForward;
 
             if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
-            {
                 GrabObject();
-            }
             else if(InputsBrain.Instance.interract.WasReleasedThisFrame())
-            {
                 if(currentGrabbedObject != null)
                 {
                     currentGrabbedObject.transform.parent = null;
                     currentGrabbedObject = null;
                 }
-            }
         }
-
         
     }
 
@@ -118,28 +111,36 @@ public class PlayerController : MonoBehaviour
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
-    }
 
-    void GrabObject()
-    {
-        if(currentGrabbedObject == null)
+        if (CanGrabObject() && currentGrabbedObject == null)
         {
             Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
+            
             if (hitted.Length > 0)
             {
                 float closest = 10;
                 int index = 0;
+
                 for (int i = 0; i < hitted.Length; i++)
-                {
                     if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
                     {
                         index = i;
                         closest = Vector3.Distance(hitted[i].transform.position, transform.position);
                     }
-                }
-                currentGrabbedObject = hitted[index].gameObject;
+                
+                closestMoveableObject = hitted[index].GetComponent<MoveableObject>();
             }
+        }
+        else
+            closestMoveableObject = null;
 
+    }
+
+    void GrabObject()
+    {
+        if(currentGrabbedObject == null && closestMoveableObject != null)
+        {
+            currentGrabbedObject = closestMoveableObject.gameObject;
             return;
         }
 
@@ -151,34 +152,10 @@ public class PlayerController : MonoBehaviour
     {
         if (HUD.Instance == null) return;
 
-        if(CanGrabObject() && currentGrabbedObject == null)
+        if(CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory)
             HUD.Instance.grabObj.SetActive(true);
         else
             HUD.Instance.grabObj.SetActive(false);
-
-        /*HUD.Instance.shootSlider.value = shootTimer;
-
-        //HUD to display use a lever or something
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
-        if (hitted.Length > 0)
-        {
-            float closest = 10;
-            int index = 0;
-            for (int i = 0; i < hitted.Length; i++)
-            {
-                if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                {
-                    index = i;
-                    closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                }
-            }
-            if (!hitted[index].GetComponent<LeverScript>().leverHasBeenUsed)
-                HUD.Instance.interactText.text = "Press 'Y' to activate lever";
-            else
-                HUD.Instance.interactText.text = "";
-        }
-        else
-            HUD.Instance.interactText.text = "";*/
     }
 
     void ActivateInteracable()
