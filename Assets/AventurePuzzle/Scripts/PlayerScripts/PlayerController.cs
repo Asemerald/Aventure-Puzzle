@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
-    [SerializeField] GameObject currentGrabbedObject;
+    [SerializeField] Rigidbody currentGrabbedObject;
     [SerializeField] MoveableObject closestMoveableObject;
     void Start()
     {
@@ -89,12 +89,9 @@ public class PlayerController : MonoBehaviour
 
             if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
                 GrabObject();
-            else if(InputsBrain.Instance.interract.WasReleasedThisFrame())
-                if(currentGrabbedObject != null)
-                {
-                    currentGrabbedObject.transform.parent = null;
-                    currentGrabbedObject = null;
-                }
+            else if (InputsBrain.Instance.interract.WasReleasedThisFrame())
+                if (currentGrabbedObject != null)
+                    UnGrabObject();
         }
         
     }
@@ -115,7 +112,7 @@ public class PlayerController : MonoBehaviour
         if (CanGrabObject() && currentGrabbedObject == null)
         {
             Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
-            
+
             if (hitted.Length > 0)
             {
                 float closest = 10;
@@ -127,25 +124,37 @@ public class PlayerController : MonoBehaviour
                         index = i;
                         closest = Vector3.Distance(hitted[i].transform.position, transform.position);
                     }
-                
+
                 closestMoveableObject = hitted[index].GetComponent<MoveableObject>();
             }
         }
+        else if (!CanGrabObject() && currentGrabbedObject != null)
+            UnGrabObject();
         else
             closestMoveableObject = null;
 
+
+        if (currentGrabbedObject != null)
+        {
+            currentGrabbedObject.velocity = rb.velocity;
+            currentGrabbedObject.mass = 1;
+        }
+    }
+
+    void UnGrabObject()
+    {
+        currentGrabbedObject.velocity = Vector3.zero;
+        currentGrabbedObject.mass = 100;
+        currentGrabbedObject = null;
     }
 
     void GrabObject()
     {
         if(currentGrabbedObject == null && closestMoveableObject != null)
         {
-            currentGrabbedObject = closestMoveableObject.gameObject;
+            currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
             return;
         }
-
-        if (currentGrabbedObject.transform.parent != transform)
-            currentGrabbedObject.transform.parent = transform;
     }
 
     void HUDUpdate()
@@ -192,9 +201,9 @@ public class PlayerController : MonoBehaviour
 
         // apply forces
         if (!OnSlope())
-            rb.velocity += (move * maxSpeed - rb.velocity) * (Time.deltaTime * (move.magnitude > 0.1f ? accel : decel));
+            rb.velocity += (move * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (move.magnitude > 0.01f ? accel : decel));
         else
-            rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.deltaTime * (slopeMove.magnitude > 0.1f ? accel : decel));
+            rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (slopeMove.magnitude > 0.01f ? accel : decel));
     }
 
     private void CameraOffset()

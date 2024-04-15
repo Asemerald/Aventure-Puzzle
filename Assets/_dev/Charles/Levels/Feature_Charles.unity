@@ -619,7 +619,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &706992196
@@ -939,6 +939,7 @@ GameObject:
   - component: {fileID: 872857713}
   - component: {fileID: 872857712}
   - component: {fileID: 872857715}
+  - component: {fileID: 872857716}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Moveable
@@ -1045,6 +1046,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeMoved: 1
+--- !u!54 &872857716
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872857710}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &1046071982
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,7 +1655,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &1382660601
@@ -2151,6 +2179,7 @@ GameObject:
   - component: {fileID: 1983082125}
   - component: {fileID: 1983082124}
   - component: {fileID: 1983082127}
+  - component: {fileID: 1983082128}
   m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Moveable
@@ -2257,6 +2286,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeMoved: 1
+--- !u!54 &1983082128
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1983082122}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &2113651687
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2359,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!65 &2113651689
@@ -2435,6 +2491,7 @@ GameObject:
   - component: {fileID: 2134578416}
   - component: {fileID: 2134578415}
   - component: {fileID: 2134578418}
+  - component: {fileID: 2134578419}
   m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Moveable
@@ -2541,6 +2598,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canBeMoved: 1
+--- !u!54 &2134578419
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134578413}
+  serializedVersion: 4
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &2145786716
 GameObject:
   m_ObjectHideFlags: 0
