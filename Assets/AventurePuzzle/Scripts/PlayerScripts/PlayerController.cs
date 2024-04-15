@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Rigidbody currentGrabbedObject;
     [SerializeField] MoveableObject closestMoveableObject;
 
-    float currentSpeed;
 
     void Start()
     {
@@ -106,7 +105,7 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .1f && currentGrabbedObject == null)
+        if (move.magnitude > .01f && currentGrabbedObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
@@ -150,7 +149,6 @@ public class PlayerController : MonoBehaviour
         {
             currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
             currentGrabbedObject.mass = 1;
-            return;
         }
     }
 
@@ -164,7 +162,7 @@ public class PlayerController : MonoBehaviour
             HUD.Instance.grabObj.SetActive(false);
     }
 
-    void ActivateInteracable()
+    /*void ActivateInteracable()
     {
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if (hitted.Length > 0)
@@ -179,9 +177,9 @@ public class PlayerController : MonoBehaviour
                     closest = Vector3.Distance(hitted[i].transform.position, transform.position);
                 }
             }
-            //hitted[index].GetComponent<LeverScript>().ActivateLever();
+            //hitted[index].GetComponent<>().Function();
         }
-    }
+    }*/
 
     private void FixedUpdate()
     {
@@ -192,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
         if (currentGrabbedObject != null)
             currentGrabbedObject.velocity = rb.velocity;
+
     }
 
     private void Move()
@@ -207,18 +206,10 @@ public class PlayerController : MonoBehaviour
             movement = slopeMove * maxSpeed;
 
         float acceleration = movement.magnitude > .01f ? accel : decel;
-
         movement = movement - rb.velocity;
-
         var force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
-        // apply forces
-        //if (!OnSlope())
-            rb.AddForce(force, ForceMode.Acceleration);
-            //rb.velocity += (move * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (move.magnitude > 0.01f ? accel : decel));
-        //else
-            //rb.AddForce(slopeMove.normalized + movement, ForceMode.Acceleration);
-            //rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.fixedDeltaTime * (slopeMove.magnitude > 0.01f ? accel : decel));
+        rb.AddForce(force, ForceMode.Acceleration);
     }
 
     private void CameraOffset()
