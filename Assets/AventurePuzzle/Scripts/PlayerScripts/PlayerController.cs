@@ -147,6 +147,8 @@ public class PlayerController : MonoBehaviour
     {
         if(currentGrabbedObject == null && closestMoveableObject != null)
         {
+            if (!closestMoveableObject.canBeMoved) return;
+
             currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
             currentGrabbedObject.mass = 1;
         }
