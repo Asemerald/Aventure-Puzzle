@@ -31,15 +31,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] Vector3 camForward, camRight;
 
-    [Header("Attack Settings")]
-    [SerializeField] Transform attackCenterPoint;
+    [Header("Interact Settings")]
+    [SerializeField] Transform interactCenterPoint;
     [SerializeField] Vector3 attackBoxSize;
     [SerializeField] LayerMask collidingLayers;
     [SerializeField] ParticleSystem slashVFX;
 
-    [Header("Activable Settings")]
-    [SerializeField] Vector3 activableBoxSize;
-    [SerializeField] LayerMask collidingActivableLayers;
+    [Header("Grab Settings")]
+    [SerializeField] Vector3 grabBoxSize;
+    [SerializeField] LayerMask collidingGrabLayers;
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 3;
@@ -89,11 +89,6 @@ public class PlayerController : MonoBehaviour
             moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
             move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            /*if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
-                //Fonction attacker / interagir
-                Attack();
-            }*/
             if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
             {
                 GrabObject();
@@ -129,7 +124,7 @@ public class PlayerController : MonoBehaviour
     {
         if(currentGrabbedObject == null)
         {
-            Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+            Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
             if (hitted.Length > 0)
             {
                 float closest = 10;
@@ -154,9 +149,14 @@ public class PlayerController : MonoBehaviour
 
     void HUDUpdate()
     {
-        /*if (HUD.Instance == null) return;
+        if (HUD.Instance == null) return;
 
-        HUD.Instance.shootSlider.value = shootTimer;
+        if(CanGrabObject() && currentGrabbedObject == null)
+            HUD.Instance.grabObj.SetActive(true);
+        else
+            HUD.Instance.grabObj.SetActive(false);
+
+        /*HUD.Instance.shootSlider.value = shootTimer;
 
         //HUD to display use a lever or something
         Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
@@ -183,7 +183,7 @@ public class PlayerController : MonoBehaviour
 
     void ActivateInteracable()
     {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if (hitted.Length > 0)
         {
             float closest = 10;
@@ -230,21 +230,6 @@ public class PlayerController : MonoBehaviour
         camRight = cam.transform.right;
     }
 
-
-    /*void Attack()
-    {
-        //slashVFX.Play();
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, attackBoxSize, transform.rotation, collidingLayers);
-        if (hitted.Length > 0)
-        {
-            foreach(Collider c in hitted)
-            {
-                if (c.GetComponent<Feedbacks>())
-                    c.GetComponent<Feedbacks>().Feedback();
-            }
-        }
-    }*/
-
     public void TakeDamage()
     {
         Debug.Log("damage");
@@ -277,7 +262,7 @@ public class PlayerController : MonoBehaviour
 
     bool CanGrabObject()
     {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;
         else
@@ -290,9 +275,9 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, attackBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, attackBoxSize);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, activableBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
     }
 }
