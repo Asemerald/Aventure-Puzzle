@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
     {
         if (HUD.Instance == null) return;
 
-        if(CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory)
+        if(DisplayGrabHUD() && closestMoveableObject.canBeMoved)
             HUD.Instance.grabObj.SetActive(true);
         else
             HUD.Instance.grabObj.SetActive(false);
@@ -261,6 +261,11 @@ public class PlayerController : MonoBehaviour
             return true;
         else
             return false;
+    }
+
+    bool DisplayGrabHUD()
+    {
+        return CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory && closestMoveableObject != null;
     }
 
     #endregion
