@@ -31,21 +31,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] Vector3 camForward, camRight;
 
-    [Header("Attack Settings")]
-    [SerializeField] Transform attackCenterPoint;
+    [Header("Interact Settings")]
+    [SerializeField] Transform interactCenterPoint;
     [SerializeField] Vector3 attackBoxSize;
     [SerializeField] LayerMask collidingLayers;
     [SerializeField] ParticleSystem slashVFX;
 
-    [Header("Activable Settings")]
-    [SerializeField] Vector3 activableBoxSize;
-    [SerializeField] LayerMask collidingActivableLayers;
+    [Header("Grab Settings")]
+    [SerializeField] Vector3 grabBoxSize;
+    [SerializeField] LayerMask collidingGrabLayers;
 
     [Header("Health Settings")]
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
-    [SerializeField] GameObject currentGrabbedObject;
+    [SerializeField] Rigidbody currentGrabbedObject;
+    [SerializeField] MoveableObject closestMoveableObject;
+
 
     void Start()
     {
@@ -59,12 +61,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         MyInputs();
+        HUDUpdate();
         
         if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
-        HUDUpdate();
     }
 
     void MyInputs()
@@ -80,34 +82,19 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.inTarotInventory)
         {
             if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
                 TarotInventory.Instance.SwitchCardState();
-            }
         }
         else
         {
             moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
             move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            /*if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
-                //Fonction attacker / interagir
-                Attack();
-            }*/
             if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
-            {
                 GrabObject();
-            }
-            else if(InputsBrain.Instance.interract.WasReleasedThisFrame())
-            {
-                if(currentGrabbedObject != null)
-                {
-                    currentGrabbedObject.transform.parent = null;
-                    currentGrabbedObject = null;
-                }
-            }
+            else if (InputsBrain.Instance.interract.WasReleasedThisFrame())
+                if (currentGrabbedObject != null)
+                    UnGrabObject();
         }
-
         
     }
 
@@ -118,72 +105,68 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .1f && currentGrabbedObject == null)
+        if (move.magnitude > .01f && currentGrabbedObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
-    }
 
-    void GrabObject()
-    {
-        if(currentGrabbedObject == null)
+        if (CanGrabObject() && currentGrabbedObject == null)
         {
-            Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+            Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
+
             if (hitted.Length > 0)
             {
                 float closest = 10;
                 int index = 0;
+
                 for (int i = 0; i < hitted.Length; i++)
-                {
                     if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
                     {
                         index = i;
                         closest = Vector3.Distance(hitted[i].transform.position, transform.position);
                     }
-                }
-                currentGrabbedObject = hitted[index].gameObject;
+
+                closestMoveableObject = hitted[index].GetComponent<MoveableObject>();
             }
-
-            return;
         }
+        else if (!CanGrabObject() && currentGrabbedObject != null)
+            UnGrabObject();
+        else
+            closestMoveableObject = null;
+    }
 
-        if (currentGrabbedObject.transform.parent != transform)
-            currentGrabbedObject.transform.parent = transform;
+    void UnGrabObject()
+    {
+        currentGrabbedObject.velocity = Vector3.zero;
+        currentGrabbedObject.mass = 100;
+        currentGrabbedObject = null;
+    }
+
+    void GrabObject()
+    {
+        if(currentGrabbedObject == null && closestMoveableObject != null)
+        {
+            if (!closestMoveableObject.canBeMoved) return;
+
+            currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
+            currentGrabbedObject.mass = 1;
+        }
     }
 
     void HUDUpdate()
     {
-        /*if (HUD.Instance == null) return;
+        if (HUD.Instance == null) return;
 
-        HUD.Instance.shootSlider.value = shootTimer;
-
-        //HUD to display use a lever or something
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
-        if (hitted.Length > 0)
-        {
-            float closest = 10;
-            int index = 0;
-            for (int i = 0; i < hitted.Length; i++)
-            {
-                if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                {
-                    index = i;
-                    closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                }
-            }
-            if (!hitted[index].GetComponent<LeverScript>().leverHasBeenUsed)
-                HUD.Instance.interactText.text = "Press 'Y' to activate lever";
-            else
-                HUD.Instance.interactText.text = "";
-        }
+        if(CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory)
+            HUD.Instance.grabObj.SetActive(true);
         else
-            HUD.Instance.interactText.text = "";*/
+            HUD.Instance.grabObj.SetActive(false);
     }
 
-    void ActivateInteracable()
+    /*void ActivateInteracable()
     {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if (hitted.Length > 0)
         {
             float closest = 10;
@@ -196,16 +179,20 @@ public class PlayerController : MonoBehaviour
                     closest = Vector3.Distance(hitted[i].transform.position, transform.position);
                 }
             }
-            //hitted[index].GetComponent<LeverScript>().ActivateLever();
+            //hitted[index].GetComponent<>().Function();
         }
-    }
+    }*/
 
     private void FixedUpdate()
     {
+        Move();
+
         if (!IsGrounded())
             rb.velocity += Vector3.down * fallSpeed;
 
-        Move();
+        if (currentGrabbedObject != null)
+            currentGrabbedObject.velocity = rb.velocity;
+
     }
 
     private void Move()
@@ -213,11 +200,18 @@ public class PlayerController : MonoBehaviour
         // calculate move vector on slopes
         slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
 
-        // apply forces
-        if (!OnSlope())
-            rb.velocity += (move * maxSpeed - rb.velocity) * (Time.deltaTime * (move.magnitude > 0.1f ? accel : decel));
+        Vector3 movement = new Vector3();
+
+        if(!OnSlope())
+            movement = move * maxSpeed;
         else
-            rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.deltaTime * (slopeMove.magnitude > 0.1f ? accel : decel));
+            movement = slopeMove * maxSpeed;
+
+        float acceleration = movement.magnitude > .01f ? accel : decel;
+        movement = movement - rb.velocity;
+        var force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
+
+        rb.AddForce(force, ForceMode.Acceleration);
     }
 
     private void CameraOffset()
@@ -229,21 +223,6 @@ public class PlayerController : MonoBehaviour
 
         camRight = cam.transform.right;
     }
-
-
-    /*void Attack()
-    {
-        //slashVFX.Play();
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, attackBoxSize, transform.rotation, collidingLayers);
-        if (hitted.Length > 0)
-        {
-            foreach(Collider c in hitted)
-            {
-                if (c.GetComponent<Feedbacks>())
-                    c.GetComponent<Feedbacks>().Feedback();
-            }
-        }
-    }*/
 
     public void TakeDamage()
     {
@@ -277,7 +256,7 @@ public class PlayerController : MonoBehaviour
 
     bool CanGrabObject()
     {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;
         else
@@ -290,9 +269,9 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, attackBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, attackBoxSize);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, activableBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
     }
 }
