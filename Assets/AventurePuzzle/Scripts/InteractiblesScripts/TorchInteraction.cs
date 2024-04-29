@@ -5,7 +5,7 @@ using UnityEngine;
 public class TorchInteraction : InteractibleTemplate
 {
     [Header("Torch Settings")]
-    [SerializeField] GameObject fireBox;
+    public GameObject fireBox;
     [SerializeField] Vector3 fireboxLitSize;
     [SerializeField] Vector3 fireboxBurningSize;
     [SerializeField] LayerMask burningLayers;
@@ -88,7 +88,7 @@ public class TorchInteraction : InteractibleTemplate
 
     bool CollidindSomething()
     {
-        return Physics.OverlapBox(fireBoxPos.position + new Vector3(0, fireboxLitSize.y / 2, 0), fireboxBurningSize, transform.rotation, burningLayers).Length > 0 ? true : false ;
+        return Physics.OverlapBox(fireBoxPos.position + new Vector3(0, fireboxLitSize.y / 2, 0), fireboxBurningSize, transform.rotation, burningLayers).Length > 0 ;
     }
 
     private void OnDrawGizmos()

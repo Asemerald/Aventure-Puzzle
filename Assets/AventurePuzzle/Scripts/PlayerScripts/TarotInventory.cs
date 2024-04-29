@@ -23,6 +23,7 @@ public class TarotInventory : MonoBehaviour
     private void Start()
     {
         SelectCardHUD();
+        
         currendCard = cards[selectedCard];
     }
 
@@ -54,8 +55,13 @@ public class TarotInventory : MonoBehaviour
                 break;
         }
 
-        for(int i = 0; i < cards.Length; i++)
-            HUD.Instance.UpdateHUDCard(i, cards[i].state.ToString());
+        UpdateHUDState();
+    }
+
+    public void UpdateHUDState()
+    {
+        for (int i = 0; i < cards.Length; i++)
+            HUD.Instance.UpdateHUDCard(i, cards[i].state);
     }
 
     public void ApplyCard()
@@ -80,7 +86,7 @@ public class TarotInventory : MonoBehaviour
 
     void SelectCardHUD()
     {
-        HUD.Instance.tarotSelect.position = HUD.Instance.cardsPos[selectedCard].position;
+        HUD.Instance.tarotSelect.position = HUD.Instance.cardsPos[selectedCard].transform.position;
     }
 
     IEnumerator SelectCard(bool up)
