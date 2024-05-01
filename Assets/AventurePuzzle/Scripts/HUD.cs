@@ -15,6 +15,9 @@ public class HUD : MonoBehaviour
     [Header("Pause Panel")]
     public GameObject pausePanel;
 
+    [Header("Grab")]
+    public GameObject grabObj;
+
     private void Awake()
     {
         if(Instance == null)

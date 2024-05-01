@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Additional_map:
-        m_Texture: {fileID: 2800000, guid: 5ab08a12f789e724485c581c349e3cc8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: -0.4, y: 0}
     - _Blend_map:
@@ -38,8 +38,8 @@ Material:
         m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: 0, y: 0}
     - _Height_map:
-        m_Texture: {fileID: 2800000, guid: 992c5a538f6c7874582b5941285d21a7, type: 3}
-        m_Scale: {x: 0.5, y: 0.5}
+        m_Texture: {fileID: 2800000, guid: d3f821ad578910e4c8a0b8f83e018c7a, type: 3}
+        m_Scale: {x: 0.95, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 01abc6c9d3c218649b9626ce0da0713c, type: 3}
@@ -75,7 +75,8 @@ Material:
     - _Blur_strength: 4.44
     - _Clip_vertex_alpha: 0
     - _Enable_blur: 1
-    - _Height_alpha: 0.142
+    - _Height_alpha: 1
+    - _Height_strength: 0.01
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Secondary_smoothness: 0.438
