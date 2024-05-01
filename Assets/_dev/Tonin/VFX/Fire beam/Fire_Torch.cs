@@ -20,7 +20,7 @@ public class Fire_Torch : MonoBehaviour
         lastState = torchInteractionScript.state;
         if (endCube != null && endCube.GetComponent<MeshRenderer>() != null)
         { endCube.GetComponent<MeshRenderer>().enabled = false; }
-        torchInteractionScript.fireBox.GetComponent<MeshRenderer>().enabled = false;
+        torchInteractionScript.fireMesh.GetComponent<MeshRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class Fire_Torch : MonoBehaviour
     {
 
         if (endCube != null && endCube.GetComponent<MeshRenderer>() != null)
-        { endCube.transform.localPosition = new Vector3(0, 0, torchInteractionScript.fireBox.transform.localScale.y); }
+        { endCube.transform.localPosition = new Vector3(0, 0, torchInteractionScript.fireMesh.transform.localScale.y); }
         if (lastState != torchInteractionScript.state)
         {
             switch (torchInteractionScript.state)
