@@ -30,7 +30,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Additional_map:
-        m_Texture: {fileID: 2800000, guid: 5ab08a12f789e724485c581c349e3cc8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 0.01, y: 0.01}
         m_Offset: {x: -0.4, y: 0}
     - _Blend_map:
@@ -76,6 +76,7 @@ Material:
     - _Clip_vertex_alpha: 0
     - _Enable_blur: 1
     - _Height_alpha: 0.142
+    - _Height_strength: 0.01
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Secondary_smoothness: 0.438
