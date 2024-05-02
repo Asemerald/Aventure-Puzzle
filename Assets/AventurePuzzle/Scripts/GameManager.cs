@@ -37,22 +37,5 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-
-    public void CheckTarotInventory()
-    {
-        inTarotInventory = !inTarotInventory;
-
-        if (inTarotInventory)
-        {
-            HUD.Instance.tarotInventory.SetActive(true);
-            Time.timeScale = 0;
-            TarotInventory.Instance.UpdateHUDState();
-        }
-        else
-        {
-            TarotInventory.Instance.ApplyCard();
-            HUD.Instance.tarotInventory.SetActive(false);
-            Time.timeScale = 1;
-        }
-    }
+    
 }
