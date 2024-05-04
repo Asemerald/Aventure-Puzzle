@@ -7,6 +7,8 @@ public class LightFlickering : MonoBehaviour
 {
 
     private float _defaultIntensity;
+    private int seedX = 0;
+    private int seedY = 0;
 
     public Vector2 noiseRange = new Vector2(0,0);
     private Vector2 noiseSample = new Vector2(0, 0);
@@ -21,13 +23,15 @@ public class LightFlickering : MonoBehaviour
             lightRef = gameObject.GetComponent<Light>();
             _defaultIntensity = lightRef.intensity;
         }
-    }
+        seedX = Random.Range(-100000, 100000);
+        seedY = Random.Range(-100000, 100000);
+}
 
     // Update is called once per frame
     void Update()
     {
         
-        lightRef.intensity = _defaultIntensity + Map(Mathf.PerlinNoise(noiseSample.x, noiseSample.y), 0, 1, noiseRange.x, noiseRange.y);
+        lightRef.intensity = _defaultIntensity + Map(Mathf.PerlinNoise(noiseSample.x+seedX, noiseSample.y+seedY), 0, 1, noiseRange.x, noiseRange.y);
         noiseSample.x += noiseSpeed * Time.deltaTime;
     }
     
