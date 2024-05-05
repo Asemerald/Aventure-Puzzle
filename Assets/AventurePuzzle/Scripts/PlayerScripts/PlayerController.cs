@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -76,22 +73,22 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.tarot.WasPressedThisFrame())
-            GameManager.Instance.CheckTarotInventory();
+        if (InputsBrain.Instance.pocket.WasPressedThisFrame())
+            throw new NotImplementedException();         //TODO
 
         if (GameManager.Instance.inTarotInventory)
         {
-            if (InputsBrain.Instance.interract.WasPressedThisFrame())
-                TarotInventory.Instance.SwitchCardState();
+            if (InputsBrain.Instance.interact.WasPressedThisFrame())
+                throw new NotImplementedException(); //TODO
         }
         else
         {
             moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
             move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
+            if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
                 GrabObject();
-            else if (InputsBrain.Instance.interract.WasReleasedThisFrame())
+            else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
                 if (currentGrabbedObject != null)
                     UnGrabObject();
         }
@@ -163,25 +160,7 @@ public class PlayerController : MonoBehaviour
         else
             HUD.Instance.grabObj.SetActive(false);
     }
-
-    /*void ActivateInteracable()
-    {
-        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
-        if (hitted.Length > 0)
-        {
-            float closest = 10;
-            int index = 0;
-            for (int i = 0; i < hitted.Length; i++)
-            {
-                if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                {
-                    index = i;
-                    closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                }
-            }
-            //hitted[index].GetComponent<>().Function();
-        }
-    }*/
+    
 
     private void FixedUpdate()
     {
