@@ -24,7 +24,15 @@ public class Interactible : MonoBehaviour
     public bool inAstralState;
     
     public bool isMoveable;
+
+    [Header("Energy Emition")]
     public bool emitEnergy;
+    public float energyRadius;
+    public LayerMask energyDoor;
+
+    [Header("Size/Mesh Mods")]
+    public GameObject worldObj;
+    public GameObject astraldObj;
 
     public void SwitchMode(bool astral)
     {
@@ -41,11 +49,11 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.NoCollider: NoColldierState();
                     break;
-                case ObjectState.EmitEnergy:
+                case ObjectState.EmitEnergy: EnergyMoveable();
                     break;
-                case ObjectState.EnergyUnMoveable:
+                case ObjectState.EnergyUnMoveable: EnergyUnMoveable();
                     break;
-                case ObjectState.EnergyNoCollider:
+                case ObjectState.EnergyNoCollider: EnergyNoCollider();
                     break;
                 case ObjectState.Size:
                     break;
@@ -69,11 +77,11 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.NoCollider: NoColldierState();
                     break;
-                case ObjectState.EmitEnergy:
+                case ObjectState.EmitEnergy: EnergyMoveable();
                     break;
-                case ObjectState.EnergyUnMoveable:
+                case ObjectState.EnergyUnMoveable: EnergyUnMoveable();
                     break;
-                case ObjectState.EnergyNoCollider:
+                case ObjectState.EnergyNoCollider: EnergyNoCollider();
                     break;
                 case ObjectState.Size:
                     break;
@@ -89,7 +97,12 @@ public class Interactible : MonoBehaviour
     {
         if (emitEnergy)
         {
-
+            Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
+            Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
+            if(colliders.Length > 0)
+            {
+                colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
+            }
         }
     }
 
@@ -99,6 +112,7 @@ public class Interactible : MonoBehaviour
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         isMoveable = false;
+        emitEnergy = false;
     }
 
     void UnMoveableState()
@@ -107,6 +121,7 @@ public class Interactible : MonoBehaviour
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         isMoveable = false;
+        emitEnergy = false;
     }
 
     void MoveableState()
@@ -115,7 +130,24 @@ public class Interactible : MonoBehaviour
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         isMoveable = true;
+        emitEnergy = false;
     }
 
-    
+    void EnergyMoveable()
+    {
+        MoveableState();
+        emitEnergy = true;
+    }
+
+    void EnergyUnMoveable()
+    {
+        UnMoveableState();
+        emitEnergy = true;
+    }
+
+    void EnergyNoCollider()
+    {
+        NoColldierState();
+        emitEnergy = true;
+    }
 }
