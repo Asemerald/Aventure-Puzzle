@@ -8,6 +8,7 @@ public class AstralPocket : MonoBehaviour
     public static AstralPocket Instance {  get; private set; }
 
     public float sphereRadius = 5f; // Adjust the radius as needed
+    public LayerMask interactibleMask;
 
     //create a taskbar menu that call the function
 
@@ -31,15 +32,13 @@ public class AstralPocket : MonoBehaviour
 
         // Cast a sphere around the player
         newPocketCastPos = transform.position;
-        Collider[] colliders = Physics.OverlapSphere(newPocketCastPos, sphereRadius);
 
+        Collider[] colliders = Physics.OverlapSphere(newPocketCastPos, sphereRadius, interactibleMask);
         foreach (Collider collider in colliders)
         {
             if (collider.GetComponent<Interactible>())
             {
                 collider.GetComponent<Interactible>().SwitchMode(true); // Switch state of interactible to astral state
-                // Add the object to the player's inventory (you need to implement this part)
-                // interactible.AddItemToInventory();
 
                 // Destroy the object in the scene -- Pourquoi ?
                 //Destroy(collider.gameObject);

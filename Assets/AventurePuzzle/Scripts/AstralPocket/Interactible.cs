@@ -34,11 +34,11 @@ public class Interactible : MonoBehaviour
             {
                 case ObjectState.None: Debug.Log("No State : Astral");
                     break;
-                case ObjectState.Moveable:
+                case ObjectState.Moveable: MoveableState();
                     break;
-                case ObjectState.UnMoveable:
+                case ObjectState.UnMoveable: UnMoveableState();
                     break;
-                case ObjectState.NoCollider:
+                case ObjectState.NoCollider: NoColldierState();
                     break;
                 case ObjectState.EmitEnergy:
                     break;
@@ -61,14 +61,11 @@ public class Interactible : MonoBehaviour
             {
                 case ObjectState.None: Debug.Log("No State : World");
                     break;
-                case ObjectState.Moveable:
-
+                case ObjectState.Moveable: MoveableState();
                     break;
-                case ObjectState.UnMoveable:
-
+                case ObjectState.UnMoveable: UnMoveableState();
                     break;
-                case ObjectState.NoCollider:
-
+                case ObjectState.NoCollider: NoColldierState();
                     break;
                 case ObjectState.EmitEnergy:
 
@@ -92,14 +89,6 @@ public class Interactible : MonoBehaviour
         }
     }
 
-
-    Collider objectCol;
-
-    private void Start()
-    {
-        objectCol = GetComponent<Collider>();
-    }
-
     private void Update()
     {
         if (emitEnergy)
@@ -107,4 +96,24 @@ public class Interactible : MonoBehaviour
 
         }
     }
+
+    void NoColldierState()
+    {
+        gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
+        isMoveable = false;
+    }
+
+    void UnMoveableState()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Interactible");
+        isMoveable = false;
+    }
+
+    void MoveableState()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Interactible");
+        isMoveable = true;
+    }
+
+    
 }

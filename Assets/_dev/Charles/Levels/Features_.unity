@@ -319,7 +319,7 @@ GameObject:
   - component: {fileID: 1118567086}
   - component: {fileID: 1118567085}
   - component: {fileID: 1118567089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BaseInteractible
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,8 +424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f635b5ae80638548b06c517d7688052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldState: 0
-  astralState: 0
+  worldState: 2
+  astralState: 3
   inAstralState: 0
   isMoveable: 0
   emitEnergy: 0
@@ -631,6 +631,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1135805059}
   - {fileID: 536287620}
+  - {fileID: 299467438}
   - {fileID: 1462278002}
   - {fileID: 1118567088}
-  - {fileID: 299467438}

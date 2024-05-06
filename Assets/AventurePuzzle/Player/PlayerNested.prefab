@@ -2486,6 +2486,11 @@ PrefabInstance:
       propertyPath: interactCenterPoint
       value: 
       objectReference: {fileID: 7803947513145113847}
+    - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
+        type: 3}
+      propertyPath: collidingGrabLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1471419125209308916, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2578,6 +2583,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sphereRadius: 5
+  interactibleMask:
+    serializedVersion: 2
+    m_Bits: 384
 --- !u!4 &6546244176325822942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1471419125209308916, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
