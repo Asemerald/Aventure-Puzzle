@@ -30,9 +30,10 @@ public class Interactible : MonoBehaviour
     {
         if(astral)
         {
+            inAstralState = true;
             switch (astralState)
             {
-                case ObjectState.None: Debug.Log("No State : Astral");
+                case ObjectState.None: Debug.Log(gameObject.name + " : " + "No State : Astral");
                     break;
                 case ObjectState.Moveable: MoveableState();
                     break;
@@ -56,10 +57,11 @@ public class Interactible : MonoBehaviour
             }
         }
         else
-        { 
+        {
+            inAstralState = false;
             switch (worldState)
             {
-                case ObjectState.None: Debug.Log("No State : World");
+                case ObjectState.None: Debug.Log(gameObject.name + " : " + "No State : World");
                     break;
                 case ObjectState.Moveable: MoveableState();
                     break;
@@ -68,22 +70,16 @@ public class Interactible : MonoBehaviour
                 case ObjectState.NoCollider: NoColldierState();
                     break;
                 case ObjectState.EmitEnergy:
-
                     break;
                 case ObjectState.EnergyUnMoveable:
-
                     break;
                 case ObjectState.EnergyNoCollider:
-
                     break;
                 case ObjectState.Size:
-
                     break;
                 case ObjectState.EnergySize:
-
                     break;
                 case ObjectState.Portal:
-
                     break;
             } 
         }
@@ -99,18 +95,24 @@ public class Interactible : MonoBehaviour
 
     void NoColldierState()
     {
+        Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
+
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         isMoveable = false;
     }
 
     void UnMoveableState()
     {
+        Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
+
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         isMoveable = false;
     }
 
     void MoveableState()
     {
+        Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         isMoveable = true;
     }
