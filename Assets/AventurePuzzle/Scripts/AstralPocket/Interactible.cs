@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Interactible : MonoBehaviour
@@ -33,6 +34,8 @@ public class Interactible : MonoBehaviour
     [Header("Size/Mesh Mods")]
     public GameObject worldObj;
     public GameObject astraldObj;
+
+    List<EnergyDoor> doorsList = new List<EnergyDoor>();
 
     public void SwitchMode(bool astral)
     {
@@ -102,7 +105,18 @@ public class Interactible : MonoBehaviour
             if(colliders.Length > 0)
             {
                 colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
+                if (!doorsList.Contains(colliders[0].GetComponent<EnergyDoor>()))
+                    doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
             }
+
+            if(doorsList.Count > 0)
+                foreach (var col in doorsList)
+                    if (!colliders.Contains(col.GetComponent<Collider>()))
+                    {
+                        col.RemoveEnergy(this);
+                        doorsList.Remove(col);
+                        if(doorsList.Count == 0) break;
+                    }
         }
     }
 
@@ -149,5 +163,11 @@ public class Interactible : MonoBehaviour
     {
         NoColldierState();
         emitEnergy = true;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, energyRadius);
     }
 }

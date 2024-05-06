@@ -30,7 +30,14 @@ public class EnergyDoor : MonoBehaviour
         {
             Debug.Log("Energy Door : interactible is emitting ? " + interactiblePowering[i].emitEnergy);
             if (!interactiblePowering[i].emitEnergy) interactiblePowering.RemoveAt(i);
+            if (interactiblePowering.Count == 0) break;
         }
+    }
+
+    public void RemoveEnergy(Interactible energy)
+    {
+        Debug.LogWarning("Energy Door : Remove Power");
+        interactiblePowering.Remove(energy);
     }
 
     public void CheckForEnergy(Interactible energy)
