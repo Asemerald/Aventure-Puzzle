@@ -42,9 +42,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
-    [SerializeField] Rigidbody currentGrabbedObject;
-    [SerializeField] MoveableObject closestMoveableObject;
-
 
     void Start()
     {
@@ -60,7 +57,7 @@ public class PlayerController : MonoBehaviour
         MyInputs();
         HUDUpdate();
         
-        if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
+        if (GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
@@ -74,24 +71,17 @@ public class PlayerController : MonoBehaviour
         if(GameManager.Instance.gameIsPause) return;
 
         if (InputsBrain.Instance.pocket.WasPressedThisFrame())
-            throw new NotImplementedException();         //TODO
+            AstralPocket.Instance.CastAstralPocket();
 
-        if (GameManager.Instance.inTarotInventory)
-        {
-            if (InputsBrain.Instance.interact.WasPressedThisFrame())
-                throw new NotImplementedException(); //TODO
-        }
-        else
-        {
-            moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
-            move = moveInputs.x * camRight + moveInputs.y * camForward;
+        moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
+        move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
-                GrabObject();
-            else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
-                if (currentGrabbedObject != null)
-                    UnGrabObject();
-        }
+        /*if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
+            GrabObject();
+        else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
+            if (currentGrabbedObject != null)
+                UnGrabObject();*/
+        
         
     }
 
@@ -102,13 +92,13 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .01f && currentGrabbedObject == null)
+        if (move.magnitude > .01f)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
 
-        if (CanGrabObject() && currentGrabbedObject == null)
+        /*if (CanGrabObject() && currentGrabbedObject == null)
         {
             Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
 
@@ -130,10 +120,10 @@ public class PlayerController : MonoBehaviour
         else if (!CanGrabObject() && currentGrabbedObject != null)
             UnGrabObject();
         else
-            closestMoveableObject = null;
+            closestMoveableObject = null;*/
     }
 
-    void UnGrabObject()
+    /*void UnGrabObject()
     {
         currentGrabbedObject.velocity = Vector3.zero;
         currentGrabbedObject.mass = 100;
@@ -149,16 +139,16 @@ public class PlayerController : MonoBehaviour
             currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
             currentGrabbedObject.mass = 1;
         }
-    }
+    }*/
 
     void HUDUpdate()
     {
         if (HUD.Instance == null) return;
 
-        if(DisplayGrabHUD() && closestMoveableObject.canBeMoved)
+        /*if(DisplayGrabHUD() && closestMoveableObject.canBeMoved)
             HUD.Instance.grabObj.SetActive(true);
         else
-            HUD.Instance.grabObj.SetActive(false);
+            HUD.Instance.grabObj.SetActive(false);*/
     }
     
 
@@ -169,8 +159,8 @@ public class PlayerController : MonoBehaviour
         if (!IsGrounded())
             rb.velocity += Vector3.down * fallSpeed;
 
-        if (currentGrabbedObject != null)
-            currentGrabbedObject.velocity = rb.velocity;
+        /*if (currentGrabbedObject != null)
+            currentGrabbedObject.velocity = rb.velocity;*/
 
     }
 
@@ -242,10 +232,10 @@ public class PlayerController : MonoBehaviour
             return false;
     }
 
-    bool DisplayGrabHUD()
+    /*bool DisplayGrabHUD()
     {
         return CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory && closestMoveableObject != null;
-    }
+    }*/
 
     #endregion
 

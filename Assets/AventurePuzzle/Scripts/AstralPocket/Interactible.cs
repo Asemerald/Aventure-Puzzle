@@ -21,6 +21,8 @@ public class Interactible : MonoBehaviour
     public ObjectState worldState;
     public ObjectState astralState;
 
+    public bool inAstralState;
+    
     public bool isMoveable;
     public bool emitEnergy;
 
@@ -30,7 +32,7 @@ public class Interactible : MonoBehaviour
         {
             switch (astralState)
             {
-                case ObjectState.None:
+                case ObjectState.None: Debug.Log("No State : Astral");
                     break;
                 case ObjectState.Moveable:
                     break;
@@ -54,10 +56,10 @@ public class Interactible : MonoBehaviour
             }
         }
         else
-        { switch (worldState)
+        { 
+            switch (worldState)
             {
-                case ObjectState.None:
-
+                case ObjectState.None: Debug.Log("No State : World");
                     break;
                 case ObjectState.Moveable:
 
