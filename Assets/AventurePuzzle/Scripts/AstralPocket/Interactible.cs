@@ -109,9 +109,11 @@ public class Interactible : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
             if(colliders.Length > 0)
             {
-                colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
                 if (!doorsList.Contains(colliders[0].GetComponent<EnergyDoor>()))
+                {
                     doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
+                    colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
+                }
             }
 
             if(doorsList.Count > 1)
