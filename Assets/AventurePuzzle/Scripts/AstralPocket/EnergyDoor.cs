@@ -16,9 +16,16 @@ public class EnergyDoor : MonoBehaviour
         {
             Debug.Log("Energy Door : Door is powered");
             isOpen = true;
+            gameObject.layer = LayerMask.NameToLayer("EnergyDoorNoCollision");
+            GetComponent<MeshRenderer>().enabled = false;
         }
         else if(interactiblePowering.Count != interactiblesRequired.Length)
+        {
+            Debug.Log("Energy Door : Door is no longer powered");
             isOpen = false;
+            gameObject.layer = LayerMask.NameToLayer("EnergyDoor");
+            GetComponent<MeshRenderer>().enabled = true;
+        }
 
         if (interactiblePowering.Count > 0)
             CheckIfInteractibleStillOn();

@@ -37,6 +37,11 @@ public class Interactible : MonoBehaviour
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
 
+    private void Start()
+    {
+        SwitchMode(false);
+    }
+
     public void SwitchMode(bool astral)
     {
         if(astral)
@@ -109,7 +114,8 @@ public class Interactible : MonoBehaviour
                     doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
             }
 
-            if(doorsList.Count > 0)
+            if(doorsList.Count > 1)
+            {
                 foreach (var col in doorsList)
                     if (!colliders.Contains(col.GetComponent<Collider>()))
                     {
@@ -117,6 +123,15 @@ public class Interactible : MonoBehaviour
                         doorsList.Remove(col);
                         if(doorsList.Count == 0) break;
                     }
+            }
+            else if(doorsList.Count == 1) 
+            {
+                if (!colliders.Contains(doorsList[0].GetComponent<Collider>()))
+                {
+                    doorsList[0].RemoveEnergy(this);
+                    doorsList.RemoveAt(0);
+                }
+            }
         }
     }
 

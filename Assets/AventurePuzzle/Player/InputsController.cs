@@ -133,6 +133,17 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""574af260-6868-4ce8-af6f-7a4e1c13166c"",
+                    ""path"": ""<Joystick>/stick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f804a9b2-251d-4f1c-8b5f-bf6538d2c80f"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -155,6 +166,17 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""894a7782-33e9-416b-93d6-84c8dd4d3849"",
+                    ""path"": ""<HID::Usb Gamepad>/button2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pocket"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""49ba6db7-201c-4542-ad24-914a1c52e2c9"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -168,6 +190,17 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""d7c7aac7-5d49-4403-9074-a13e3975797e"",
                     ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d95bf9e0-3b3c-472e-87d2-897c0e71be5a"",
+                    ""path"": ""<HID::Usb Gamepad>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .01f)
+        if (move.magnitude > .01f && currentGrabObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
