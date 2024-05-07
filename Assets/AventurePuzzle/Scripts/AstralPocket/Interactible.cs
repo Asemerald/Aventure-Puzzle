@@ -21,6 +21,7 @@ public class Interactible : MonoBehaviour
 
     public ObjectState worldState;
     public ObjectState astralState;
+    public bool sizeIsModify;
 
     public bool inAstralState;
     
@@ -32,7 +33,6 @@ public class Interactible : MonoBehaviour
     public LayerMask energyDoor;
 
     [Header("Size/Mesh Mods")]
-    public GameObject worldObj;
     public GameObject astraldObj;
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
@@ -42,10 +42,12 @@ public class Interactible : MonoBehaviour
     public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat;
 
     MeshRenderer mesh;
+    Collider col;
 
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
+        col = GetComponent<Collider>();
         SwitchMode(false);
     }
 
@@ -54,6 +56,10 @@ public class Interactible : MonoBehaviour
         if(astral)
         {
             inAstralState = true;
+
+            if (sizeIsModify)
+                ResetSize();
+
             switch (astralState)
             {
                 case ObjectState.None: Debug.Log(gameObject.name + " : " + "No State : Astral");
@@ -70,9 +76,9 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergyNoCollider: EnergyNoCollider();
                     break;
-                case ObjectState.Size:
+                case ObjectState.Size: Size();
                     break;
-                case ObjectState.EnergySize:
+                case ObjectState.EnergySize: EnergySize();
                     break;
                 case ObjectState.Portal:
                     break;
@@ -82,6 +88,10 @@ public class Interactible : MonoBehaviour
         else
         {
             inAstralState = false;
+
+            if (sizeIsModify)
+                ResetSize();
+
             switch (worldState)
             {
                 case ObjectState.None: Debug.Log(gameObject.name + " : " + "No State : World");
@@ -98,9 +108,9 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergyNoCollider: EnergyNoCollider();
                     break;
-                case ObjectState.Size:
+                case ObjectState.Size: Size();
                     break;
-                case ObjectState.EnergySize:
+                case ObjectState.EnergySize: EnergySize();
                     break;
                 case ObjectState.Portal:
                     break;
@@ -209,9 +219,65 @@ public class Interactible : MonoBehaviour
         mesh.material = energyNoColliderMat;
     }
 
+    void Size()
+    {
+        if (inAstralState)
+        {
+            astraldObj.SetActive(true);
+            mesh.enabled = false;
+            col.enabled = false;
+        }
+        else
+        {
+            astraldObj.SetActive(false);
+            mesh.enabled = true;
+            col.enabled = true;
+        }
+
+        UnMoveableState();
+
+        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
+            astraldObj.GetComponent<MeshRenderer>().material = sizeMat;
+        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
+            mesh.material = sizeMat;
+
+        sizeIsModify = true;
+    }
+
+    void EnergySize()
+    {
+        Size();
+        emitEnergy = true;
+
+        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
+            astraldObj.GetComponent<MeshRenderer>().material = energySizeMat;
+        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
+            mesh.material = energySizeMat;
+    }
+
+    void ResetSize()
+    {
+        if (inAstralState)
+        {
+            astraldObj.SetActive(true);
+            mesh.enabled = false;
+            col.enabled = false;
+        }
+        else
+        {
+            astraldObj.SetActive(false);
+            mesh.enabled = true;
+            col.enabled = true;
+        }
+
+        sizeIsModify = false;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, energyRadius);
+
+        if(emitEnergy)
+            Gizmos.DrawWireSphere(transform.position, energyRadius);
     }
 }

@@ -43,6 +43,11 @@ public class AstralPocket : MonoBehaviour
                 // Destroy the object in the scene -- Pourquoi ?
                 //Destroy(collider.gameObject);
             }
+            else if (collider.GetComponent<InteractibleMesh>())
+            {
+                Debug.Log("Astral Pocket : Interactible Mesh is detected : Casted");
+                collider.GetComponent<InteractibleMesh>().parent.SwitchMode(true);
+            }
         }
         astralPocketCasted = true;
         previousPocketCastPos = newPocketCastPos;
@@ -57,6 +62,11 @@ public class AstralPocket : MonoBehaviour
             if (collider.GetComponent<Interactible>())
             {
                 collider.GetComponent<Interactible>().SwitchMode(false); // Switch state of interactible to world state
+            }
+            else if (collider.GetComponent<InteractibleMesh>())
+            {
+                Debug.Log("Astral Pocket : Interactible Mesh is detected : Decasted");
+                collider.GetComponent<InteractibleMesh>().parent.SwitchMode(false);
             }
         }
     }
