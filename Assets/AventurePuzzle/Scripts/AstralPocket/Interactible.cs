@@ -37,8 +37,15 @@ public class Interactible : MonoBehaviour
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
 
+    [Header("Materials States")]
+    public Material moveableMat;
+    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat;
+
+    MeshRenderer mesh;
+
     private void Start()
     {
+        mesh = GetComponent<MeshRenderer>();
         SwitchMode(false);
     }
 
@@ -104,35 +111,40 @@ public class Interactible : MonoBehaviour
     private void Update()
     {
         if (emitEnergy)
-        {
-            Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
-            Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
-            if(colliders.Length > 0)
-            {
-                if (!doorsList.Contains(colliders[0].GetComponent<EnergyDoor>()))
-                {
-                    doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
-                    colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
-                }
-            }
+            EmitEnergy();
+        else if(!emitEnergy)
+            doorsList.Clear();
+    }
 
-            if(doorsList.Count > 1)
+    void EmitEnergy()
+    {
+        Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
+        Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
+        if (colliders.Length > 0)
+        {
+            if (!doorsList.Contains(colliders[0].GetComponent<EnergyDoor>()))
             {
-                foreach (var col in doorsList)
-                    if (!colliders.Contains(col.GetComponent<Collider>()))
-                    {
-                        col.RemoveEnergy(this);
-                        doorsList.Remove(col);
-                        if(doorsList.Count == 0) break;
-                    }
+                doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
+                colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
             }
-            else if(doorsList.Count == 1) 
-            {
-                if (!colliders.Contains(doorsList[0].GetComponent<Collider>()))
+        }
+
+        if (doorsList.Count > 1)
+        {
+            foreach (var col in doorsList)
+                if (!colliders.Contains(col.GetComponent<Collider>()))
                 {
-                    doorsList[0].RemoveEnergy(this);
-                    doorsList.RemoveAt(0);
+                    col.RemoveEnergy(this);
+                    doorsList.Remove(col);
+                    if (doorsList.Count == 0) break;
                 }
+        }
+        else if (doorsList.Count == 1)
+        {
+            if (!colliders.Contains(doorsList[0].GetComponent<Collider>()))
+            {
+                doorsList[0].RemoveEnergy(this);
+                doorsList.RemoveAt(0);
             }
         }
     }
@@ -144,6 +156,8 @@ public class Interactible : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         isMoveable = false;
         emitEnergy = false;
+
+        mesh.material = noColliderMat;
     }
 
     void UnMoveableState()
@@ -153,6 +167,8 @@ public class Interactible : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         isMoveable = false;
         emitEnergy = false;
+
+        mesh.material = unMoveableMat;
     }
 
     void MoveableState()
@@ -162,24 +178,35 @@ public class Interactible : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         isMoveable = true;
         emitEnergy = false;
+
+        mesh.material = moveableMat;
     }
 
     void EnergyMoveable()
     {
         MoveableState();
+        EmitEnergy();
         emitEnergy = true;
+
+        mesh.material = emitEnergyMat;
     }
 
     void EnergyUnMoveable()
     {
         UnMoveableState();
+        EmitEnergy();
         emitEnergy = true;
+
+        mesh.material = energyUnMoveableMat;
     }
 
     void EnergyNoCollider()
     {
         NoColldierState();
+        EmitEnergy();
         emitEnergy = true;
+
+        mesh.material = energyNoColliderMat;
     }
 
     private void OnDrawGizmos()

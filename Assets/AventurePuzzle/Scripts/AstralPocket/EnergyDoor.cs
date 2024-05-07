@@ -43,7 +43,7 @@ public class EnergyDoor : MonoBehaviour
 
     public void RemoveEnergy(Interactible energy)
     {
-        Debug.LogWarning("Energy Door : Remove Power");
+        Debug.Log("Energy Door : Remove Power");
         interactiblePowering.Remove(energy);
     }
 
