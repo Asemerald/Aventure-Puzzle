@@ -65,5 +65,8 @@ public class AstralPocket : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, sphereRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(newPocketCastPos, sphereRadius);
     }
 }
