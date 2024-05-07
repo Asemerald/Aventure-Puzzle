@@ -142,7 +142,7 @@ public class Interactible : MonoBehaviour
     {
         Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
 
-        gameObject.layer = LayerMask.NameToLayer("Interactible");
+        gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         isMoveable = true;
         emitEnergy = false;
     }
