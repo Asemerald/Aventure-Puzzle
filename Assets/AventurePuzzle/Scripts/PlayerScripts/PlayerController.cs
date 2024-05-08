@@ -144,8 +144,6 @@ public class PlayerController : MonoBehaviour
         else
             force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
-        Debug.DrawRay(transform.position, force.normalized * 2);
-
         rb.AddForce(force, ForceMode.Acceleration);
     }
 
@@ -162,11 +160,13 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+        Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
     }
 
     void UnGrabObject()
     {
+        currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }

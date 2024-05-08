@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2211431512266974468}
   - component: {fileID: 1605675659568924549}
   - component: {fileID: 5448143876955587215}
+  - component: {fileID: 2705102230082238403}
   m_Layer: 7
   m_Name: BaseInteractible
   m_TagString: Untagged
@@ -139,6 +140,33 @@ MonoBehaviour:
   sizeMat: {fileID: 2100000, guid: f6e50f97db1923045a958c8a3c2d1a39, type: 2}
   energySizeMat: {fileID: 2100000, guid: 9dcf57faaabf76a45b7f4284ca302480, type: 2}
   portalMat: {fileID: 0}
+--- !u!54 &2705102230082238403
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061154298518885311}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &6032609470856569727
 GameObject:
   m_ObjectHideFlags: 0
