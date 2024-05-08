@@ -2468,6 +2468,11 @@ PrefabInstance:
       objectReference: {fileID: 4542386057841744451}
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
+      propertyPath: maxFallSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
+        type: 3}
       propertyPath: grabBoxSize.x
       value: 0.8
       objectReference: {fileID: 0}
@@ -2480,6 +2485,11 @@ PrefabInstance:
         type: 3}
       propertyPath: grabBoxSize.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
+        type: 3}
+      propertyPath: fallSpeedAccel
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
