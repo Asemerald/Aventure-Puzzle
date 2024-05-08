@@ -42,9 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth = 3;
     private int currentHealth;
 
-    [SerializeField] Rigidbody currentGrabbedObject;
-    [SerializeField] MoveableObject closestMoveableObject;
-
+    GameObject currentGrabObject;
 
     void Start()
     {
@@ -60,7 +58,7 @@ public class PlayerController : MonoBehaviour
         MyInputs();
         HUDUpdate();
         
-        if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
+        if (GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
@@ -74,24 +72,17 @@ public class PlayerController : MonoBehaviour
         if(GameManager.Instance.gameIsPause) return;
 
         if (InputsBrain.Instance.pocket.WasPressedThisFrame())
-            throw new NotImplementedException();         //TODO
+            AstralPocket.Instance.CastAstralPocket();
 
-        if (GameManager.Instance.inTarotInventory)
-        {
-            if (InputsBrain.Instance.interact.WasPressedThisFrame())
-                throw new NotImplementedException(); //TODO
-        }
-        else
-        {
-            moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
-            move = moveInputs.x * camRight + moveInputs.y * camForward;
+        moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
+        move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
-                GrabObject();
-            else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
-                if (currentGrabbedObject != null)
-                    UnGrabObject();
-        }
+        if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
+            GrabObject();
+        else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
+            if (currentGrabObject != null)
+                UnGrabObject();
+        
         
     }
 
@@ -102,52 +93,10 @@ public class PlayerController : MonoBehaviour
         else
             fallSpeed = 0;
 
-        if (move.magnitude > .01f && currentGrabbedObject == null)
+        if (move.magnitude > .01f && currentGrabObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
-        }
-
-        if (CanGrabObject() && currentGrabbedObject == null)
-        {
-            Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
-
-            if (hitted.Length > 0)
-            {
-                float closest = 10;
-                int index = 0;
-
-                for (int i = 0; i < hitted.Length; i++)
-                    if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                    {
-                        index = i;
-                        closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                    }
-
-                closestMoveableObject = hitted[index].GetComponent<MoveableObject>();
-            }
-        }
-        else if (!CanGrabObject() && currentGrabbedObject != null)
-            UnGrabObject();
-        else
-            closestMoveableObject = null;
-    }
-
-    void UnGrabObject()
-    {
-        currentGrabbedObject.velocity = Vector3.zero;
-        currentGrabbedObject.mass = 100;
-        currentGrabbedObject = null;
-    }
-
-    void GrabObject()
-    {
-        if(currentGrabbedObject == null && closestMoveableObject != null)
-        {
-            if (!closestMoveableObject.canBeMoved) return;
-
-            currentGrabbedObject = closestMoveableObject.GetComponent<Rigidbody>();
-            currentGrabbedObject.mass = 1;
         }
     }
 
@@ -155,7 +104,7 @@ public class PlayerController : MonoBehaviour
     {
         if (HUD.Instance == null) return;
 
-        if(DisplayGrabHUD() && closestMoveableObject.canBeMoved)
+        if(CanGrabObject())
             HUD.Instance.grabObj.SetActive(true);
         else
             HUD.Instance.grabObj.SetActive(false);
@@ -168,10 +117,6 @@ public class PlayerController : MonoBehaviour
 
         if (!IsGrounded())
             rb.velocity += Vector3.down * fallSpeed;
-
-        if (currentGrabbedObject != null)
-            currentGrabbedObject.velocity = rb.velocity;
-
     }
 
     private void Move()
@@ -203,13 +148,16 @@ public class PlayerController : MonoBehaviour
         camRight = cam.transform.right;
     }
 
-    public void TakeDamage()
+    void GrabObject()
     {
-        Debug.Log("damage");
-        if (currentHealth == 0)
-            return;
+        currentGrabObject = SortObjectToGrab();
+        currentGrabObject.transform.parent = transform;
+    }
 
-        currentHealth -= 1;
+    void UnGrabObject()
+    {
+        currentGrabObject.transform.parent = null;
+        currentGrabObject = null;
     }
 
     #region Boolean
@@ -233,6 +181,33 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    GameObject SortObjectToGrab()
+    {
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
+        if (hitted.Length == 1)
+        {
+            return hitted[0].gameObject;
+        }
+        else if(hitted.Length > 1)
+        {
+            float distance = 100;
+            int index = 0;
+            for (int i = 0; i < hitted.Length; i++)
+            {
+                float tempDist = Vector3.Distance(hitted[i].transform.position, transform.position);
+                if(tempDist < distance)
+                {
+                    distance = tempDist;
+                    index = i;
+                }
+            }
+
+            return hitted[index].gameObject;
+        }
+        else    
+            return null;
+    }
+
     bool CanGrabObject()
     {
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
@@ -240,11 +215,6 @@ public class PlayerController : MonoBehaviour
             return true;
         else
             return false;
-    }
-
-    bool DisplayGrabHUD()
-    {
-        return CanGrabObject() && currentGrabbedObject == null && !GameManager.Instance.inTarotInventory && closestMoveableObject != null;
     }
 
     #endregion
