@@ -5,11 +5,18 @@ using UnityEngine;
 
 public class AstralPocket : MonoBehaviour
 {
-    public float sphereRadius = 5f; // Adjust the radius as needed
     
-    //create a taskbar menu that call the function
+    public static AstralPocket Instance { get; private set; }
+    
+    [Header("Pocket Settings")]
+    [SerializeField] float sphereRadius = 5f;
     
     
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void CastAstralPocket()
     {

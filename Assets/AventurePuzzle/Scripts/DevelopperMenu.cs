@@ -1,18 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class DevelopperMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    public class MyCustomMenuItems
     {
-        
+    [MenuItem("MyMenu/Do Something")]
+    private static void DoSomething()
+    {
+       AstralPocket.Instance.CastAstralPocket();
+    }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
