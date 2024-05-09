@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -31,40 +28,43 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] Vector3 camForward, camRight;
 
-    [Header("Attack Settings")]
-    [SerializeField] Transform attackCenterPoint;
+    [Header("Interact Settings")]
+    [SerializeField] Transform interactCenterPoint;
     [SerializeField] Vector3 attackBoxSize;
     [SerializeField] LayerMask collidingLayers;
     [SerializeField] ParticleSystem slashVFX;
 
-    [Header("Activable Settings")]
-    [SerializeField] Vector3 activableBoxSize;
-    [SerializeField] LayerMask collidingActivableLayers;
+    [Header("Grab Settings")]
+    [SerializeField] Vector3 grabBoxSize;
+    [SerializeField] LayerMask collidingGrabLayers;
 
-    [Header("Health Settings")]
+    /*[Header("Health Settings")]
     [SerializeField] private int maxHealth = 3;
-    private int currentHealth;
+    private int currentHealth;*/
 
-    [SerializeField] GameObject currentGrabbedObject;
+    GameObject currentGrabObject;
+    [HideInInspector] public float MoveSpeed;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         CameraOffset();
     }
 
     void Update()
     {
+        Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
+
         MyInputs();
+        HUDUpdate();
         
-        if (GameManager.Instance.inTarotInventory || GameManager.Instance.gameIsPause)
+        if (GameManager.Instance.gameIsPause)
             return;
 
         CheckMethods();
-        HUDUpdate();
     }
 
     void MyInputs()
@@ -74,150 +74,78 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.tarot.WasPressedThisFrame())
-            GameManager.Instance.CheckTarotInventory();
+        if (InputsBrain.Instance.pocket.WasPressedThisFrame())
+            AstralPocket.Instance.CastAstralPocket();
 
-        if (GameManager.Instance.inTarotInventory)
-        {
-            if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
-                TarotInventory.Instance.SwitchCardState();
-            }
-        }
-        else
-        {
-            moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
-            move = moveInputs.x * camRight + moveInputs.y * camForward;
+        moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
+        move = moveInputs.x * camRight + moveInputs.y * camForward;
 
-            /*if (InputsBrain.Instance.interract.WasPressedThisFrame())
-            {
-                //Fonction attacker / interagir
-                Attack();
-            }*/
-            if (InputsBrain.Instance.interract.IsPressed() && CanGrabObject())
-            {
-                GrabObject();
-            }
-            else if(InputsBrain.Instance.interract.WasReleasedThisFrame())
-            {
-                if(currentGrabbedObject != null)
-                {
-                    currentGrabbedObject.transform.parent = null;
-                    currentGrabbedObject = null;
-                }
-            }
-        }
-
+        if (InputsBrain.Instance.interact.IsPressed() && CanGrabObject())
+            GrabObject();
+        else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
+            if (currentGrabObject != null)
+                UnGrabObject();
+        
         
     }
 
     void CheckMethods()
     {
+        slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
+
         if (!IsGrounded())
             fallSpeed = Mathf.SmoothStep(fallSpeed, maxFallSpeed, fallSpeedAccel * Time.deltaTime);
-        else
+        else if (IsGrounded())
             fallSpeed = 0;
 
-        if (move.magnitude > .1f && currentGrabbedObject == null)
+        if (OnSlope()) rb.useGravity = false;
+        else rb.useGravity = true;
+
+        if (move.magnitude > .01f && currentGrabObject == null)
         {
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
     }
 
-    void GrabObject()
-    {
-        if(currentGrabbedObject == null)
-        {
-            Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
-            if (hitted.Length > 0)
-            {
-                float closest = 10;
-                int index = 0;
-                for (int i = 0; i < hitted.Length; i++)
-                {
-                    if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                    {
-                        index = i;
-                        closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                    }
-                }
-                currentGrabbedObject = hitted[index].gameObject;
-            }
-
-            return;
-        }
-
-        if (currentGrabbedObject.transform.parent != transform)
-            currentGrabbedObject.transform.parent = transform;
-    }
-
     void HUDUpdate()
     {
-        /*if (HUD.Instance == null) return;
+        if (HUD.Instance == null) return;
 
-        HUD.Instance.shootSlider.value = shootTimer;
-
-        //HUD to display use a lever or something
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
-        if (hitted.Length > 0)
-        {
-            float closest = 10;
-            int index = 0;
-            for (int i = 0; i < hitted.Length; i++)
-            {
-                if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                {
-                    index = i;
-                    closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                }
-            }
-            if (!hitted[index].GetComponent<LeverScript>().leverHasBeenUsed)
-                HUD.Instance.interactText.text = "Press 'Y' to activate lever";
-            else
-                HUD.Instance.interactText.text = "";
-        }
+        if(CanGrabObject())
+            HUD.Instance.grabObj.SetActive(true);
         else
-            HUD.Instance.interactText.text = "";*/
+            HUD.Instance.grabObj.SetActive(false);
     }
-
-    void ActivateInteracable()
-    {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
-        if (hitted.Length > 0)
-        {
-            float closest = 10;
-            int index = 0;
-            for (int i = 0; i < hitted.Length; i++)
-            {
-                if (Vector3.Distance(hitted[i].transform.position, transform.position) < closest)
-                {
-                    index = i;
-                    closest = Vector3.Distance(hitted[i].transform.position, transform.position);
-                }
-            }
-            //hitted[index].GetComponent<LeverScript>().ActivateLever();
-        }
-    }
+    
 
     private void FixedUpdate()
     {
+        Move();
+
         if (!IsGrounded())
             rb.velocity += Vector3.down * fallSpeed;
-
-        Move();
     }
 
     private void Move()
     {
-        // calculate move vector on slopes
-        slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
+        Vector3 movement = new Vector3();
 
-        // apply forces
-        if (!OnSlope())
-            rb.velocity += (move * maxSpeed - rb.velocity) * (Time.deltaTime * (move.magnitude > 0.1f ? accel : decel));
+        if(OnSlope())
+            movement = slopeMove * maxSpeed;
         else
-            rb.velocity += (slopeMove * maxSpeed - rb.velocity) * (Time.deltaTime * (slopeMove.magnitude > 0.1f ? accel : decel));
+            movement = move * maxSpeed;
+
+        float acceleration = movement.magnitude > .01f ? accel : decel;
+        movement = movement - rb.velocity;
+
+        var force = new Vector3();
+        if(OnSlope())
+            force = new Vector3(movement.x * acceleration, movement.y * acceleration, movement.z * acceleration);
+        else
+            force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
+
+        rb.AddForce(force, ForceMode.Acceleration);
     }
 
     private void CameraOffset()
@@ -230,44 +158,38 @@ public class PlayerController : MonoBehaviour
         camRight = cam.transform.right;
     }
 
-
-    /*void Attack()
+    void GrabObject()
     {
-        //slashVFX.Play();
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, attackBoxSize, transform.rotation, collidingLayers);
-        if (hitted.Length > 0)
-        {
-            foreach(Collider c in hitted)
-            {
-                if (c.GetComponent<Feedbacks>())
-                    c.GetComponent<Feedbacks>().Feedback();
-            }
-        }
-    }*/
+        currentGrabObject = SortObjectToGrab();
+        Destroy(currentGrabObject.GetComponent<Rigidbody>());
+        currentGrabObject.transform.parent = transform;
+    }
 
-    public void TakeDamage()
+    void UnGrabObject()
     {
-        Debug.Log("damage");
-        if (currentHealth == 0)
-            return;
-
-        currentHealth -= 1;
+        currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
+        currentGrabObject.transform.parent = null;
+        currentGrabObject = null;
     }
 
     #region Boolean
     bool IsGrounded()
     {
-        return Physics.CheckSphere(feet.position, 0.3f, ground);
+        float angle = 0;
+        if (slopeHit.normal != Vector3.up)
+            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+
+        return Physics.CheckSphere(feet.position, 0.15f, ground) && angle < 46;
     }
 
     bool OnSlope()
     {
-        if (Physics.Raycast(feet.position, Vector3.down, out slopeHit, 0.3f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.5f))
         {
             if (slopeHit.normal != Vector3.up)
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-                return angle < 45 && angle != 0;
+                return angle < 46 && angle != 0;
             }
             else
                 return false;
@@ -275,9 +197,36 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    GameObject SortObjectToGrab()
+    {
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
+        if (hitted.Length == 1)
+        {
+            return hitted[0].gameObject;
+        }
+        else if(hitted.Length > 1)
+        {
+            float distance = 100;
+            int index = 0;
+            for (int i = 0; i < hitted.Length; i++)
+            {
+                float tempDist = Vector3.Distance(hitted[i].transform.position, transform.position);
+                if(tempDist < distance)
+                {
+                    distance = tempDist;
+                    index = i;
+                }
+            }
+
+            return hitted[index].gameObject;
+        }
+        else    
+            return null;
+    }
+
     bool CanGrabObject()
     {
-        Collider[] hitted = Physics.OverlapBox(attackCenterPoint.position, activableBoxSize, transform.rotation, collidingActivableLayers);
+        Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;
         else
@@ -290,9 +239,9 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, attackBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, attackBoxSize);
 
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(attackCenterPoint.localPosition, activableBoxSize);
+        Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
     }
 }
