@@ -6,6 +6,7 @@ public class PlayerAnimator : MonoBehaviour
 {
     private Animator _animator;
     private PlayerController _playerController;
+    private InputsBrain _inputsBrain;
 
     private void Awake()
     {
@@ -20,11 +21,17 @@ public class PlayerAnimator : MonoBehaviour
             _playerController = playerController;
         }
         else Debug.LogError("No PlayerController component found on " + gameObject.name);
+        
+        if (TryGetComponent(out InputsBrain inputsBrain))
+        {
+            _inputsBrain = inputsBrain;
+        }
+        else Debug.LogError("No InputsBrain component found on " + gameObject.name);
     }
 
 
     private void Update()
     {
-        _animator.SetFloat("Speed", _playerController.MovementInput.magnitude);
+        //_animator.SetFloat("Speed", );
     }
 }
