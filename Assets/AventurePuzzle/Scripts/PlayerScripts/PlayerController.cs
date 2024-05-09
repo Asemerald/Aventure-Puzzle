@@ -131,9 +131,9 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3();
 
         if(OnSlope())
-            movement = slopeMove.normalized * maxSpeed;
+            movement = slopeMove * maxSpeed;
         else
-            movement = move.normalized * maxSpeed;
+            movement = move * maxSpeed;
 
         float acceleration = movement.magnitude > .01f ? accel : decel;
         movement = movement - rb.velocity;
