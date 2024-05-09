@@ -38,9 +38,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Vector3 grabBoxSize;
     [SerializeField] LayerMask collidingGrabLayers;
 
-    [Header("Health Settings")]
+    /*[Header("Health Settings")]
     [SerializeField] private int maxHealth = 3;
-    private int currentHealth;
+    private int currentHealth;*/
 
     GameObject currentGrabObject;
 
@@ -49,12 +49,14 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
 
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth;
         CameraOffset();
     }
 
     void Update()
     {
+        Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
+
         MyInputs();
         HUDUpdate();
         
@@ -88,10 +90,15 @@ public class PlayerController : MonoBehaviour
 
     void CheckMethods()
     {
+        slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
+
         if (!IsGrounded())
             fallSpeed = Mathf.SmoothStep(fallSpeed, maxFallSpeed, fallSpeedAccel * Time.deltaTime);
-        else
+        else if (IsGrounded())
             fallSpeed = 0;
+
+        if (OnSlope()) rb.useGravity = false;
+        else rb.useGravity = true;
 
         if (move.magnitude > .01f && currentGrabObject == null)
         {
@@ -121,19 +128,21 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        // calculate move vector on slopes
-        slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
-
         Vector3 movement = new Vector3();
 
-        if(!OnSlope())
-            movement = move * maxSpeed;
+        if(OnSlope())
+            movement = slopeMove.normalized * maxSpeed;
         else
-            movement = slopeMove * maxSpeed;
+            movement = move.normalized * maxSpeed;
 
         float acceleration = movement.magnitude > .01f ? accel : decel;
         movement = movement - rb.velocity;
-        var force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
+
+        var force = new Vector3();
+        if(OnSlope())
+            force = new Vector3(movement.x * acceleration, movement.y * acceleration, movement.z * acceleration);
+        else
+            force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
         rb.AddForce(force, ForceMode.Acceleration);
     }
@@ -151,11 +160,13 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+        Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
     }
 
     void UnGrabObject()
     {
+        currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
@@ -163,17 +174,21 @@ public class PlayerController : MonoBehaviour
     #region Boolean
     bool IsGrounded()
     {
-        return Physics.CheckSphere(feet.position, 0.3f, ground);
+        float angle = 0;
+        if (slopeHit.normal != Vector3.up)
+            angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+
+        return Physics.CheckSphere(feet.position, 0.15f, ground) && angle < 46;
     }
 
     bool OnSlope()
     {
-        if (Physics.Raycast(feet.position, Vector3.down, out slopeHit, 0.3f))
+        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, 1.5f))
         {
             if (slopeHit.normal != Vector3.up)
             {
                 float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
-                return angle < 45 && angle != 0;
+                return angle < 46 && angle != 0;
             }
             else
                 return false;
