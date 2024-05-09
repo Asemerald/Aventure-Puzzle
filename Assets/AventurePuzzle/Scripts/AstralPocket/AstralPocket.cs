@@ -9,6 +9,8 @@ public class AstralPocket : MonoBehaviour
 
     public float sphereRadius = 5f; // Adjust the radius as needed
     public LayerMask interactibleMask;
+    
+    [HideInInspector] public bool ShowAstralPocket = false;
 
     //create a taskbar menu that call the function
 
@@ -73,10 +75,18 @@ public class AstralPocket : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!ShowAstralPocket) return;
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, sphereRadius);
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(newPocketCastPos, sphereRadius);
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        //if (!ShowAstralPocket) return;
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, sphereRadius);
     }
 }
