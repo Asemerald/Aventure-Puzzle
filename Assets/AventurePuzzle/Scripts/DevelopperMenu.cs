@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class DeveloperMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    
 
-    // Update is called once per frame
-    void Update()
+    [MenuItem("Dev/Show Astral Pocket", true)]
+    private static bool ShowAstralPocketGoldValidation()
     {
-        
+        //if play mode is active, set to true
+        return Application.isPlaying;
     }
+    
+    [MenuItem("Dev/Show Astral Pocket")]
+    private static void ShowAstralPocket()
+    {
+        AstralPocket.Instance.ShowAstralPocket = !AstralPocket.Instance.ShowAstralPocket;
+    }
+    
 }
