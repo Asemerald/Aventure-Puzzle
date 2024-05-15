@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DevelopperMenu : MonoBehaviour
+public class DeveloperMenu : MonoBehaviour
 {
     
-    public class MyCustomMenuItems
-    {
-    [MenuItem("MyMenu/Do Something")]
-    private static void DoSomething()
-    {
-       AstralPocket.Instance.CastAstralPocket();
-    }
-    }
 
+    [MenuItem("Dev/Show Astral Pocket", true)]
+    private static bool ShowAstralPocketGoldValidation()
+    {
+        //if play mode is active, set to true
+        return Application.isPlaying;
+    }
+    
+    [MenuItem("Dev/Show Astral Pocket")]
+    private static void ShowAstralPocket()
+    {
+        AstralPocket.Instance.ShowAstralPocket = !AstralPocket.Instance.ShowAstralPocket;
+    }
+    
 }

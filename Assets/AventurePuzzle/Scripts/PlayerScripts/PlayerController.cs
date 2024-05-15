@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;*/
 
     GameObject currentGrabObject;
+    [HideInInspector] public float MoveSpeed;
 
     void Start()
     {
