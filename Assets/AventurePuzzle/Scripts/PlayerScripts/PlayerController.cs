@@ -161,6 +161,10 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+
+        if (currentGrabObject.GetComponent<InteractibleMesh>())
+            currentGrabObject = currentGrabObject.transform.parent.gameObject;
+
         Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
     }
@@ -227,6 +231,9 @@ public class PlayerController : MonoBehaviour
 
     bool CanGrabObject()
     {
+        if (currentGrabObject != null) 
+            return false;
+
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;

@@ -164,6 +164,8 @@ public class Interactible : MonoBehaviour
         Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
+        astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
+
         isMoveable = false;
         emitEnergy = false;
 
@@ -175,6 +177,8 @@ public class Interactible : MonoBehaviour
         Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
+        astraldObj.layer = LayerMask.NameToLayer("Interactible");
+
         isMoveable = false;
         emitEnergy = false;
 
@@ -186,6 +190,7 @@ public class Interactible : MonoBehaviour
         Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
+        astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");
         isMoveable = true;
         emitEnergy = false;
 
