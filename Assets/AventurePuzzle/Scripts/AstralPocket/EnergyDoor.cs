@@ -6,7 +6,7 @@ public class EnergyDoor : MonoBehaviour
 {
     [Header("Interactibles Required Energy")]
     public Interactible[] interactiblesRequired;
-    public List<Interactible> interactiblePowering;
+    [HideInInspector] public List<Interactible> interactiblePowering;
 
     public bool isOpen;
 
