@@ -7,6 +7,10 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInputs;
     private Vector3 move;
+    
+    private PlayerController Instance;
+    private PlayerAnimator _playerAnimator;
+    
 
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
@@ -43,11 +47,33 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;*/
 
     GameObject currentGrabObject;
-    [HideInInspector] public float MoveSpeed;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance= this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        if (TryGetComponent(out PlayerAnimator playerAnimator))
+        {
+            _playerAnimator = playerAnimator;
+        }
+        else Debug.LogError("No PlayerAnimator component found on " + gameObject.name);
+        
+        if (TryGetComponent(out Rigidbody Rigidbody))
+        {
+            rb = Rigidbody;
+        }
+        else Debug.LogError("No Rigidbody component found on " + gameObject.name);
+        
         rb.freezeRotation = true;
 
         //currentHealth = maxHealth;
@@ -146,6 +172,13 @@ public class PlayerController : MonoBehaviour
             force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
         rb.AddForce(force, ForceMode.Acceleration);
+        
+
+        // Calcul la speed et l'envoie a l'animator
+        float speed = rb.velocity.magnitude / maxSpeed;
+        speed = Mathf.Clamp(speed, 0f, 1f);
+        _playerAnimator.SetSpeed(speed);
+        
     }
 
     private void CameraOffset()
@@ -161,6 +194,10 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+
+        if (currentGrabObject.GetComponent<InteractibleMesh>())
+            currentGrabObject = currentGrabObject.transform.parent.gameObject;
+
         Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
     }
@@ -168,6 +205,7 @@ public class PlayerController : MonoBehaviour
     void UnGrabObject()
     {
         currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
+        currentGrabObject.GetComponent<Rigidbody>().mass = 100;
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
@@ -226,6 +264,9 @@ public class PlayerController : MonoBehaviour
 
     bool CanGrabObject()
     {
+        if (currentGrabObject != null) 
+            return false;
+
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;

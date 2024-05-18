@@ -110,7 +110,10 @@ MonoBehaviour:
   m_Name: Poche Astrale
   m_EditorClassIdentifier: 
   m_Active: 1
-  passMaterial: {fileID: 2100000, guid: f3205c33810d18649abb03ff422a529d, type: 2}
   injectionPoint: 600
-  requirements: -1
+  fetchColorBuffer: 1
+  requirements: -5
+  passMaterial: {fileID: 2100000, guid: f3205c33810d18649abb03ff422a529d, type: 2}
   passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
