@@ -36,7 +36,6 @@ public class Interactible : MonoBehaviour
     public GameObject astraldObj;
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
-    List<DoorRelays> doorsPointsList = new List<DoorRelays>();
 
     [Header("Materials States")]
     public Material moveableMat;
@@ -141,14 +140,6 @@ public class Interactible : MonoBehaviour
                     colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
                 }
             }
-            else if (colliders[0].GetComponent<DoorRelays>())
-            {
-                if (!doorsPointsList.Contains(colliders[0].GetComponent<DoorRelays>()))
-                {
-                    doorsPointsList.Add(colliders[0].GetComponent<DoorRelays>());
-                    colliders[0].GetComponent<DoorRelays>().CheckForEnergy(this);
-                }
-            }
         }
 
         if (doorsList.Count > 1)
@@ -167,25 +158,6 @@ public class Interactible : MonoBehaviour
             {
                 doorsList[0].RemoveEnergy(this);
                 doorsList.RemoveAt(0);
-            }
-        }
-
-        if (doorsPointsList.Count > 1)
-        {
-            foreach (var col in doorsPointsList)
-                if (!colliders.Contains(col.GetComponent<Collider>()))
-                {
-                    col.RemoveEnergy(this);
-                    doorsPointsList.Remove(col);
-                    if (doorsPointsList.Count == 0) break;
-                }
-        }
-        else if (doorsPointsList.Count == 1)
-        {
-            if (!colliders.Contains(doorsPointsList[0].GetComponent<Collider>()))
-            {
-                doorsPointsList[0].RemoveEnergy(this);
-                doorsPointsList.RemoveAt(0);
             }
         }
     }
