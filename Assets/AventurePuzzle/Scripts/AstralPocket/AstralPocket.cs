@@ -19,6 +19,8 @@ public class AstralPocket : MonoBehaviour
 
     bool astralPocketCasted;
 
+    public GameObject astralPocketMesh;
+
     private void Awake()
     {
         if (Instance == null)
@@ -53,6 +55,9 @@ public class AstralPocket : MonoBehaviour
         }
         astralPocketCasted = true;
         previousPocketCastPos = newPocketCastPos;
+
+        astralPocketMesh.SetActive(true);
+        astralPocketMesh.transform.position = newPocketCastPos;
     }
 
     void DecastAstralPocket()
