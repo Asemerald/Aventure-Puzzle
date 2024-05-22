@@ -129,7 +129,7 @@ public class Interactible : MonoBehaviour
 
     void EmitEnergy()
     {
-        Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
         Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
         if (colliders.Length > 0)
         {
@@ -192,7 +192,7 @@ public class Interactible : MonoBehaviour
 
     void NoColldierState()
     {
-        Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
@@ -205,7 +205,7 @@ public class Interactible : MonoBehaviour
 
     void UnMoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
@@ -218,7 +218,7 @@ public class Interactible : MonoBehaviour
 
     void MoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");

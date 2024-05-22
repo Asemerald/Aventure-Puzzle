@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
+        //Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
 
         MyInputs();
         HUDUpdate();
