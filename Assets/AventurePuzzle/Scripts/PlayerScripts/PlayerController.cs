@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask collidingGrabLayers;
 
     GameObject currentGrabObject;
+    float inputTimer;
 
     private void Awake()
     {
@@ -83,8 +84,21 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.pocket.WasPressedThisFrame())
-            AstralPocket.Instance.CastAstralPocket();
+        if (InputsBrain.Instance.pocket.IsPressed())
+            inputTimer += Time.deltaTime;
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame())
+        {
+            if(inputTimer < AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.CastAstralPocket();
+                inputTimer = 0;
+            }
+            else if (inputTimer > AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.DecastAstralPocket();
+                inputTimer = 0;
+            }
+        }
 
         moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
         move = moveInputs.x * camRight + moveInputs.y * camForward;
@@ -115,6 +129,14 @@ public class PlayerController : MonoBehaviour
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
+
+        if (inputTimer > 0)
+        {
+            HUD.Instance.astralSlider.gameObject.SetActive(true);
+            HUD.Instance.astralSlider.value = inputTimer;
+        }
+        else
+            HUD.Instance.astralSlider.gameObject.SetActive(false);
     }
 
     void HUDUpdate()
