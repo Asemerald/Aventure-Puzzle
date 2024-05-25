@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (TryGetComponent(out PlayerAnimator playerAnimator))
             _playerAnimator = playerAnimator;
         else 
-            Debug.LogError("No PlayerAnimator component found on " + gameObject.name);
+            Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
         
         if (TryGetComponent(out Rigidbody Rigidbody))
             rb = Rigidbody;
