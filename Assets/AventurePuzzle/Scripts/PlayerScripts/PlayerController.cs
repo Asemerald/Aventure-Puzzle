@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInputs;
     private Vector3 move;
     
-    private PlayerController Instance;
+    public static PlayerController Instance;
     private PlayerAnimator _playerAnimator;
     
 
@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
     GameObject currentGrabObject;
     float inputTimer;
+
+    public bool hasAstralPocket;
+
 
     private void Awake()
     {
@@ -86,7 +89,8 @@ public class PlayerController : MonoBehaviour
 
         if (InputsBrain.Instance.pocket.IsPressed())
             inputTimer += Time.deltaTime;
-        if (InputsBrain.Instance.pocket.WasReleasedThisFrame())
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket)
         {
             if(inputTimer < AstralPocket.Instance.timeToReset)
             {
@@ -130,7 +134,7 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
 
-        if (inputTimer > 0)
+        if (inputTimer > .2f)
         {
             HUD.Instance.astralSlider.gameObject.SetActive(true);
             HUD.Instance.astralSlider.value = inputTimer;
