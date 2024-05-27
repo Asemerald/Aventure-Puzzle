@@ -35,7 +35,6 @@ public class EnergyDoor : MonoBehaviour
     {
         for(int i = interactiblePowering.Count -1; i >= 0; i--) //Can cause some error :/
         {
-            Debug.Log("Energy Door : interactible is emitting ? " + interactiblePowering[i].emitEnergy);
             if (!interactiblePowering[i].emitEnergy) interactiblePowering.RemoveAt(i);
             if (interactiblePowering.Count == 0) break;
         }
@@ -43,16 +42,13 @@ public class EnergyDoor : MonoBehaviour
 
     public void RemoveEnergy(Interactible energy)
     {
-        Debug.Log("Energy Door : Remove Power");
         interactiblePowering.Remove(energy);
     }
 
     public void CheckForEnergy(Interactible energy)
     {
-        Debug.Log("Energy Door : Check called");
         if (!interactiblePowering.Contains(energy))
         {
-            Debug.Log("Energy Door : energy added");
             interactiblePowering.Add(energy);
         }
     }

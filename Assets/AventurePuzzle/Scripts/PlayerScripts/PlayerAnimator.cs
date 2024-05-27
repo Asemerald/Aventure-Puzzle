@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,15 +8,27 @@ public class PlayerAnimator : MonoBehaviour
     private Animator _animator;
     private PlayerController _playerController;
     private InputsBrain _inputsBrain;
+    
+    [SerializeField] private GameObject _mesh;
 
     private void Awake()
     {
-        if (TryGetComponent(out Animator animator))
+        if  (_mesh == null)
+        {
+            Debug.LogError("Mesh not referenced in " + gameObject.name);
+            return;
+        }
+        
+        if (_mesh.TryGetComponent(out Animator animator))
         {
             _animator = animator;
         }
-        else Debug.LogError("No Animator component found on " + gameObject.name);
+        else Debug.LogError("No Animator component found on " + _mesh.name);
         
+    }
+
+    private void Start()
+    {
         if (TryGetComponent(out PlayerController playerController))
         {
             _playerController = playerController;
@@ -30,8 +43,13 @@ public class PlayerAnimator : MonoBehaviour
     }
 
 
+    public void SetSpeed(float speed)
+    {
+        _animator.SetFloat("Speed", speed);
+    }
+
     private void Update()
     {
-        //_animator.SetFloat("Speed", );
+        
     }
 }

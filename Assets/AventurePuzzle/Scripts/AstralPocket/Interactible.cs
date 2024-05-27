@@ -36,7 +36,6 @@ public class Interactible : MonoBehaviour
     public GameObject astraldObj;
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
-    List<DoorRelays> doorsPointsList = new List<DoorRelays>();
 
     [Header("Materials States")]
     public Material moveableMat;
@@ -129,7 +128,7 @@ public class Interactible : MonoBehaviour
 
     void EmitEnergy()
     {
-        Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
         Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
         if (colliders.Length > 0)
         {
@@ -139,14 +138,6 @@ public class Interactible : MonoBehaviour
                 {
                     doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
                     colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
-                }
-            }
-            else if (colliders[0].GetComponent<DoorRelays>())
-            {
-                if (!doorsPointsList.Contains(colliders[0].GetComponent<DoorRelays>()))
-                {
-                    doorsPointsList.Add(colliders[0].GetComponent<DoorRelays>());
-                    colliders[0].GetComponent<DoorRelays>().CheckForEnergy(this);
                 }
             }
         }
@@ -169,30 +160,11 @@ public class Interactible : MonoBehaviour
                 doorsList.RemoveAt(0);
             }
         }
-
-        if (doorsPointsList.Count > 1)
-        {
-            foreach (var col in doorsPointsList)
-                if (!colliders.Contains(col.GetComponent<Collider>()))
-                {
-                    col.RemoveEnergy(this);
-                    doorsPointsList.Remove(col);
-                    if (doorsPointsList.Count == 0) break;
-                }
-        }
-        else if (doorsPointsList.Count == 1)
-        {
-            if (!colliders.Contains(doorsPointsList[0].GetComponent<Collider>()))
-            {
-                doorsPointsList[0].RemoveEnergy(this);
-                doorsPointsList.RemoveAt(0);
-            }
-        }
     }
 
     void NoColldierState()
     {
-        Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
@@ -205,7 +177,7 @@ public class Interactible : MonoBehaviour
 
     void UnMoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
@@ -218,7 +190,7 @@ public class Interactible : MonoBehaviour
 
     void MoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");
