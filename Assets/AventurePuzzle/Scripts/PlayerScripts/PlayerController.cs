@@ -69,8 +69,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
-
         MyInputs();
         HUDUpdate();
         
@@ -87,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.pocket.IsPressed())
+        if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket)
             inputTimer += Time.deltaTime;
 
         if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket)

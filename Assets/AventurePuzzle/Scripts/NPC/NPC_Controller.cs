@@ -19,7 +19,7 @@ public class NPC_Controller : MonoBehaviour
 
     void Start()
     {
-        TryGetComponent(out NavMeshAgent _agent);
+        gameObject.TryGetComponent(out NavMeshAgent _agent);
         agent = _agent;
 
         agent.velocity = Vector3.zero;
@@ -35,13 +35,6 @@ public class NPC_Controller : MonoBehaviour
     {
         agent.speed = wanderSpeed;
         agent.SetDestination(waypoints[currentWaypoint].position);
-        
-        if (agent.isPathStale)
-        {
-            currentWaypoint++;
-            if (currentWaypoint >= waypoints.Length)
-                currentWaypoint = 0;
-        }
 
         if (Vector3.Distance(agent.transform.position, waypoints[currentWaypoint].position) < 2f)
         {
