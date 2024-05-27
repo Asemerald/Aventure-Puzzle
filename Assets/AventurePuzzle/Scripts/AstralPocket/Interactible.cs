@@ -173,6 +173,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = noColliderMat;
+        astraldObj.GetComponent<MeshRenderer>().material = noColliderMat;
     }
 
     void UnMoveableState()
@@ -186,6 +187,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = unMoveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = unMoveableMat;
     }
 
     void MoveableState()
@@ -198,6 +200,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = moveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = moveableMat;
     }
 
     void EnergyMoveable()
@@ -207,6 +210,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = emitEnergyMat;
+        astraldObj.GetComponent<MeshRenderer>().material = emitEnergyMat;
     }
 
     void EnergyUnMoveable()
@@ -216,6 +220,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = energyUnMoveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = energyUnMoveableMat;
     }
 
     void EnergyNoCollider()
@@ -225,6 +230,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = energyNoColliderMat;
+        astraldObj.GetComponent<MeshRenderer>().material = energyNoColliderMat;
     }
 
     void Size()
