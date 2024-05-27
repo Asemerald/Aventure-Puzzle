@@ -19,7 +19,7 @@ public class NPC_Controller : MonoBehaviour
 
     void Start()
     {
-        gameObject.TryGetComponent(out NavMeshAgent _agent);
+        TryGetComponent(out NavMeshAgent _agent);
         agent = _agent;
 
         agent.velocity = Vector3.zero;
@@ -56,6 +56,12 @@ public class NPC_Controller : MonoBehaviour
 
     public void SwitchAstralState(bool astral)
     {
+        if(agent == null)
+        {
+            TryGetComponent(out NavMeshAgent _agent);
+            agent = _agent;
+        }
+
         if (astral)
         {
             inAstralMode = true;
