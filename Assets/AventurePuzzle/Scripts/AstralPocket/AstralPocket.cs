@@ -7,9 +7,12 @@ public class AstralPocket : MonoBehaviour
 {
     public static AstralPocket Instance {  get; private set; }
 
+    [Header("Settings")]
     public float sphereRadius = 5f; // Adjust the radius as needed
     public LayerMask interactibleMask;
-    
+    public float timeToReset = 2;
+
+
     [HideInInspector] public bool ShowAstralPocket = false;
 
     //create a taskbar menu that call the function
@@ -18,6 +21,8 @@ public class AstralPocket : MonoBehaviour
     Vector3 newPocketCastPos;
 
     bool astralPocketCasted;
+
+    public GameObject astralPocketMesh;
 
     private void Awake()
     {
@@ -53,9 +58,12 @@ public class AstralPocket : MonoBehaviour
         }
         astralPocketCasted = true;
         previousPocketCastPos = newPocketCastPos;
+
+        astralPocketMesh.SetActive(true);
+        astralPocketMesh.transform.position = newPocketCastPos;
     }
 
-    void DecastAstralPocket()
+    public void DecastAstralPocket()
     {
         Debug.Log("Astral Pocket : Decasted");
         Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
@@ -71,6 +79,8 @@ public class AstralPocket : MonoBehaviour
                 collider.GetComponent<InteractibleMesh>().parent.SwitchMode(false);
             }
         }
+
+        astralPocketMesh.SetActive(false);
     }
 
     private void OnDrawGizmos()

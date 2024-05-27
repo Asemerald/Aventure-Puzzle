@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8542452309712083489
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: chemins etoile
+  m_Shader: {fileID: -6465566751694194690, guid: 0f30856b98c98024dbd79c0fdd49d0c7,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Color:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_397645dba1c54a9fb637b244b7a905b8_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ac287f174af8ef5468fd261ca1017c15, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4d6fb734747548a180ecda8e7e02412b_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ac287f174af8ef5468fd261ca1017c15, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_776d92fd38b0430187bbbe6021ffcc1a_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ac287f174af8ef5468fd261ca1017c15, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_7fbf9e1c88a64403991d940d9a6c858c_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: d688757c08300fa489156787a9c10855, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_f1b0aa4386594c6abbf6957dd82b2e00_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: ac287f174af8ef5468fd261ca1017c15, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _DEBUG_EDGE: 0
+    - _Emissive: 0
+    - _L1_Pos: 0.5
+    - _L2_Pos: 0.5
+    - _L_Mult: 0
+    - _L_Pow: 0
+    - _Metalic: 0
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Side_Mask_Mult: 0
+    - _Side_Mask_Pow: 0
+    - _Smoothness: 0.5
+    - _T1_Frequance: 0
+    - _T1_PanX: 0
+    - _T1_PanY: 0
+    - _T1_Rot: 0
+    - _T1_Tile: 0
+    - _T2_Frequance: 0
+    - _T2_PanX: 0
+    - _T2_PanY: 0
+    - _T2_Rot: 0
+    - _T2_Tile: 0
+    - _T3_Frequance: 0
+    - _T3_PanX: 0
+    - _T3_PanY: 0
+    - _T3_Rot: 0
+    - _T3_Tile: 0
+    - _T4_Frequance: 0
+    - _T4_PanX: 0
+    - _T4_PanY: 0
+    - _T4_Rot: 0
+    - _T4_Tile: 0
+    - _tile: 218.8
+    m_Colors:
+    - _DEBUG_color: {r: 0, g: 0, b: 0, a: 0}
+    - _L_Color: {r: 1, g: 0, b: 0, a: 0}
+    - _Pattern_Color: {r: 0.09338885, g: 1, b: 0.04245281, a: 0}
+    - _ouais: {r: 0, g: 0, b: 0, a: 0}
+  m_BuildTextureStacks: []
