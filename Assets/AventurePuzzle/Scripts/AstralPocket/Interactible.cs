@@ -17,39 +17,48 @@ public class Interactible : MonoBehaviour
      * Portal -> l'objet se transforme en portail
      */
 
-    public enum ObjectState { None, Moveable, UnMoveable, NoCollider, EmitEnergy, EnergyUnMoveable, EnergyNoCollider, Size, EnergySize, Portal }
+    public enum ObjectState { None, Moveable, UnMoveable, NoCollider, EmitEnergy, EnergyUnMoveable, EnergyNoCollider, Size, EnergySize, Portal, NPC }
 
+    [Header("Global Settings")]
     public ObjectState worldState;
     public ObjectState astralState;
     public bool sizeIsModify;
 
     public bool inAstralState;
-    
     public bool isMoveable;
+    public bool isPortal;
 
     [Header("Energy Emition")]
     public bool emitEnergy;
     public float energyRadius;
     public LayerMask energyDoor;
+    public GameObject energySphere;
 
     [Header("Size/Mesh Mods")]
     public GameObject astraldObj;
 
-    List<EnergyDoor> doorsList = new List<EnergyDoor>();
-    List<DoorRelays> doorsPointsList = new List<DoorRelays>();
-
     [Header("Materials States")]
     public Material moveableMat;
-    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat;
+    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat, npcMat, npcEnergyMat;
 
+    List<EnergyDoor> doorsList = new List<EnergyDoor>();
     MeshRenderer mesh;
     Collider col;
+
 
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
         SwitchMode(false);
+
+        if (astralState == ObjectState.Portal)
+            isPortal = true;
+
+        if(worldState == ObjectState.NPC)
+        energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
+            else
+        energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
     public void SwitchMode(bool astral)
@@ -60,6 +69,9 @@ public class Interactible : MonoBehaviour
 
             if (sizeIsModify)
                 ResetSize();
+
+            if (isPortal)
+                ResetPortal();
 
             switch (astralState)
             {
@@ -81,10 +93,13 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergySize: EnergySize();
                     break;
-                case ObjectState.Portal:
+                case ObjectState.Portal: PortalSwitch();
                     break;
-
+                case ObjectState.NPC: SwitchToNPC();
+                    break;
             }
+
+            //if (isPortal) PortalSwitch();
         }
         else
         {
@@ -92,6 +107,9 @@ public class Interactible : MonoBehaviour
 
             if (sizeIsModify)
                 ResetSize();
+
+            if (isPortal)
+                ResetPortal();
 
             switch (worldState)
             {
@@ -113,7 +131,9 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergySize: EnergySize();
                     break;
-                case ObjectState.Portal:
+                case ObjectState.Portal: PortalSwitch();
+                    break;
+                case ObjectState.NPC: SwitchToNPC();
                     break;
             } 
         }
@@ -125,11 +145,16 @@ public class Interactible : MonoBehaviour
             EmitEnergy();
         else if(!emitEnergy)
             doorsList.Clear();
+
+        if(emitEnergy && !energySphere.activeSelf)
+            energySphere.SetActive(true);
+        else if(!emitEnergy && energySphere.activeSelf)
+            energySphere.SetActive(false);
     }
 
     void EmitEnergy()
     {
-        Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Emitting energy : " + (inAstralState ? "Astral" : "World"));
         Collider[] colliders = Physics.OverlapSphere(transform.position, energyRadius, energyDoor);
         if (colliders.Length > 0)
         {
@@ -139,14 +164,6 @@ public class Interactible : MonoBehaviour
                 {
                     doorsList.Add(colliders[0].GetComponent<EnergyDoor>());
                     colliders[0].GetComponent<EnergyDoor>().CheckForEnergy(this);
-                }
-            }
-            else if (colliders[0].GetComponent<DoorRelays>())
-            {
-                if (!doorsPointsList.Contains(colliders[0].GetComponent<DoorRelays>()))
-                {
-                    doorsPointsList.Add(colliders[0].GetComponent<DoorRelays>());
-                    colliders[0].GetComponent<DoorRelays>().CheckForEnergy(this);
                 }
             }
         }
@@ -169,30 +186,11 @@ public class Interactible : MonoBehaviour
                 doorsList.RemoveAt(0);
             }
         }
-
-        if (doorsPointsList.Count > 1)
-        {
-            foreach (var col in doorsPointsList)
-                if (!colliders.Contains(col.GetComponent<Collider>()))
-                {
-                    col.RemoveEnergy(this);
-                    doorsPointsList.Remove(col);
-                    if (doorsPointsList.Count == 0) break;
-                }
-        }
-        else if (doorsPointsList.Count == 1)
-        {
-            if (!colliders.Contains(doorsPointsList[0].GetComponent<Collider>()))
-            {
-                doorsPointsList[0].RemoveEnergy(this);
-                doorsPointsList.RemoveAt(0);
-            }
-        }
     }
 
     void NoColldierState()
     {
-        Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
@@ -201,11 +199,12 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = noColliderMat;
+        astraldObj.GetComponent<MeshRenderer>().material = noColliderMat;
     }
 
     void UnMoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
@@ -214,11 +213,12 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = unMoveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = unMoveableMat;
     }
 
     void MoveableState()
     {
-        Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+        //Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");
@@ -226,6 +226,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = false;
 
         mesh.material = moveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = moveableMat;
     }
 
     void EnergyMoveable()
@@ -235,6 +236,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = emitEnergyMat;
+        astraldObj.GetComponent<MeshRenderer>().material = emitEnergyMat;
     }
 
     void EnergyUnMoveable()
@@ -244,6 +246,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = energyUnMoveableMat;
+        astraldObj.GetComponent<MeshRenderer>().material = energyUnMoveableMat;
     }
 
     void EnergyNoCollider()
@@ -253,6 +256,7 @@ public class Interactible : MonoBehaviour
         emitEnergy = true;
 
         mesh.material = energyNoColliderMat;
+        astraldObj.GetComponent<MeshRenderer>().material = energyNoColliderMat;
     }
 
     void Size()
@@ -307,6 +311,67 @@ public class Interactible : MonoBehaviour
         }
 
         sizeIsModify = false;
+    }
+
+    void SwitchToNPC()
+    {
+        TryGetComponent(out NPC_Controller _npc);
+        if (inAstralState)
+        {
+            _npc.SwitchAstralState(true);
+            emitEnergy = true;
+            mesh.material = npcEnergyMat;
+        }
+        else
+        {
+            _npc.SwitchAstralState(false);
+            emitEnergy = false;
+            mesh.material = npcMat;
+        }
+    }
+
+    void PortalSwitch()
+    {
+        TryGetComponent(out Portal p);
+
+        UnMoveableState();
+
+        TryGetComponent(out Rigidbody rb);
+        Destroy(rb);
+
+        astraldObj.SetActive(true);
+        mesh.enabled = false;
+        col.enabled = false;
+
+        astraldObj.GetComponent<MeshRenderer>().material = portalMat;
+        p.isActive = true;
+
+        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
+            astraldObj.GetComponent<MeshRenderer>().material = portalMat;
+        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
+            mesh.material = portalMat;
+    }
+
+    void ResetPortal()
+    {
+        TryGetComponent(out Portal p);
+        
+        MoveableState();
+        astraldObj.SetActive(false);
+        mesh.enabled = true;
+        col.enabled = true;
+
+        p.isActive = false;
+
+        if (TryGetComponent(out Rigidbody rb))
+            return;
+        else
+        {
+            Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
+            _rb.mass = 100;
+            _rb.freezeRotation = true;
+        }
+        
     }
 
     private void OnDrawGizmos()

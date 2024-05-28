@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInputs;
     private Vector3 move;
     
-    private PlayerController Instance;
+    public static PlayerController Instance;
     private PlayerAnimator _playerAnimator;
     
 
@@ -32,58 +32,44 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] Vector3 camForward, camRight;
 
-    [Header("Interact Settings")]
-    [SerializeField] Transform interactCenterPoint;
-    [SerializeField] Vector3 attackBoxSize;
-    [SerializeField] LayerMask collidingLayers;
-    [SerializeField] ParticleSystem slashVFX;
-
     [Header("Grab Settings")]
+    [SerializeField] Transform interactCenterPoint;
     [SerializeField] Vector3 grabBoxSize;
     [SerializeField] LayerMask collidingGrabLayers;
 
-    /*[Header("Health Settings")]
-    [SerializeField] private int maxHealth = 3;
-    private int currentHealth;*/
-
     GameObject currentGrabObject;
+    float inputTimer;
+
+    public bool hasAstralPocket;
+    bool inputRealased = true;
+
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance= this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     void Start()
     {
         if (TryGetComponent(out PlayerAnimator playerAnimator))
-        {
             _playerAnimator = playerAnimator;
-        }
-        else Debug.LogError("No PlayerAnimator component found on " + gameObject.name);
+        else 
+            Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
         
         if (TryGetComponent(out Rigidbody Rigidbody))
-        {
             rb = Rigidbody;
-        }
-        else Debug.LogError("No Rigidbody component found on " + gameObject.name);
+        else 
+            Debug.LogError("No Rigidbody component found on " + gameObject.name);
         
         rb.freezeRotation = true;
-
-        //currentHealth = maxHealth;
         CameraOffset();
     }
 
     void Update()
     {
-        Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
-
         MyInputs();
         HUDUpdate();
         
@@ -100,8 +86,25 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.pocket.WasPressedThisFrame())
-            AstralPocket.Instance.CastAstralPocket();
+        if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
+            inputTimer += Time.deltaTime;
+
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket && inputRealased)
+        {
+            if(inputTimer < AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.CastAstralPocket();
+                inputTimer = 0;
+            }
+            else if (inputTimer > AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.DecastAstralPocket();
+                inputTimer = 0;
+            }
+        }
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame()) inputRealased = true;
 
         moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
         move = moveInputs.x * camRight + moveInputs.y * camForward;
@@ -132,6 +135,22 @@ public class PlayerController : MonoBehaviour
             var aimVector = Quaternion.LookRotation(move);
             transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
+
+        if (inputTimer > .2f)
+        {
+            HUD.Instance.astralSlider.gameObject.SetActive(true);
+            HUD.Instance.astralSlider.value = inputTimer;
+        }
+        else
+            HUD.Instance.astralSlider.gameObject.SetActive(false);
+
+        if(inputTimer > AstralPocket.Instance.timeToReset)
+        {
+            AstralPocket.Instance.DecastAstralPocket();
+            inputTimer = 0;
+            inputRealased = false;
+        }
+
     }
 
     void HUDUpdate()
@@ -175,10 +194,12 @@ public class PlayerController : MonoBehaviour
         
 
         // Calcul la speed et l'envoie a l'animator
-        float speed = rb.velocity.magnitude / maxSpeed;
-        speed = Mathf.Clamp(speed, 0f, 1f);
-        _playerAnimator.SetSpeed(speed);
-        
+        if(_playerAnimator != null)
+        {
+            float speed = rb.velocity.magnitude / maxSpeed;
+            speed = Mathf.Clamp(speed, 0f, 1f);
+            _playerAnimator.SetSpeed(speed);
+        }
     }
 
     private void CameraOffset()
@@ -279,10 +300,10 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(interactCenterPoint.localPosition, attackBoxSize);
+
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
+        Gizmos.DrawWireSphere(feet.localPosition, 0.15f);
     }
 }
