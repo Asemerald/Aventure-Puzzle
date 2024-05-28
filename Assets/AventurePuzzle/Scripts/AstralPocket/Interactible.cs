@@ -19,13 +19,14 @@ public class Interactible : MonoBehaviour
 
     public enum ObjectState { None, Moveable, UnMoveable, NoCollider, EmitEnergy, EnergyUnMoveable, EnergyNoCollider, Size, EnergySize, Portal, NPC }
 
+    [Header("Global Settings")]
     public ObjectState worldState;
     public ObjectState astralState;
     public bool sizeIsModify;
 
     public bool inAstralState;
-    
     public bool isMoveable;
+    public bool isPortal;
 
     [Header("Energy Emition")]
     public bool emitEnergy;
@@ -35,20 +36,23 @@ public class Interactible : MonoBehaviour
     [Header("Size/Mesh Mods")]
     public GameObject astraldObj;
 
-    List<EnergyDoor> doorsList = new List<EnergyDoor>();
-
     [Header("Materials States")]
     public Material moveableMat;
-    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat, npc, npcEnergy;
+    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat, npcMat, npcEnergyMat;
 
+    List<EnergyDoor> doorsList = new List<EnergyDoor>();
     MeshRenderer mesh;
     Collider col;
+
 
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
         SwitchMode(false);
+
+        if (astralState == ObjectState.Portal)
+            isPortal = true;
     }
 
     public void SwitchMode(bool astral)
@@ -80,11 +84,13 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergySize: EnergySize();
                     break;
-                case ObjectState.Portal:
+                case ObjectState.Portal: PortalSwitch();
                     break;
                 case ObjectState.NPC: SwitchToNPC();
                     break;
             }
+
+            if (isPortal) PortalSwitch();
         }
         else
         {
@@ -113,7 +119,7 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.EnergySize: EnergySize();
                     break;
-                case ObjectState.Portal:
+                case ObjectState.Portal: PortalSwitch();
                     break;
                 case ObjectState.NPC: SwitchToNPC();
                     break;
@@ -297,15 +303,54 @@ public class Interactible : MonoBehaviour
         {
             _npc.SwitchAstralState(true);
             emitEnergy = true;
-            mesh.material = npcEnergy;
+            mesh.material = npcEnergyMat;
         }
         else
         {
             _npc.SwitchAstralState(false);
             emitEnergy = false;
-            mesh.material = npc;
+            mesh.material = npcMat;
         }
     }
+
+    void PortalSwitch()
+    {
+        TryGetComponent(out Portal p);
+
+        if (inAstralState)
+        {
+            UnMoveableState();
+
+            TryGetComponent(out Rigidbody rb);
+            Destroy(rb);
+
+            astraldObj.SetActive(true);
+            mesh.enabled = false;
+            col.enabled = false;
+
+            astraldObj.GetComponent<MeshRenderer>().material = portalMat;
+            p.isActive = true;
+        }
+        else
+        {
+            MoveableState();
+            astraldObj.SetActive(false);
+            mesh.enabled = true;
+            col.enabled = true;
+
+            p.isActive = false;
+
+            if (TryGetComponent(out Rigidbody rb))
+                return;
+            else
+            {
+                Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
+                _rb.mass = 100;
+                _rb.freezeRotation = true;
+            }
+        }
+    }
+
 
     private void OnDrawGizmos()
     {
