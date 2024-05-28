@@ -70,6 +70,9 @@ public class Interactible : MonoBehaviour
             if (sizeIsModify)
                 ResetSize();
 
+            if (isPortal)
+                ResetPortal();
+
             switch (astralState)
             {
                 case ObjectState.None: Debug.Log(gameObject.name + " : " + "No State : Astral");
@@ -96,7 +99,7 @@ public class Interactible : MonoBehaviour
                     break;
             }
 
-            if (isPortal) PortalSwitch();
+            //if (isPortal) PortalSwitch();
         }
         else
         {
@@ -104,6 +107,9 @@ public class Interactible : MonoBehaviour
 
             if (sizeIsModify)
                 ResetSize();
+
+            if (isPortal)
+                ResetPortal();
 
             switch (worldState)
             {
@@ -328,40 +334,45 @@ public class Interactible : MonoBehaviour
     {
         TryGetComponent(out Portal p);
 
-        if (inAstralState)
-        {
-            UnMoveableState();
+        UnMoveableState();
 
-            TryGetComponent(out Rigidbody rb);
-            Destroy(rb);
+        TryGetComponent(out Rigidbody rb);
+        Destroy(rb);
 
-            astraldObj.SetActive(true);
-            mesh.enabled = false;
-            col.enabled = false;
+        astraldObj.SetActive(true);
+        mesh.enabled = false;
+        col.enabled = false;
 
+        astraldObj.GetComponent<MeshRenderer>().material = portalMat;
+        p.isActive = true;
+
+        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
             astraldObj.GetComponent<MeshRenderer>().material = portalMat;
-            p.isActive = true;
-        }
-        else
-        {
-            MoveableState();
-            astraldObj.SetActive(false);
-            mesh.enabled = true;
-            col.enabled = true;
-
-            p.isActive = false;
-
-            if (TryGetComponent(out Rigidbody rb))
-                return;
-            else
-            {
-                Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
-                _rb.mass = 100;
-                _rb.freezeRotation = true;
-            }
-        }
+        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
+            mesh.material = portalMat;
     }
 
+    void ResetPortal()
+    {
+        TryGetComponent(out Portal p);
+        
+        MoveableState();
+        astraldObj.SetActive(false);
+        mesh.enabled = true;
+        col.enabled = true;
+
+        p.isActive = false;
+
+        if (TryGetComponent(out Rigidbody rb))
+            return;
+        else
+        {
+            Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
+            _rb.mass = 100;
+            _rb.freezeRotation = true;
+        }
+        
+    }
 
     private void OnDrawGizmos()
     {
