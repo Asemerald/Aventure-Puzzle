@@ -36,7 +36,7 @@ public class HUD : MonoBehaviour
     public IEnumerator Tutorial()
     {
         tutorialHolder.SetActive(true);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(6);
         tutorialHolder.SetActive(false);
     }
 
