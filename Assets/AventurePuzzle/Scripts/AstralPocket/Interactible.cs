@@ -56,9 +56,9 @@ public class Interactible : MonoBehaviour
             isPortal = true;
 
         if(worldState == ObjectState.NPC)
-        energySphere.transform.localScale = Vector3.one * (energyRadius * 2);
+        energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
             else
-        energySphere.transform.localScale = Vector3.one * energyRadius;
+        energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
     public void SwitchMode(bool astral)
