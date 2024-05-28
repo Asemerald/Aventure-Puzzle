@@ -17,7 +17,7 @@ public class Interactible : MonoBehaviour
      * Portal -> l'objet se transforme en portail
      */
 
-    public enum ObjectState { None, Moveable, UnMoveable, NoCollider, EmitEnergy, EnergyUnMoveable, EnergyNoCollider, Size, EnergySize, Portal }
+    public enum ObjectState { None, Moveable, UnMoveable, NoCollider, EmitEnergy, EnergyUnMoveable, EnergyNoCollider, Size, EnergySize, Portal, NPC }
 
     public ObjectState worldState;
     public ObjectState astralState;
@@ -39,7 +39,7 @@ public class Interactible : MonoBehaviour
 
     [Header("Materials States")]
     public Material moveableMat;
-    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat;
+    public Material unMoveableMat, noColliderMat, emitEnergyMat, energyUnMoveableMat, energyNoColliderMat, sizeMat, energySizeMat, portalMat, npc, npcEnergy;
 
     MeshRenderer mesh;
     Collider col;
@@ -82,7 +82,8 @@ public class Interactible : MonoBehaviour
                     break;
                 case ObjectState.Portal:
                     break;
-
+                case ObjectState.NPC: SwitchToNPC();
+                    break;
             }
         }
         else
@@ -113,6 +114,8 @@ public class Interactible : MonoBehaviour
                 case ObjectState.EnergySize: EnergySize();
                     break;
                 case ObjectState.Portal:
+                    break;
+                case ObjectState.NPC: SwitchToNPC();
                     break;
             } 
         }
@@ -285,6 +288,23 @@ public class Interactible : MonoBehaviour
         }
 
         sizeIsModify = false;
+    }
+
+    void SwitchToNPC()
+    {
+        TryGetComponent(out NPC_Controller _npc);
+        if (inAstralState)
+        {
+            _npc.SwitchAstralState(true);
+            emitEnergy = true;
+            mesh.material = npcEnergy;
+        }
+        else
+        {
+            _npc.SwitchAstralState(false);
+            emitEnergy = false;
+            mesh.material = npc;
+        }
     }
 
     private void OnDrawGizmos()
