@@ -17,6 +17,10 @@ public class HUD : MonoBehaviour
     [Header("Astral Pocket")]
     public Slider astralSlider;
 
+
+    [Header("Tutorial")]
+    [SerializeField] GameObject tutorialHolder;
+
     private void Awake()
     {
         if(Instance == null)
@@ -27,6 +31,13 @@ public class HUD : MonoBehaviour
     {
         astralSlider.minValue = 0;
         astralSlider.maxValue = AstralPocket.Instance.timeToReset;
+    }
+
+    public IEnumerator Tutorial()
+    {
+        tutorialHolder.SetActive(true);
+        yield return new WaitForSeconds(3);
+        tutorialHolder.SetActive(false);
     }
 
 }
