@@ -32,6 +32,7 @@ public class Interactible : MonoBehaviour
     public bool emitEnergy;
     public float energyRadius;
     public LayerMask energyDoor;
+    public GameObject energySphere;
 
     [Header("Size/Mesh Mods")]
     public GameObject astraldObj;
@@ -53,6 +54,11 @@ public class Interactible : MonoBehaviour
 
         if (astralState == ObjectState.Portal)
             isPortal = true;
+
+        if(worldState == ObjectState.NPC)
+        energySphere.transform.localScale = Vector3.one * (energyRadius * 2);
+            else
+        energySphere.transform.localScale = Vector3.one * energyRadius;
     }
 
     public void SwitchMode(bool astral)
@@ -133,6 +139,11 @@ public class Interactible : MonoBehaviour
             EmitEnergy();
         else if(!emitEnergy)
             doorsList.Clear();
+
+        if(emitEnergy && !energySphere.activeSelf)
+            energySphere.SetActive(true);
+        else if(!emitEnergy && energySphere.activeSelf)
+            energySphere.SetActive(false);
     }
 
     void EmitEnergy()
