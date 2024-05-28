@@ -43,17 +43,13 @@ public class AstralPocket : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(newPocketCastPos, sphereRadius, interactibleMask);
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<Interactible>())
+            if (collider.TryGetComponent(out Interactible interactible))
             {
-                collider.GetComponent<Interactible>().SwitchMode(true); // Switch state of interactible to astral state
-
-                // Destroy the object in the scene -- Pourquoi ?
-                //Destroy(collider.gameObject);
+                interactible.SwitchMode(true); // Switch state of interactible to astral state
             }
-            else if (collider.GetComponent<InteractibleMesh>())
+            else if (collider.TryGetComponent(out InteractibleMesh mesh))
             {
-                Debug.Log("Astral Pocket : Interactible Mesh is detected : Casted");
-                collider.GetComponent<InteractibleMesh>().parent.SwitchMode(true);
+                mesh.parent.SwitchMode(true);
             }
         }
         astralPocketCasted = true;
@@ -69,14 +65,13 @@ public class AstralPocket : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
         foreach (Collider collider in colliders)
         {
-            if (collider.GetComponent<Interactible>())
+            if (collider.TryGetComponent(out Interactible interactible))
             {
-                collider.GetComponent<Interactible>().SwitchMode(false); // Switch state of interactible to world state
+                interactible.SwitchMode(false); // Switch state of interactible to world state
             }
-            else if (collider.GetComponent<InteractibleMesh>())
+            else if (collider.TryGetComponent(out InteractibleMesh mesh))
             {
-                Debug.Log("Astral Pocket : Interactible Mesh is detected : Decasted");
-                collider.GetComponent<InteractibleMesh>().parent.SwitchMode(false);
+                mesh.parent.SwitchMode(false);
             }
         }
 
