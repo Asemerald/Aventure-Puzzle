@@ -25,8 +25,7 @@ public class AstralPocket : MonoBehaviour
 
     public GameObject astralPocketMesh;
 
-    List<Collider> currentObjects = new List<Collider>();
-    List<Collider> previousObjects = new List<Collider>();
+    List<GameObject> sphereCasted = new List<GameObject>();
 
     private void Awake()
     {
@@ -155,9 +154,10 @@ public class AstralPocket : MonoBehaviour
         }
 
         astralPocketCasted = true;
-        previousPocketCastPos = newPocketCastPos;
-        astralPocketMesh.transform.position = newPocketCastPos;
-        astralPocketMesh.SetActive(true);
+
+        sphereCasted.Add(Instantiate(astralPocketMesh, newPocketCastPos, Quaternion.identity, transform.parent));
+        
+        //astralPocketMesh.SetActive(true);
 
         //StartCoroutine(DisplayAstralPocket());
     }
@@ -170,6 +170,11 @@ public class AstralPocket : MonoBehaviour
 
         foreach(var o in obj)
         { o.SwitchMode(false); }
+
+        foreach (var o in sphereCasted)
+            Destroy(o.gameObject);
+
+        sphereCasted.Clear();
 
         /*Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
         foreach (Collider collider in colliders)
@@ -184,7 +189,7 @@ public class AstralPocket : MonoBehaviour
             }
         }*/
 
-        astralPocketMesh.SetActive(false);
+        //astralPocketMesh.SetActive(false);
     }
 
     /*IEnumerator DisplayAstralPocket()
