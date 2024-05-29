@@ -39,7 +39,6 @@ public class PlayerAnimator : MonoBehaviour
         if (_mesh.TryGetComponent(out Animator animator))
         {
             _animator = animator;
-            //_mesh.transform.parent.transform.position = Vector3.zero;
         }
         else Debug.LogError("No Animator component found on " + _mesh.name);
         
@@ -61,6 +60,11 @@ public class PlayerAnimator : MonoBehaviour
     public void SetSpeed(float speed)
     {
         _animator.SetFloat("Speed", speed);
+    }
+
+    public void AlternativeIdle()
+    {
+        _animator.SetBool("AlternativeIdle", true);
     }
 
     private void Update()
