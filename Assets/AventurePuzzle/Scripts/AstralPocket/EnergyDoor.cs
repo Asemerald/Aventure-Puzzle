@@ -38,7 +38,7 @@ public class EnergyDoor : MonoBehaviour
 
     private void Update()
     {
-        if(interactiblePowering.Count == interactiblesRequired.Length && !isOpen)
+        if(interactiblePowering.Count >= interactiblesRequired.Length && !isOpen)
         {
             Debug.Log("Energy Door : Door is powered");
             isOpen = true;
@@ -62,6 +62,7 @@ public class EnergyDoor : MonoBehaviour
         }
         for(int i = 0; i < interactiblePowering.Count; i++)
         {
+            if (i >= lockObjects.Count) continue;
             lockObjects[i].SetActive(false);
         }
 
