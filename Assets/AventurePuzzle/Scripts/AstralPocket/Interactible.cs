@@ -32,6 +32,7 @@ public class Interactible : MonoBehaviour
     public bool emitEnergy;
     public float energyRadius;
     public LayerMask energyDoor;
+    public GameObject energySphere;
 
     [Header("Size/Mesh Mods")]
     public GameObject astraldObj;
@@ -53,6 +54,11 @@ public class Interactible : MonoBehaviour
 
         if (astralState == ObjectState.Portal)
             isPortal = true;
+
+        if(worldState == ObjectState.NPC)
+        energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
+            else
+        energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
     public void SwitchMode(bool astral)
@@ -63,6 +69,9 @@ public class Interactible : MonoBehaviour
 
             if (sizeIsModify)
                 ResetSize();
+
+            if (isPortal)
+                ResetPortal();
 
             switch (astralState)
             {
@@ -90,7 +99,7 @@ public class Interactible : MonoBehaviour
                     break;
             }
 
-            if (isPortal) PortalSwitch();
+            //if (isPortal) PortalSwitch();
         }
         else
         {
@@ -98,6 +107,9 @@ public class Interactible : MonoBehaviour
 
             if (sizeIsModify)
                 ResetSize();
+
+            if (isPortal)
+                ResetPortal();
 
             switch (worldState)
             {
@@ -133,6 +145,11 @@ public class Interactible : MonoBehaviour
             EmitEnergy();
         else if(!emitEnergy)
             doorsList.Clear();
+
+        if(emitEnergy && !energySphere.activeSelf)
+            energySphere.SetActive(true);
+        else if(!emitEnergy && energySphere.activeSelf)
+            energySphere.SetActive(false);
     }
 
     void EmitEnergy()
@@ -317,40 +334,45 @@ public class Interactible : MonoBehaviour
     {
         TryGetComponent(out Portal p);
 
-        if (inAstralState)
-        {
-            UnMoveableState();
+        UnMoveableState();
 
-            TryGetComponent(out Rigidbody rb);
-            Destroy(rb);
+        TryGetComponent(out Rigidbody rb);
+        Destroy(rb);
 
-            astraldObj.SetActive(true);
-            mesh.enabled = false;
-            col.enabled = false;
+        astraldObj.SetActive(true);
+        mesh.enabled = false;
+        col.enabled = false;
 
+        astraldObj.GetComponent<MeshRenderer>().material = portalMat;
+        p.isActive = true;
+
+        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
             astraldObj.GetComponent<MeshRenderer>().material = portalMat;
-            p.isActive = true;
-        }
-        else
-        {
-            MoveableState();
-            astraldObj.SetActive(false);
-            mesh.enabled = true;
-            col.enabled = true;
-
-            p.isActive = false;
-
-            if (TryGetComponent(out Rigidbody rb))
-                return;
-            else
-            {
-                Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
-                _rb.mass = 100;
-                _rb.freezeRotation = true;
-            }
-        }
+        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
+            mesh.material = portalMat;
     }
 
+    void ResetPortal()
+    {
+        TryGetComponent(out Portal p);
+        
+        MoveableState();
+        astraldObj.SetActive(false);
+        mesh.enabled = true;
+        col.enabled = true;
+
+        p.isActive = false;
+
+        if (TryGetComponent(out Rigidbody rb))
+            return;
+        else
+        {
+            Rigidbody _rb = gameObject.AddComponent<Rigidbody>();
+            _rb.mass = 100;
+            _rb.freezeRotation = true;
+        }
+        
+    }
 
     private void OnDrawGizmos()
     {

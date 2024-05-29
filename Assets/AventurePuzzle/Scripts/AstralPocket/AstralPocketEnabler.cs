@@ -9,6 +9,7 @@ public class AstralPocketEnabler : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController.Instance.hasAstralPocket = true;
+            StartCoroutine(HUD.Instance.Tutorial());
         }
     }
 }

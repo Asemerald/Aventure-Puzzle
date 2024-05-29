@@ -8,11 +8,37 @@ public class EnergyDoor : MonoBehaviour
     public Interactible[] interactiblesRequired;
     [HideInInspector] public List<Interactible> interactiblePowering;
 
+    [Header("Lock")]
+    [SerializeField] GameObject lockMesh;
+    List<GameObject> lockObjects = new();
+
     public bool isOpen;
+
+    private void Start()
+    {
+        foreach(var d in interactiblesRequired)
+        {
+            GameObject go = Instantiate(lockMesh, transform.position, transform.rotation, transform);
+            lockObjects.Add(go);
+        }
+
+        if(lockObjects.Count > 0)
+        {
+            int sum = lockObjects.Count;
+
+            if (sum > 1)
+            {
+                lockObjects[0].transform.localPosition = new Vector3(lockObjects[0].transform.localPosition.x - .25f, lockObjects[0].transform.localPosition.y, lockObjects[0].transform.localPosition.z - .55f);
+                lockObjects[1].transform.localPosition = new Vector3(lockObjects[1].transform.localPosition.x + .25f, lockObjects[1].transform.localPosition.y, lockObjects[1].transform.localPosition.z - .55f);
+            }
+            else
+                lockObjects[0].transform.localPosition = new Vector3(0, 0,-.55f);
+        }
+    }
 
     private void Update()
     {
-        if(interactiblePowering.Count == interactiblesRequired.Length && !isOpen)
+        if(interactiblePowering.Count >= interactiblesRequired.Length && !isOpen)
         {
             Debug.Log("Energy Door : Door is powered");
             isOpen = true;
@@ -29,6 +55,17 @@ public class EnergyDoor : MonoBehaviour
 
         if (interactiblePowering.Count > 0)
             CheckIfInteractibleStillOn();
+
+        for(int i = 0; i < interactiblesRequired.Length; i++)
+        {
+            lockObjects[i].SetActive(true);
+        }
+        for(int i = 0; i < interactiblePowering.Count; i++)
+        {
+            if (i >= lockObjects.Count) continue;
+            lockObjects[i].SetActive(false);
+        }
+
     }
 
     void CheckIfInteractibleStillOn()
