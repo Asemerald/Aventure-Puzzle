@@ -29,6 +29,21 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Start()
     {
+        
+        if  (_mesh == null)
+        {
+            Debug.LogError("Mesh not referenced in " + gameObject.name);
+            return;
+        }
+        
+        if (_mesh.TryGetComponent(out Animator animator))
+        {
+            _animator = animator;
+            //_mesh.transform.parent.transform.position = Vector3.zero;
+        }
+        else Debug.LogError("No Animator component found on " + _mesh.name);
+        
+        
         if (TryGetComponent(out PlayerController playerController))
         {
             _playerController = playerController;
