@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     float inputTimer;
 
     public bool hasAstralPocket;
+    bool inputRealased = true;
 
 
     private void Awake()
@@ -85,10 +86,11 @@ public class PlayerController : MonoBehaviour
 
         if(GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket)
+        if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
             inputTimer += Time.deltaTime;
 
-        if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket)
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket && inputRealased)
         {
             if(inputTimer < AstralPocket.Instance.timeToReset)
             {
@@ -101,6 +103,8 @@ public class PlayerController : MonoBehaviour
                 inputTimer = 0;
             }
         }
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame()) inputRealased = true;
 
         moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
         move = moveInputs.x * camRight + moveInputs.y * camForward;
@@ -139,6 +143,14 @@ public class PlayerController : MonoBehaviour
         }
         else
             HUD.Instance.astralSlider.gameObject.SetActive(false);
+
+        if(inputTimer > AstralPocket.Instance.timeToReset)
+        {
+            AstralPocket.Instance.DecastAstralPocket();
+            inputTimer = 0;
+            inputRealased = false;
+        }
+
     }
 
     void HUDUpdate()
