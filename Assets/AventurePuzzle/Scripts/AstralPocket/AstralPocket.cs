@@ -135,8 +135,8 @@ public class AstralPocket : MonoBehaviour
     {
         Debug.Log("Astral Pocket : Casted");
         
-        if(astralPocketCasted)
-            DecastAstralPocket();
+        /*if(astralPocketCasted)
+            DecastAstralPocket();*/
 
         // Cast a sphere around the player
         newPocketCastPos = transform.position;
@@ -146,15 +146,16 @@ public class AstralPocket : MonoBehaviour
         {
             if (collider.TryGetComponent(out Interactible interactible))
             {
-                interactible.SwitchMode(true); // Switch state of interactible to astral state
+                interactible.SwitchMode(!interactible.inAstralState); // Switch state of interactible to astral state
             }
             else if (collider.TryGetComponent(out InteractibleMesh mesh))
             {
-                mesh.parent.SwitchMode(true);
+                mesh.parent.SwitchMode(!mesh.parent.inAstralState);
             }
         }
-        astralPocketCasted = true;
-        previousPocketCastPos = newPocketCastPos;
+
+        //astralPocketCasted = true;
+        //previousPocketCastPos = newPocketCastPos;
         astralPocketMesh.transform.position = newPocketCastPos;
 
         StartCoroutine(DisplayAstralPocket());
@@ -181,7 +182,7 @@ public class AstralPocket : MonoBehaviour
     IEnumerator DisplayAstralPocket()
     {
         astralPocketMesh.SetActive(true);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.25f);
         astralPocketMesh.SetActive(false);
     }
 
