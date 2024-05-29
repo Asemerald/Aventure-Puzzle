@@ -146,25 +146,32 @@ public class AstralPocket : MonoBehaviour
         {
             if (collider.TryGetComponent(out Interactible interactible))
             {
-                interactible.SwitchMode(!interactible.inAstralState); // Switch state of interactible to astral state
+                interactible.SwitchMode(true); // Switch state of interactible to astral state
             }
             else if (collider.TryGetComponent(out InteractibleMesh mesh))
             {
-                mesh.parent.SwitchMode(!mesh.parent.inAstralState);
+                mesh.parent.SwitchMode(true);
             }
         }
 
-        //astralPocketCasted = true;
-        //previousPocketCastPos = newPocketCastPos;
+        astralPocketCasted = true;
+        previousPocketCastPos = newPocketCastPos;
         astralPocketMesh.transform.position = newPocketCastPos;
+        astralPocketMesh.SetActive(true);
 
-        StartCoroutine(DisplayAstralPocket());
+        //StartCoroutine(DisplayAstralPocket());
     }
 
     public void DecastAstralPocket()
     {
         Debug.Log("Astral Pocket : Decasted");
-        Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
+
+        Interactible[] obj = FindObjectsOfType<Interactible>();
+
+        foreach(var o in obj)
+        { o.SwitchMode(false); }
+
+        /*Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
         foreach (Collider collider in colliders)
         {
             if (collider.TryGetComponent(out Interactible interactible))
@@ -175,16 +182,17 @@ public class AstralPocket : MonoBehaviour
             {
                 mesh.parent.SwitchMode(false);
             }
-        }
+        }*/
 
+        astralPocketMesh.SetActive(false);
     }
 
-    IEnumerator DisplayAstralPocket()
+    /*IEnumerator DisplayAstralPocket()
     {
         astralPocketMesh.SetActive(true);
         yield return new WaitForSeconds(.25f);
         astralPocketMesh.SetActive(false);
-    }
+    }*/
 
     private void OnDrawGizmos()
     {

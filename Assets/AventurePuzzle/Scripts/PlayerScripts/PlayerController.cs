@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (inputTimer > AstralPocket.Instance.timeToReset)
             {
-                //AstralPocket.Instance.DecastAstralPocket();
+                AstralPocket.Instance.DecastAstralPocket();
                 inputTimer = 0;
             }
         }
@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         if(inputTimer > AstralPocket.Instance.timeToReset)
         {
-            //AstralPocket.Instance.DecastAstralPocket();
+            AstralPocket.Instance.DecastAstralPocket();
             inputTimer = 0;
             inputRealased = false;
         }
