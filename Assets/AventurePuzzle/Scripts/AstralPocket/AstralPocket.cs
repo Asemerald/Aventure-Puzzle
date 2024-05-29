@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AstralPocket : MonoBehaviour
@@ -24,11 +25,111 @@ public class AstralPocket : MonoBehaviour
 
     public GameObject astralPocketMesh;
 
+    List<Collider> currentObjects = new List<Collider>();
+    List<Collider> previousObjects = new List<Collider>();
+
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
     }
+
+    #region Test
+    /*public void CastPocket()
+    {
+        newPocketCastPos = transform.position;
+
+        astralPocketCasted = true;
+        previousPocketCastPos = newPocketCastPos;
+
+        astralPocketMesh.SetActive(true);
+        astralPocketMesh.transform.position = newPocketCastPos;
+    }
+
+    public void DeCastPocket()
+    {
+        astralPocketMesh.SetActive(false);
+
+        astralPocketCasted = false;
+    }
+
+    private void Update()
+    {
+        
+        CheckForInteractibles();
+
+    }
+
+    void CheckForInteractibles()
+    {
+        if (!astralPocketCasted)
+        {
+            if(previousObjects.Count > 0)
+            {
+                foreach (Collider coll in previousObjects)
+                    DecastAstralPocket(coll.gameObject);
+                currentObjects.Clear();
+                previousObjects.Clear();
+            }
+            return;
+        }
+
+        if (previousObjects.Count == GetObjects().Count) return;
+
+        foreach (var obj in previousObjects)
+            DecastAstralPocket(obj.gameObject);
+
+
+        currentObjects.Clear();
+
+        foreach (var o in GetObjects())
+        {
+            currentObjects.Add(o);
+            CastAstralPocket(o.gameObject);
+        }
+
+        previousObjects.Clear();
+        previousObjects.AddRange(currentObjects);
+    }
+
+    void CastAstralPocket(GameObject obj)
+    {
+        if (obj.TryGetComponent(out Interactible interactible))
+        {
+            interactible.SwitchMode(true); // Switch state of interactible to astral state
+        }
+        else if (obj.TryGetComponent(out InteractibleMesh mesh))
+        {
+            mesh.parent.SwitchMode(true);
+        }
+
+        astralPocketCasted = true;
+        previousPocketCastPos = newPocketCastPos;
+
+        astralPocketMesh.SetActive(true);
+        astralPocketMesh.transform.position = newPocketCastPos;
+    }
+
+    void DecastAstralPocket(GameObject obj)
+    {
+        if (obj.TryGetComponent(out Interactible interactible))
+        {
+            interactible.SwitchMode(false); // Switch state of interactible to world state
+        }
+        else if (obj.TryGetComponent(out InteractibleMesh mesh))
+        {
+            mesh.parent.SwitchMode(false);
+        }
+    }*/
+
+    /*List<Collider> GetObjects()
+    {
+        if (astralPocketCasted)
+            return Physics.OverlapSphere(newPocketCastPos, sphereRadius, interactibleMask).ToList();
+        else
+            return null;
+    }*/
+    #endregion
 
     public void CastAstralPocket()
     {
@@ -54,9 +155,9 @@ public class AstralPocket : MonoBehaviour
         }
         astralPocketCasted = true;
         previousPocketCastPos = newPocketCastPos;
-
-        astralPocketMesh.SetActive(true);
         astralPocketMesh.transform.position = newPocketCastPos;
+
+        StartCoroutine(DisplayAstralPocket());
     }
 
     public void DecastAstralPocket()
@@ -75,6 +176,12 @@ public class AstralPocket : MonoBehaviour
             }
         }
 
+    }
+
+    IEnumerator DisplayAstralPocket()
+    {
+        astralPocketMesh.SetActive(true);
+        yield return new WaitForSeconds(.5f);
         astralPocketMesh.SetActive(false);
     }
 
