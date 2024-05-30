@@ -191,6 +191,9 @@ public class Interactible : MonoBehaviour
     {
         //Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = true;
+
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
 
@@ -205,6 +208,9 @@ public class Interactible : MonoBehaviour
     {
         //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = true;
+
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
 
@@ -218,6 +224,9 @@ public class Interactible : MonoBehaviour
     void MoveableState()
     {
         //Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = false;
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");
@@ -274,6 +283,8 @@ public class Interactible : MonoBehaviour
         }
 
         UnMoveableState();
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = false;
 
         if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
             astraldObj.GetComponent<MeshRenderer>().material = sizeMat;
@@ -372,6 +383,7 @@ public class Interactible : MonoBehaviour
         }
         
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
