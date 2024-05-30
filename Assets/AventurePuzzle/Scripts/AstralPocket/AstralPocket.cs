@@ -12,16 +12,13 @@ public class AstralPocket : MonoBehaviour
     public float sphereRadius = 5f; // Adjust the radius as needed
     public LayerMask interactibleMask;
     public float timeToReset = 2;
+    public int maxPocketAvailable = 3;
 
+    int currentPocketNum;
 
     [HideInInspector] public bool ShowAstralPocket = false;
 
-    //create a taskbar menu that call the function
-
-    Vector3 previousPocketCastPos;
     Vector3 newPocketCastPos;
-
-    bool astralPocketCasted;
 
     public GameObject astralPocketMesh;
 
@@ -132,6 +129,10 @@ public class AstralPocket : MonoBehaviour
 
     public void CastAstralPocket()
     {
+        if (currentPocketNum >= maxPocketAvailable)
+            return;
+
+        currentPocketNum++;
         Debug.Log("Astral Pocket : Casted");
         
         /*if(astralPocketCasted)
@@ -152,8 +153,6 @@ public class AstralPocket : MonoBehaviour
                 mesh.parent.SwitchMode(true);
             }
         }
-
-        astralPocketCasted = true;
 
         sphereCasted.Add(Instantiate(astralPocketMesh, newPocketCastPos, Quaternion.identity, transform.parent));
         
@@ -176,6 +175,8 @@ public class AstralPocket : MonoBehaviour
 
         sphereCasted.Clear();
 
+        currentPocketNum = 0;
+
         /*Collider[] colliders = Physics.OverlapSphere(previousPocketCastPos, sphereRadius);
         foreach (Collider collider in colliders)
         {
@@ -191,13 +192,6 @@ public class AstralPocket : MonoBehaviour
 
         //astralPocketMesh.SetActive(false);
     }
-
-    /*IEnumerator DisplayAstralPocket()
-    {
-        astralPocketMesh.SetActive(true);
-        yield return new WaitForSeconds(.25f);
-        astralPocketMesh.SetActive(false);
-    }*/
 
     private void OnDrawGizmos()
     {
