@@ -389,9 +389,11 @@ public class Interactible : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            TryGetComponent(out Rigidbody rb);
-            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-            rb.freezeRotation = true;
+            if(TryGetComponent(out Rigidbody rb))
+            {
+                rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                rb.freezeRotation = true;
+            }
         }
     }
 
@@ -399,9 +401,11 @@ public class Interactible : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            TryGetComponent(out Rigidbody rb);
-            rb.constraints = RigidbodyConstraints.None;
-            rb.freezeRotation = true;
+            if (TryGetComponent(out Rigidbody rb))
+            {
+                rb.constraints = RigidbodyConstraints.None;
+                rb.freezeRotation = true;
+            }
         }
     }
 
