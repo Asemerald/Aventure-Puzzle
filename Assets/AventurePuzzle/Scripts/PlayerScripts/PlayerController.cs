@@ -136,14 +136,14 @@ public class PlayerController : MonoBehaviour
             if (currentGrabObject != null)
             {
                 currentGrabObject.transform.rotation = currentGrabInitialRot;
-                /*Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
-                if(Vector3.Angle(transform.forward, moveInputs) < 90)
+                //Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
+                if(Vector3.Angle(transform.forward, move.normalized) < 130)
                 {
                     var aimVector = Quaternion.LookRotation(move);
                     transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
-                }*/
-                var aimVector = Quaternion.LookRotation(move);
-                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+                }
+                /*var aimVector = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);*/
             }
             else
             {
@@ -237,12 +237,13 @@ public class PlayerController : MonoBehaviour
         if (currentGrabObject.GetComponent<InteractibleMesh>())
             currentGrabObject = currentGrabObject.transform.parent.gameObject;
 
-        currentGrabObject.TryGetComponent(out Interactible i);
-        i.isGrabed = true;
-
         Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
         currentGrabObject.transform.localPosition += new Vector3(0, 1f, 0);
+
+        currentGrabObject.TryGetComponent(out Interactible i);
+        i.isGrabed = true;
+        i.localPosInit = i.transform.localPosition;
     }
 
     void UnGrabObject()
@@ -253,7 +254,10 @@ public class PlayerController : MonoBehaviour
         //r.drag = 2;
 
         currentGrabObject.TryGetComponent(out Interactible i);
+        i.placePos = i.transform.position;
         i.isGrabed = false;
+
+        currentGrabObject.transform.rotation = currentGrabInitialRot;
 
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;

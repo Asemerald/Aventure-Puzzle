@@ -146,6 +146,11 @@ MonoBehaviour:
   portalMat: {fileID: 0}
   npcMat: {fileID: 0}
   npcEnergyMat: {fileID: 0}
+  isGrabed: 0
+  heightToAdd: 1
+  distanceToCheckForGround: 0.4
+  timeToResetPos: 4
+  localPosInit: {x: 0, y: 0, z: 0}
 --- !u!54 &2705102230082238403
 Rigidbody:
   m_ObjectHideFlags: 0

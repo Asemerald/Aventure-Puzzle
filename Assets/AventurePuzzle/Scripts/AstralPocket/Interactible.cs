@@ -51,8 +51,17 @@ public class Interactible : MonoBehaviour
     public bool isGrabed;
 
     [Header("GrabSettings")]
+    public float heightToAdd;
     public float distanceToCheckForGround = 0.1f;
+    public float timeToResetPos;
 
+    [HideInInspector]
+    public Vector3 localPosInit;
+    Vector3 newLocalPos;
+    [HideInInspector]
+    public Vector3 placePos;
+    
+    bool higheringObject = false;
 
     private void Start()
     {
@@ -157,10 +166,47 @@ public class Interactible : MonoBehaviour
         else if(!emitEnergy && energySphere.activeSelf)
             energySphere.SetActive(false);
 
+        if (!isGrabed && higheringObject)
+        {
+            StopAllCoroutines();
+            higheringObject = false;
+            transform.position = placePos;
+        }
+
         if (isGrabed && HittingGround())
         {
-            Debug.Log("Touching ground");
+            if(!higheringObject)
+                StartCoroutine(HigherObject());
         }
+    }
+
+    IEnumerator HigherObject()
+    {
+        higheringObject = true;
+        float elapsedTime = 0;
+        newLocalPos = localPosInit + new Vector3(0, heightToAdd, 0);
+        while (elapsedTime < .5f)
+        {
+            elapsedTime += Time.deltaTime;
+
+            Vector3 newPos = Vector3.Lerp(localPosInit, newLocalPos, elapsedTime / .5f);
+            transform.localPosition  = newPos;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(timeToResetPos);
+
+        elapsedTime = 0;
+        while (elapsedTime < .5f)
+        {
+            elapsedTime += Time.deltaTime;
+
+            Vector3 newPos = Vector3.Lerp(newLocalPos, localPosInit, elapsedTime / .5f);
+            transform.localPosition = newPos;
+            yield return null;
+        }
+
+        higheringObject = false;
     }
 
     #region States
