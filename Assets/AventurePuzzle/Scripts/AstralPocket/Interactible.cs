@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Interactible : MonoBehaviour
@@ -63,7 +64,7 @@ public class Interactible : MonoBehaviour
 
     public void SwitchMode(bool astral)
     {
-        if(astral)
+        if (astral)
         {
             inAstralState = true;
 
@@ -98,8 +99,6 @@ public class Interactible : MonoBehaviour
                 case ObjectState.NPC: SwitchToNPC();
                     break;
             }
-
-            //if (isPortal) PortalSwitch();
         }
         else
         {
@@ -372,6 +371,26 @@ public class Interactible : MonoBehaviour
             _rb.freezeRotation = true;
         }
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            TryGetComponent(out Rigidbody rb);
+            rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            rb.freezeRotation = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            TryGetComponent(out Rigidbody rb);
+            rb.constraints = RigidbodyConstraints.None;
+            rb.freezeRotation = true;
+        }
     }
 
     private void OnDrawGizmos()
