@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
 public class Interactible : MonoBehaviour
 {
     /* None -> Aucun état
@@ -45,6 +46,12 @@ public class Interactible : MonoBehaviour
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
     MeshRenderer mesh;
     Collider col;
+
+    [HideInInspector]
+    public bool isGrabed;
+
+    [Header("GrabSettings")]
+    public float distanceToCheckForGround = 0.1f;
 
 
     private void Start()
@@ -149,7 +156,14 @@ public class Interactible : MonoBehaviour
             energySphere.SetActive(true);
         else if(!emitEnergy && energySphere.activeSelf)
             energySphere.SetActive(false);
+
+        if (isGrabed && HittingGround())
+        {
+            Debug.Log("Touching ground");
+        }
     }
+
+    #region States
 
     void EmitEnergy()
     {
@@ -384,6 +398,21 @@ public class Interactible : MonoBehaviour
         
     }
 
+    #endregion
+
+    bool HittingGround()
+    {
+        if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            return true;
+        else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            return true;
+        else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            return true;
+        else if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            return true;
+        else
+            return false;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

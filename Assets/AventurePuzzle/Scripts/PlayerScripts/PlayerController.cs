@@ -7,10 +7,10 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInputs;
     private Vector3 move;
-    
+
     public static PlayerController Instance;
     private PlayerAnimator _playerAnimator;
-    
+
 
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
@@ -43,11 +43,12 @@ public class PlayerController : MonoBehaviour
     public bool hasAstralPocket;
     bool inputRealased = true;
 
+    Quaternion currentGrabInitialRot;
 
     private void Awake()
     {
         if (Instance == null)
-            Instance= this;
+            Instance = this;
         else
             Destroy(gameObject);
     }
@@ -56,14 +57,14 @@ public class PlayerController : MonoBehaviour
     {
         if (TryGetComponent(out PlayerAnimator playerAnimator))
             _playerAnimator = playerAnimator;
-        else 
+        else
             Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
-        
+
         if (TryGetComponent(out Rigidbody Rigidbody))
             rb = Rigidbody;
-        else 
+        else
             Debug.LogError("No Rigidbody component found on " + gameObject.name);
-        
+
         rb.freezeRotation = true;
         CameraOffset();
     }
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour
     {
         MyInputs();
         HUDUpdate();
-        
+
         if (GameManager.Instance.gameIsPause)
             return;
 
@@ -81,10 +82,10 @@ public class PlayerController : MonoBehaviour
 
     void MyInputs()
     {
-        if(InputsBrain.Instance.pause.WasPressedThisFrame())
+        if (InputsBrain.Instance.pause.WasPressedThisFrame())
             GameManager.Instance.PauseGame();
 
-        if(GameManager.Instance.gameIsPause) return;
+        if (GameManager.Instance.gameIsPause) return;
 
         if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
             inputTimer += Time.deltaTime;
@@ -92,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket && inputRealased)
         {
-            if(inputTimer < AstralPocket.Instance.timeToReset)
+            if (inputTimer < AstralPocket.Instance.timeToReset)
             {
                 AstralPocket.Instance.CastAstralPocket();
                 inputTimer = 0;
@@ -114,8 +115,8 @@ public class PlayerController : MonoBehaviour
         else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
             if (currentGrabObject != null)
                 UnGrabObject();
-        
-        
+
+
     }
 
     void CheckMethods()
@@ -130,11 +131,27 @@ public class PlayerController : MonoBehaviour
         if (OnSlope()) rb.useGravity = false;
         else rb.useGravity = true;
 
-        if (move.magnitude > .01f && currentGrabObject == null)
+        if (move.magnitude > .01f)
         {
-            var aimVector = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+            if (currentGrabObject != null)
+            {
+                currentGrabObject.transform.rotation = currentGrabInitialRot;
+                /*Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
+                if(Vector3.Angle(transform.forward, moveInputs) < 90)
+                {
+                    var aimVector = Quaternion.LookRotation(move);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+                }*/
+                var aimVector = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+            }
+            else
+            {
+                var aimVector = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+            }
         }
+    
 
         if (inputTimer > .2f)
         {
@@ -215,12 +232,17 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+        currentGrabInitialRot = currentGrabObject.transform.rotation;
 
         if (currentGrabObject.GetComponent<InteractibleMesh>())
             currentGrabObject = currentGrabObject.transform.parent.gameObject;
 
+        currentGrabObject.TryGetComponent(out Interactible i);
+        i.isGrabed = true;
+
         Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
+        currentGrabObject.transform.localPosition += new Vector3(0, 1f, 0);
     }
 
     void UnGrabObject()
@@ -229,6 +251,10 @@ public class PlayerController : MonoBehaviour
         r.mass = 1;
         r.freezeRotation = true;
         //r.drag = 2;
+
+        currentGrabObject.TryGetComponent(out Interactible i);
+        i.isGrabed = false;
+
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
