@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInputs;
     private Vector3 move;
 
+    public static PlayerController Instance;
+    private PlayerAnimator _playerAnimator;
+
+
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private float accel = 1f;
@@ -28,39 +32,48 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] Vector3 camForward, camRight;
 
-    [Header("Interact Settings")]
-    [SerializeField] Transform interactCenterPoint;
-    [SerializeField] Vector3 attackBoxSize;
-    [SerializeField] LayerMask collidingLayers;
-    [SerializeField] ParticleSystem slashVFX;
-
     [Header("Grab Settings")]
+    [SerializeField] Transform interactCenterPoint;
     [SerializeField] Vector3 grabBoxSize;
     [SerializeField] LayerMask collidingGrabLayers;
 
-    /*[Header("Health Settings")]
-    [SerializeField] private int maxHealth = 3;
-    private int currentHealth;*/
-
     GameObject currentGrabObject;
-    [HideInInspector] public float MoveSpeed;
+    float inputTimer;
+
+    public bool hasAstralPocket;
+    bool inputRealased = true;
+
+    Quaternion currentGrabInitialRot;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        if (TryGetComponent(out PlayerAnimator playerAnimator))
+            _playerAnimator = playerAnimator;
+        else
+            Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
 
-        //currentHealth = maxHealth;
+        if (TryGetComponent(out Rigidbody Rigidbody))
+            rb = Rigidbody;
+        else
+            Debug.LogError("No Rigidbody component found on " + gameObject.name);
+
+        rb.freezeRotation = true;
         CameraOffset();
     }
 
     void Update()
     {
-        Debug.Log("Player is Grounded ? " + IsGrounded() + " Player is OnSlope ?" + OnSlope());
-
         MyInputs();
         HUDUpdate();
-        
+
         if (GameManager.Instance.gameIsPause)
             return;
 
@@ -69,13 +82,30 @@ public class PlayerController : MonoBehaviour
 
     void MyInputs()
     {
-        if(InputsBrain.Instance.pause.WasPressedThisFrame())
+        if (InputsBrain.Instance.pause.WasPressedThisFrame())
             GameManager.Instance.PauseGame();
 
-        if(GameManager.Instance.gameIsPause) return;
+        if (GameManager.Instance.gameIsPause) return;
 
-        if (InputsBrain.Instance.pocket.WasPressedThisFrame())
-            AstralPocket.Instance.CastAstralPocket();
+        if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
+            inputTimer += Time.deltaTime;
+
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame() && hasAstralPocket && inputRealased)
+        {
+            if (inputTimer < AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.CastAstralPocket();
+                inputTimer = 0;
+            }
+            else if (inputTimer > AstralPocket.Instance.timeToReset)
+            {
+                AstralPocket.Instance.DecastAstralPocket();
+                inputTimer = 0;
+            }
+        }
+
+        if (InputsBrain.Instance.pocket.WasReleasedThisFrame()) inputRealased = true;
 
         moveInputs = InputsBrain.Instance.move.ReadValue<Vector2>();
         move = moveInputs.x * camRight + moveInputs.y * camForward;
@@ -85,8 +115,8 @@ public class PlayerController : MonoBehaviour
         else if (InputsBrain.Instance.interact.WasReleasedThisFrame())
             if (currentGrabObject != null)
                 UnGrabObject();
-        
-        
+
+
     }
 
     void CheckMethods()
@@ -101,11 +131,43 @@ public class PlayerController : MonoBehaviour
         if (OnSlope()) rb.useGravity = false;
         else rb.useGravity = true;
 
-        if (move.magnitude > .01f && currentGrabObject == null)
+        if (move.magnitude > .01f)
         {
-            var aimVector = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+            if (currentGrabObject != null)
+            {
+                currentGrabObject.transform.rotation = currentGrabInitialRot;
+                //Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
+                if(Vector3.Angle(transform.forward, move.normalized) < 130)
+                {
+                    var aimVector = Quaternion.LookRotation(move);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+                }
+                /*var aimVector = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);*/
+            }
+            else
+            {
+                var aimVector = Quaternion.LookRotation(move);
+                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+            }
         }
+    
+
+        if (inputTimer > .2f)
+        {
+            HUD.Instance.astralSlider.gameObject.SetActive(true);
+            HUD.Instance.astralSlider.value = inputTimer;
+        }
+        else
+            HUD.Instance.astralSlider.gameObject.SetActive(false);
+
+        if(inputTimer > AstralPocket.Instance.timeToReset)
+        {
+            AstralPocket.Instance.DecastAstralPocket();
+            inputTimer = 0;
+            inputRealased = false;
+        }
+
     }
 
     void HUDUpdate()
@@ -146,6 +208,15 @@ public class PlayerController : MonoBehaviour
             force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
         rb.AddForce(force, ForceMode.Acceleration);
+        
+
+        // Calcul la speed et l'envoie a l'animator
+        if(_playerAnimator != null)
+        {
+            float speed = rb.velocity.magnitude / maxSpeed;
+            speed = Mathf.Clamp(speed, 0f, 1f);
+            _playerAnimator.SetSpeed(speed);
+        }
     }
 
     private void CameraOffset()
@@ -161,13 +232,33 @@ public class PlayerController : MonoBehaviour
     void GrabObject()
     {
         currentGrabObject = SortObjectToGrab();
+        currentGrabInitialRot = currentGrabObject.transform.rotation;
+
+        if (currentGrabObject.GetComponent<InteractibleMesh>())
+            currentGrabObject = currentGrabObject.transform.parent.gameObject;
+
         Destroy(currentGrabObject.GetComponent<Rigidbody>());
         currentGrabObject.transform.parent = transform;
+        currentGrabObject.transform.localPosition += new Vector3(0, 1f, 0);
+
+        currentGrabObject.TryGetComponent(out Interactible i);
+        i.isGrabed = true;
+        i.localPosInit = i.transform.localPosition;
     }
 
     void UnGrabObject()
     {
-        currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
+        Rigidbody r = currentGrabObject.AddComponent<Rigidbody>();
+        r.mass = 1;
+        r.freezeRotation = true;
+        //r.drag = 2;
+
+        currentGrabObject.TryGetComponent(out Interactible i);
+        i.placePos = i.transform.position;
+        i.isGrabed = false;
+
+        currentGrabObject.transform.rotation = currentGrabInitialRot;
+
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
@@ -226,6 +317,9 @@ public class PlayerController : MonoBehaviour
 
     bool CanGrabObject()
     {
+        if (currentGrabObject != null) 
+            return false;
+
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);
         if(hitted.Length > 0)
             return true;
@@ -238,10 +332,10 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(interactCenterPoint.localPosition, attackBoxSize);
+
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
+        Gizmos.DrawWireSphere(feet.localPosition, 0.15f);
     }
 }
