@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Interactible : MonoBehaviour
@@ -63,7 +64,7 @@ public class Interactible : MonoBehaviour
 
     public void SwitchMode(bool astral)
     {
-        if(astral)
+        if (astral)
         {
             inAstralState = true;
 
@@ -98,8 +99,6 @@ public class Interactible : MonoBehaviour
                 case ObjectState.NPC: SwitchToNPC();
                     break;
             }
-
-            //if (isPortal) PortalSwitch();
         }
         else
         {
@@ -192,6 +191,9 @@ public class Interactible : MonoBehaviour
     {
         //Debug.Log(gameObject.name + " : " + "No Collider State : " + (inAstralState ? "Astral" : "World"));
 
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = true;
+
         gameObject.layer = LayerMask.NameToLayer("InteractibleNoCollision");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleNoCollision");
 
@@ -206,6 +208,9 @@ public class Interactible : MonoBehaviour
     {
         //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = true;
+
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
 
@@ -219,6 +224,9 @@ public class Interactible : MonoBehaviour
     void MoveableState()
     {
         //Debug.Log(gameObject.name + " : " + "Moveable State : " + (inAstralState ? "Astral" : "World"));
+
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = false;
 
         gameObject.layer = LayerMask.NameToLayer("InteractibleMoveable");
         astraldObj.layer = LayerMask.NameToLayer("InteractibleMoveable");
@@ -275,6 +283,8 @@ public class Interactible : MonoBehaviour
         }
 
         UnMoveableState();
+        if (TryGetComponent(out Rigidbody rb))
+            rb.isKinematic = false;
 
         if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
             astraldObj.GetComponent<MeshRenderer>().material = sizeMat;
@@ -372,6 +382,31 @@ public class Interactible : MonoBehaviour
             _rb.freezeRotation = true;
         }
         
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if(TryGetComponent(out Rigidbody rb))
+            {
+                rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+                rb.freezeRotation = true;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            if (TryGetComponent(out Rigidbody rb))
+            {
+                rb.constraints = RigidbodyConstraints.None;
+                rb.freezeRotation = true;
+            }
+        }
     }
 
     private void OnDrawGizmos()

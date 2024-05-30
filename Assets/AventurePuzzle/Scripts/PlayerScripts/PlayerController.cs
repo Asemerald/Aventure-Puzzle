@@ -225,8 +225,10 @@ public class PlayerController : MonoBehaviour
 
     void UnGrabObject()
     {
-        currentGrabObject.AddComponent<Rigidbody>().freezeRotation = true;
-        currentGrabObject.GetComponent<Rigidbody>().mass = 100;
+        Rigidbody r = currentGrabObject.AddComponent<Rigidbody>();
+        r.mass = 1;
+        r.freezeRotation = true;
+        //r.drag = 2;
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
