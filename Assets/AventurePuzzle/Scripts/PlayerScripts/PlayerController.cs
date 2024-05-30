@@ -137,13 +137,12 @@ public class PlayerController : MonoBehaviour
             {
                 currentGrabObject.transform.rotation = currentGrabInitialRot;
                 //Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
-                if(Vector3.Angle(transform.forward, move.normalized) < 130)
+                /*float angle = Vector3.Angle(transform.forward, move.normalized);
+                if (angle < 135 && angle > 55)
                 {
                     var aimVector = Quaternion.LookRotation(move);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
-                }
-                /*var aimVector = Quaternion.LookRotation(move);
-                transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);*/
+                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime / 2 * Time.deltaTime);
+                }*/
             }
             else
             {
