@@ -135,14 +135,12 @@ public class PlayerController : MonoBehaviour
         {
             if (currentGrabObject != null)
             {
-                currentGrabObject.transform.rotation = currentGrabInitialRot;
-                //Debug.Log(Vector3.Angle(transform.forward, moveInputs) + " Angle");
-                /*float angle = Vector3.Angle(transform.forward, move.normalized);
-                if (angle < 135 && angle > 55)
+                if (InputsBrain.Instance.rotateGrab.IsPressed())
                 {
+                    currentGrabObject.transform.rotation = currentGrabInitialRot;
                     var aimVector = Quaternion.LookRotation(move);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime / 2 * Time.deltaTime);
-                }*/
+                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
+                }
             }
             else
             {
@@ -178,7 +176,12 @@ public class PlayerController : MonoBehaviour
         else
             HUD.Instance.grabObj.SetActive(false);
 
-        if(DisplayInputs() && hasAstralPocket)
+        if (currentGrabObject != null)
+            HUD.Instance.grabRotateObj.SetActive(true);
+        else
+            HUD.Instance.grabRotateObj.SetActive(false);
+
+        if (DisplayInputs() && hasAstralPocket)
             HUD.Instance.astralInputs.SetActive(true);
         else
             HUD.Instance.astralInputs.SetActive(false);
@@ -210,6 +213,9 @@ public class PlayerController : MonoBehaviour
             force = new Vector3(movement.x * acceleration, movement.y * acceleration, movement.z * acceleration);
         else
             force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
+
+        if (InputsBrain.Instance.rotateGrab.IsPressed())
+            force = Vector3.zero;
 
         rb.AddForce(force, ForceMode.Acceleration);
         

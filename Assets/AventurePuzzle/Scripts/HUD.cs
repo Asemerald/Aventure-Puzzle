@@ -13,6 +13,7 @@ public class HUD : MonoBehaviour
 
     [Header("Grab")]
     public GameObject grabObj;
+    public GameObject grabRotateObj;
 
     [Header("Astral Pocket")]
     public Slider astralSlider;

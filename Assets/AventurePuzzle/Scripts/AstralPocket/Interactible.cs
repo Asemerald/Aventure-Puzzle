@@ -244,6 +244,7 @@ public class Interactible : MonoBehaviour
 
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
             elapsedTime += Time.deltaTime;
 
             if(HittingGround() && astraldObj.activeInHierarchy)
@@ -259,11 +260,17 @@ public class Interactible : MonoBehaviour
             yield return null;
         }
 
+        if (!isGrabed) yield break;
+
         yield return new WaitForSeconds(timeToResetPos);
+
+        if (!isGrabed) yield break;
 
         elapsedTime = 0;
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
+
             elapsedTime += Time.deltaTime;
 
             Vector3 newPos = Vector3.Lerp(newLocalPos, localPosInit, elapsedTime / .5f);
