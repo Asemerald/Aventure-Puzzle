@@ -148,8 +148,12 @@ MonoBehaviour:
   npcEnergyMat: {fileID: 0}
   isGrabed: 0
   heightToAdd: 0.5
-  distanceToCheckForGround: 0.4
+  macDistanceToHigher: 2
+  distanceToCheckForGround: 0.1
   timeToResetPos: 4
+  colToHigher:
+    serializedVersion: 2
+    m_Bits: 64
   localPosInit: {x: 0, y: 0, z: 0}
   placePos: {x: 0, y: 0, z: 0}
 --- !u!54 &2705102230082238403
@@ -465,9 +469,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parent: {fileID: 5448143876955587215}
-  isGrabed: 0
-  heightToAdd: 0.5
-  distanceToCheckForGround: 0.2
-  timeToResetPos: 4
-  localPosInit: {x: 0, y: 0, z: 0}
-  placePos: {x: 0, y: 0, z: 0}
