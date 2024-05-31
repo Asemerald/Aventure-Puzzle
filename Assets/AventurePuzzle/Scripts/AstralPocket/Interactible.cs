@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class Interactible : MonoBehaviour
 {
     /* None -> Aucun état

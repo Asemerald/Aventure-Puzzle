@@ -5,7 +5,7 @@ public class DeveloperMenu : MonoBehaviour
 {
     
 
-    [MenuItem("Dev/Show Astral Pocket", true)]
+    /*[MenuItem("Dev/Show Astral Pocket", true)]
     private static bool ShowAstralPocketGoldValidation()
     {
         //if play mode is active, set to true
@@ -16,6 +16,6 @@ public class DeveloperMenu : MonoBehaviour
     private static void ShowAstralPocket()
     {
         AstralPocket.Instance.ShowAstralPocket = !AstralPocket.Instance.ShowAstralPocket;
-    }
+    }*/
     
 }
