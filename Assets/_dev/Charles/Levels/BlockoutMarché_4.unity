@@ -27996,23 +27996,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5653992676486536326, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
+      propertyPath: m_DeadZoneWidth
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653992676486536326, guid: 6786c29e5bd51c249a96b591655d3599,
+        type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653992676486536326, guid: 6786c29e5bd51c249a96b591655d3599,
+        type: 3}
       propertyPath: m_CameraDistance
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653992676486536326, guid: 6786c29e5bd51c249a96b591655d3599,
+        type: 3}
+      propertyPath: m_DeadZoneHeight
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 5653992676486536326, guid: 6786c29e5bd51c249a96b591655d3599,
+        type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6503128542489623614, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.28
+      value: 250.30132
       objectReference: {fileID: 0}
     - target: {fileID: 6503128542489623614, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.142134
+      value: 28.731216
       objectReference: {fileID: 0}
     - target: {fileID: 6503128542489623614, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.000001
+      value: -88
       objectReference: {fileID: 0}
     - target: {fileID: 6503128542489623614, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
@@ -28047,17 +28067,17 @@ PrefabInstance:
     - target: {fileID: 6546244176325822942, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 50.28
+      value: 260.3013
       objectReference: {fileID: 0}
     - target: {fileID: 6546244176325822942, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 14.589094
       objectReference: {fileID: 0}
     - target: {fileID: 6546244176325822942, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -78
       objectReference: {fileID: 0}
     - target: {fileID: 6573926498432474196, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
@@ -28114,6 +28134,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8465455455896473851, guid: 6786c29e5bd51c249a96b591655d3599,
+        type: 3}
+      propertyPath: m_Lens.GateFit
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8576080653837331652, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -28137,17 +28162,17 @@ PrefabInstance:
     - target: {fileID: 8842392247568423130, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 40.28
+      value: 250.30132
       objectReference: {fileID: 0}
     - target: {fileID: 8842392247568423130, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.142134
+      value: 28.731216
       objectReference: {fileID: 0}
     - target: {fileID: 8842392247568423130, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.000001
+      value: -88
       objectReference: {fileID: 0}
     - target: {fileID: 8842392247568423130, guid: 6786c29e5bd51c249a96b591655d3599,
         type: 3}
@@ -28198,21 +28223,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CollideAgainst:
     serializedVersion: 2
-    m_Bits: 16384
+    m_Bits: 1
   m_IgnoreTag: 
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
   m_MinimumDistanceFromTarget: 0.1
   m_AvoidObstacles: 1
-  m_DistanceLimit: 15
-  m_MinimumOcclusionTime: 0.5
-  m_CameraRadius: 0.25
-  m_Strategy: 2
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 1
   m_MaximumEffort: 4
-  m_SmoothingTime: 1
-  m_Damping: 4
-  m_DampingWhenOccluded: 2
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 20
 --- !u!1 &1108533958
 GameObject:
