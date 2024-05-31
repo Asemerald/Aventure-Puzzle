@@ -184,10 +184,19 @@ public class Interactible : MonoBehaviour
     {
         higheringObject = true;
         float elapsedTime = 0;
-        newLocalPos = localPosInit + new Vector3(0, heightToAdd, 0);
+        if(astraldObj.activeInHierarchy)
+            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 2, 0);
+        else
+            newLocalPos = localPosInit + new Vector3(0, heightToAdd, 0);
+
         while (elapsedTime < .5f)
         {
             elapsedTime += Time.deltaTime;
+
+            if(HittingGround() && astraldObj.activeInHierarchy)
+                newLocalPos += new Vector3(0, heightToAdd / 4, 0);
+            else if(HittingGround() && !astraldObj.activeInHierarchy)
+                newLocalPos += new Vector3(0, heightToAdd / 2, 0);
 
             Vector3 newPos = Vector3.Lerp(localPosInit, newLocalPos, elapsedTime / .5f);
             transform.localPosition  = newPos;
@@ -448,16 +457,34 @@ public class Interactible : MonoBehaviour
 
     bool HittingGround()
     {
-        if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
-            return true;
-        else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
-            return true;
-        else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
-            return true;
-        else if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
-            return true;
+        if (astraldObj.activeInHierarchy)
+        {
+            astraldObj.TryGetComponent(out Collider collider);
+
+            if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else
+                return false;
+        }
         else
-            return false;
+        {
+            if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+                return true;
+            else
+                return false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
