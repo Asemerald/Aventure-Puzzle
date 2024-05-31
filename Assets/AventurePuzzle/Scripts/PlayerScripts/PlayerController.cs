@@ -177,6 +177,11 @@ public class PlayerController : MonoBehaviour
             HUD.Instance.grabObj.SetActive(true);
         else
             HUD.Instance.grabObj.SetActive(false);
+
+        if(DisplayInputs() && hasAstralPocket)
+            HUD.Instance.astralInputs.SetActive(true);
+        else
+            HUD.Instance.astralInputs.SetActive(false);
     }
     
 
@@ -288,6 +293,10 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
+    bool DisplayInputs()
+    {
+        return Physics.OverlapSphere(transform.position, AstralPocket.Instance.sphereRadius, AstralPocket.Instance.interactibleMask).Length > 0;
+    }
     GameObject SortObjectToGrab()
     {
         Collider[] hitted = Physics.OverlapBox(interactCenterPoint.position, grabBoxSize, transform.rotation, collidingGrabLayers);

@@ -16,6 +16,7 @@ public class HUD : MonoBehaviour
 
     [Header("Astral Pocket")]
     public Slider astralSlider;
+    public GameObject astralInputs;
 
 
     [Header("Tutorial")]

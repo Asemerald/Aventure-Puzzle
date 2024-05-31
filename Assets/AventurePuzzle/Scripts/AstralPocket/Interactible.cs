@@ -180,7 +180,9 @@ public class Interactible : MonoBehaviour
         }
 
         GrabCheck();
-        ReduceVelocity();
+
+        if(_rb != null)
+            ReduceVelocity();
     }
 
     void GrabCheck()
@@ -201,7 +203,7 @@ public class Interactible : MonoBehaviour
 
     void ReduceVelocity()
     {
-        if (isGrabed || _rb.velocity == null)
+        if (isGrabed)
         {
             StopCoroutine(SetVelocity());
             resetVel = false;
