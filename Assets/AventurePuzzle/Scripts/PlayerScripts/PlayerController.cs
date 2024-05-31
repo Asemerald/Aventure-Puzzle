@@ -255,6 +255,7 @@ public class PlayerController : MonoBehaviour
         currentGrabObject.TryGetComponent(out Interactible i);
         i.placePos = i.transform.position;
         i.isGrabed = false;
+        i._rb = r;
 
         currentGrabObject.transform.rotation = currentGrabInitialRot;
 

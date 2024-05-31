@@ -298,7 +298,7 @@ MonoBehaviour:
   npcEnergyMat: {fileID: 0}
   isGrabed: 0
   heightToAdd: 0.25
-  macDistanceToHigher: 2
+  macDistanceToHigher: 3.5
   distanceToCheckForGround: 0.1
   timeToResetPos: 4
   colToHigher:
@@ -324,7 +324,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 8
-  portalSize: {x: 2, y: 3, z: 1}
+  portalSize: {x: 1.9, y: 3, z: 0.9}
 --- !u!54 &3690751950494687839
 Rigidbody:
   m_ObjectHideFlags: 0

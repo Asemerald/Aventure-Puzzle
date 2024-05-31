@@ -65,10 +65,18 @@ public class Interactible : MonoBehaviour
     
     bool higheringObject = false;
 
+    [HideInInspector]
+    public Rigidbody _rb;
+    bool resetVel = false;
+    float timeToResetVel = .5f;
+
+
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
+        _rb = GetComponent<Rigidbody>();
+
         SwitchMode(false);
 
         if (astralState == ObjectState.Portal)
@@ -171,18 +179,56 @@ public class Interactible : MonoBehaviour
                 energySphere.SetActive(false);
         }
 
+        GrabCheck();
+        ReduceVelocity();
+    }
+
+    void GrabCheck()
+    {
         if (!isGrabed && higheringObject)
         {
-            StopAllCoroutines();
+            StopCoroutine(HigherObject());
             higheringObject = false;
             transform.position = placePos;
         }
 
         if (isGrabed && HittingGround())
         {
-            if(!higheringObject)
+            if (!higheringObject)
                 StartCoroutine(HigherObject());
         }
+    }
+
+    void ReduceVelocity()
+    {
+        if (isGrabed)
+        {
+            StopCoroutine(SetVelocity());
+            resetVel = false;
+            return;
+        }
+        if(_rb.velocity.x > 0 || _rb.velocity.z > 0 && !resetVel)
+        {
+            StartCoroutine(SetVelocity());
+        }
+    }
+
+    #region Ienumerator
+    IEnumerator SetVelocity()
+    {
+        resetVel = true;
+
+        float elapsedTime = 0;
+        while (elapsedTime < timeToResetVel)
+        {
+            elapsedTime += Time.deltaTime;
+
+            Vector3 newVel = Vector3.Lerp(_rb.velocity, new Vector3(0,_rb.velocity.y, 0), elapsedTime / .5f);
+            _rb.velocity = newVel;
+            yield return null;
+        }
+
+        resetVel = false;
     }
 
     IEnumerator HigherObject()
@@ -203,6 +249,9 @@ public class Interactible : MonoBehaviour
             else if(HittingGround() && !astraldObj.activeInHierarchy)
                 newLocalPos += new Vector3(0, heightToAdd / 2, 0);
 
+            if(newLocalPos.y > macDistanceToHigher)
+                newLocalPos.y = macDistanceToHigher;
+
             Vector3 newPos = Vector3.Lerp(localPosInit, newLocalPos, elapsedTime / .5f);
             transform.localPosition  = newPos;
             yield return null;
@@ -222,6 +271,7 @@ public class Interactible : MonoBehaviour
 
         higheringObject = false;
     }
+#endregion
 
     #region States
 
@@ -420,8 +470,7 @@ public class Interactible : MonoBehaviour
 
         UnMoveableState();
 
-        TryGetComponent(out Rigidbody rb);
-        Destroy(rb);
+        _rb.isKinematic = true;
 
         astraldObj.SetActive(true);
         mesh.enabled = false;
@@ -444,6 +493,8 @@ public class Interactible : MonoBehaviour
         astraldObj.SetActive(false);
         mesh.enabled = true;
         col.enabled = true;
+
+        _rb.isKinematic = false;
 
         p.isActive = false;
 
