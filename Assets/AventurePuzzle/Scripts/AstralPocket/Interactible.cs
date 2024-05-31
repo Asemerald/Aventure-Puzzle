@@ -201,7 +201,7 @@ public class Interactible : MonoBehaviour
 
     void ReduceVelocity()
     {
-        if (isGrabed)
+        if (isGrabed || _rb.velocity == null)
         {
             StopCoroutine(SetVelocity());
             resetVel = false;
