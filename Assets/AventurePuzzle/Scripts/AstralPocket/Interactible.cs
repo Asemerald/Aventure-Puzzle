@@ -476,6 +476,9 @@ public class Interactible : MonoBehaviour
         mesh.enabled = false;
         col.enabled = false;
 
+        gameObject.layer = LayerMask.NameToLayer("Portal");
+        astraldObj.layer = LayerMask.NameToLayer("Portal");
+
         astraldObj.GetComponent<MeshRenderer>().material = portalMat;
         p.isActive = true;
 
