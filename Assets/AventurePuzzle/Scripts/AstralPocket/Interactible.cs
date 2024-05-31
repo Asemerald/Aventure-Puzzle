@@ -74,10 +74,10 @@ public class Interactible : MonoBehaviour
         if (astralState == ObjectState.Portal)
             isPortal = true;
 
-        if(worldState == ObjectState.NPC)
-        energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
-            else
-        energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
+        if(worldState == ObjectState.NPC && energySphere != null)
+            energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
+        else if(energySphere != null)
+            energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
     public void SwitchMode(bool astral)
@@ -163,10 +163,13 @@ public class Interactible : MonoBehaviour
         else if(!emitEnergy)
             doorsList.Clear();
 
-        if(emitEnergy && !energySphere.activeSelf)
-            energySphere.SetActive(true);
-        else if(!emitEnergy && energySphere.activeSelf)
-            energySphere.SetActive(false);
+        if(energySphere != null)
+        {
+            if(emitEnergy && !energySphere.activeSelf)
+                energySphere.SetActive(true);
+            else if(!emitEnergy && energySphere.activeSelf)
+                energySphere.SetActive(false);
+        }
 
         if (!isGrabed && higheringObject)
         {
