@@ -2,12 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AstralPocket : MonoBehaviour
 {
     public static AstralPocket Instance {  get; private set; }
 
+    [SerializeField] private EventReference testSound;
+    
     [Header("Settings")]
     public float sphereRadius = 5f; // Adjust the radius as needed
     public LayerMask interactibleMask;
@@ -154,6 +158,7 @@ public class AstralPocket : MonoBehaviour
             }
         }
 
+        AudioManager.instance.PlayOneShot(testSound, this.transform.position);
         sphereCasted.Add(Instantiate(astralPocketMesh, newPocketCastPos, Quaternion.identity, transform.parent));
         
         //astralPocketMesh.SetActive(true);
