@@ -3258,6 +3258,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3612282925047300740}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 94932ecf904a8054b918137c5076f9b8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6523012902966208625}
     - targetCorrespondingSourceObject: {fileID: -6599595710019927877, guid: 94932ecf904a8054b918137c5076f9b8,
         type: 3}
       insertIndex: -1
@@ -3361,6 +3365,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6523012902966208625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4084469173117444786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 650670c731e8d074992b744406d4a2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerAnimator: {fileID: 0}
 --- !u!4 &5798174799965868595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2010615882863505968, guid: 94932ecf904a8054b918137c5076f9b8,
@@ -3575,7 +3592,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 5504
   timeToReset: 0.5
-  maxPocketAvailable: 3
   ShowAstralPocket: 0
   astralPocketMesh: {fileID: 7661479044235464074, guid: 692877db3e40e26489442c1e20be5a5c,
     type: 3}
