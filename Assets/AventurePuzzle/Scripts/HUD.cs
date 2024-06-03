@@ -54,17 +54,21 @@ public class HUD : MonoBehaviour
 
     public void Pause()
     {
-        SelectBtt(HUD.Instance.pauseBtt);
-        HUD.Instance.pausePanel.SetActive(true);
-        HUD.Instance.inGamePanel.SetActive(false);
+        SelectBtt(pauseBtt);
+        pausePanel.SetActive(true);
+        inGamePanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0;
     }
 
     public void Resume()
     {
         GameManager.Instance.gameIsPause = false;
-        HUD.Instance.pausePanel.SetActive(false);
-        HUD.Instance.inGamePanel.SetActive(true);
+        pausePanel.SetActive(false);
+        inGamePanel.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1;
     }
 
