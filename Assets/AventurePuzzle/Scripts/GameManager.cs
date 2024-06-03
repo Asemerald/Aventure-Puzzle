@@ -27,38 +27,9 @@ public class GameManager : MonoBehaviour
         gameIsPause = !gameIsPause;
 
         if (gameIsPause)
-        {
-            SelectBtt(HUD.Instance.pauseBtt);
-            HUD.Instance.pausePanel.SetActive(true);
-            Time.timeScale = 0;
-        }
+            HUD.Instance.Pause();
         else
-        {
-            Resume();
-        }
-    }
-
-    public void SelectBtt(GameObject button)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(button);
-    }
-
-    public void Resume()
-    {
-        gameIsPause = false;
-        HUD.Instance.pausePanel.SetActive(false);
-        Time.timeScale = 1;
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void LoadScene(int levelIndex)
-    {
-        SceneManager.LoadScene(levelIndex);
+            HUD.Instance.Resume();
     }
 }
 
