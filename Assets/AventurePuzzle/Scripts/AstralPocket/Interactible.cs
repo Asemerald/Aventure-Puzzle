@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class Interactible : MonoBehaviour
 {
     /* None -> Aucun état
@@ -52,8 +50,10 @@ public class Interactible : MonoBehaviour
 
     [Header("GrabSettings")]
     public float heightToAdd;
+    public float macDistanceToHigher;
     public float distanceToCheckForGround = 0.1f;
     public float timeToResetPos;
+    public LayerMask colToHigher;
 
     [HideInInspector]
     public Vector3 localPosInit;
@@ -63,19 +63,27 @@ public class Interactible : MonoBehaviour
     
     bool higheringObject = false;
 
+    [HideInInspector]
+    public Rigidbody _rb;
+    bool resetVel = false;
+    float timeToResetVel = .5f;
+
+
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
+        _rb = GetComponent<Rigidbody>();
+
         SwitchMode(false);
 
         if (astralState == ObjectState.Portal)
             isPortal = true;
 
-        if(worldState == ObjectState.NPC)
-        energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
-            else
-        energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
+        if(worldState == ObjectState.NPC && energySphere != null)
+            energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
+        else if(energySphere != null)
+            energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
     public void SwitchMode(bool astral)
@@ -161,23 +169,66 @@ public class Interactible : MonoBehaviour
         else if(!emitEnergy)
             doorsList.Clear();
 
-        if(emitEnergy && !energySphere.activeSelf)
-            energySphere.SetActive(true);
-        else if(!emitEnergy && energySphere.activeSelf)
-            energySphere.SetActive(false);
+        if(energySphere != null)
+        {
+            if(emitEnergy && !energySphere.activeSelf)
+                energySphere.SetActive(true);
+            else if(!emitEnergy && energySphere.activeSelf)
+                energySphere.SetActive(false);
+        }
 
+        GrabCheck();
+
+        if(_rb != null)
+            ReduceVelocity();
+    }
+
+    void GrabCheck()
+    {
         if (!isGrabed && higheringObject)
         {
-            StopAllCoroutines();
+            StopCoroutine(HigherObject());
             higheringObject = false;
             transform.position = placePos;
         }
 
         if (isGrabed && HittingGround())
         {
-            if(!higheringObject)
+            if (!higheringObject)
                 StartCoroutine(HigherObject());
         }
+    }
+
+    void ReduceVelocity()
+    {
+        if (isGrabed)
+        {
+            StopCoroutine(SetVelocity());
+            resetVel = false;
+            return;
+        }
+        if(_rb.velocity.x > 0 || _rb.velocity.z > 0 && !resetVel)
+        {
+            StartCoroutine(SetVelocity());
+        }
+    }
+
+    #region Ienumerator
+    IEnumerator SetVelocity()
+    {
+        resetVel = true;
+
+        float elapsedTime = 0;
+        while (elapsedTime < timeToResetVel)
+        {
+            elapsedTime += Time.deltaTime;
+
+            Vector3 newVel = Vector3.Lerp(_rb.velocity, new Vector3(0,_rb.velocity.y, 0), elapsedTime / .5f);
+            _rb.velocity = newVel;
+            yield return null;
+        }
+
+        resetVel = false;
     }
 
     IEnumerator HigherObject()
@@ -191,6 +242,7 @@ public class Interactible : MonoBehaviour
 
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
             elapsedTime += Time.deltaTime;
 
             if(HittingGround() && astraldObj.activeInHierarchy)
@@ -198,16 +250,25 @@ public class Interactible : MonoBehaviour
             else if(HittingGround() && !astraldObj.activeInHierarchy)
                 newLocalPos += new Vector3(0, heightToAdd / 2, 0);
 
+            if(newLocalPos.y > macDistanceToHigher)
+                newLocalPos.y = macDistanceToHigher;
+
             Vector3 newPos = Vector3.Lerp(localPosInit, newLocalPos, elapsedTime / .5f);
             transform.localPosition  = newPos;
             yield return null;
         }
 
+        if (!isGrabed) yield break;
+
         yield return new WaitForSeconds(timeToResetPos);
+
+        if (!isGrabed) yield break;
 
         elapsedTime = 0;
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
+
             elapsedTime += Time.deltaTime;
 
             Vector3 newPos = Vector3.Lerp(newLocalPos, localPosInit, elapsedTime / .5f);
@@ -217,6 +278,7 @@ public class Interactible : MonoBehaviour
 
         higheringObject = false;
     }
+#endregion
 
     #region States
 
@@ -415,12 +477,14 @@ public class Interactible : MonoBehaviour
 
         UnMoveableState();
 
-        TryGetComponent(out Rigidbody rb);
-        Destroy(rb);
+        _rb.isKinematic = true;
 
         astraldObj.SetActive(true);
         mesh.enabled = false;
         col.enabled = false;
+
+        gameObject.layer = LayerMask.NameToLayer("Portal");
+        astraldObj.layer = LayerMask.NameToLayer("Portal");
 
         astraldObj.GetComponent<MeshRenderer>().material = portalMat;
         p.isActive = true;
@@ -439,6 +503,8 @@ public class Interactible : MonoBehaviour
         astraldObj.SetActive(false);
         mesh.enabled = true;
         col.enabled = true;
+
+        _rb.isKinematic = false;
 
         p.isActive = false;
 
@@ -461,26 +527,26 @@ public class Interactible : MonoBehaviour
         {
             astraldObj.TryGetComponent(out Collider collider);
 
-            if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, collider.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(-collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(collider.bounds.center + new Vector3(collider.bounds.extents.x, -collider.bounds.extents.y, -collider.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
             else
                 return false;
         }
         else
         {
-            if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, col.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(col.bounds.center + new Vector3(-col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
-            else if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround))
+            else if (Physics.Raycast(col.bounds.center + new Vector3(col.bounds.extents.x, -col.bounds.extents.y, -col.bounds.extents.z), Vector3.down, distanceToCheckForGround, colToHigher))
                 return true;
             else
                 return false;

@@ -9,7 +9,7 @@ public class InputsBrain : MonoBehaviour
 
     InputsController inputs;
     [HideInInspector]
-    public InputAction move, pocket, interact, pause;
+    public InputAction move, pocket, interact, pause, rotateGrab;
 
     private void Awake()
     {
@@ -25,6 +25,7 @@ public class InputsBrain : MonoBehaviour
         pocket = inputs.Player.Pocket;
         interact = inputs.Player.Interact;
         pause = inputs.Player.Pause;
+        rotateGrab = inputs.Player.RotateGrab;
 
         inputs.Enable();
     }
