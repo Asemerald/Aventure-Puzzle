@@ -62,6 +62,15 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateGrab"",
+                    ""type"": ""Button"",
+                    ""id"": ""db2ce81b-ef55-4c72-9f57-89c7157f521e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +238,17 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2e71086-76f6-445e-ba1f-bd78b973b88c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateGrab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -241,6 +261,7 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
         m_Player_Pocket = m_Player.FindAction("Pocket", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_RotateGrab = m_Player.FindAction("RotateGrab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +327,7 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pocket;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_RotateGrab;
     public struct PlayerActions
     {
         private @InputsController m_Wrapper;
@@ -314,6 +336,7 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
         public InputAction @Pocket => m_Wrapper.m_Player_Pocket;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @RotateGrab => m_Wrapper.m_Player_RotateGrab;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -335,6 +358,9 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @RotateGrab.started += instance.OnRotateGrab;
+            @RotateGrab.performed += instance.OnRotateGrab;
+            @RotateGrab.canceled += instance.OnRotateGrab;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -351,6 +377,9 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @RotateGrab.started -= instance.OnRotateGrab;
+            @RotateGrab.performed -= instance.OnRotateGrab;
+            @RotateGrab.canceled -= instance.OnRotateGrab;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -374,5 +403,6 @@ public partial class @InputsController: IInputActionCollection2, IDisposable
         void OnPocket(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnRotateGrab(InputAction.CallbackContext context);
     }
 }

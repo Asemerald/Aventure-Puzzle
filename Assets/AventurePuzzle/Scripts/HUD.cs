@@ -10,12 +10,15 @@ public class HUD : MonoBehaviour
 
     [Header("Pause Panel")]
     public GameObject pausePanel;
+    public GameObject pauseBtt;
 
     [Header("Grab")]
     public GameObject grabObj;
+    public GameObject grabRotateObj;
 
     [Header("Astral Pocket")]
     public Slider astralSlider;
+    public GameObject astralInputs;
 
 
     [Header("Tutorial")]

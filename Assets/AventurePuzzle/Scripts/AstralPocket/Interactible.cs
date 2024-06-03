@@ -1,10 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class Interactible : MonoBehaviour
 {
     /* None -> Aucun état
@@ -180,7 +178,9 @@ public class Interactible : MonoBehaviour
         }
 
         GrabCheck();
-        ReduceVelocity();
+
+        if(_rb != null)
+            ReduceVelocity();
     }
 
     void GrabCheck()
@@ -201,7 +201,7 @@ public class Interactible : MonoBehaviour
 
     void ReduceVelocity()
     {
-        if (isGrabed || _rb.velocity == null)
+        if (isGrabed)
         {
             StopCoroutine(SetVelocity());
             resetVel = false;
@@ -242,6 +242,7 @@ public class Interactible : MonoBehaviour
 
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
             elapsedTime += Time.deltaTime;
 
             if(HittingGround() && astraldObj.activeInHierarchy)
@@ -257,11 +258,17 @@ public class Interactible : MonoBehaviour
             yield return null;
         }
 
+        if (!isGrabed) yield break;
+
         yield return new WaitForSeconds(timeToResetPos);
+
+        if (!isGrabed) yield break;
 
         elapsedTime = 0;
         while (elapsedTime < .5f)
         {
+            if (!isGrabed) break;
+
             elapsedTime += Time.deltaTime;
 
             Vector3 newPos = Vector3.Lerp(newLocalPos, localPosInit, elapsedTime / .5f);
