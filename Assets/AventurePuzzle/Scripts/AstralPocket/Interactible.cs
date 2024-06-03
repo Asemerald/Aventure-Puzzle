@@ -199,7 +199,7 @@ public class Interactible : MonoBehaviour
         }
     }
 
-    void ReduceVelocity()
+    public void ReduceVelocity()
     {
         if (isGrabed)
         {

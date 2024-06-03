@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
     public bool hasAstralPocket;
     bool inputRealased = true;
+    bool colGrabObj = false;
 
     Quaternion currentGrabInitialRot;
 
@@ -95,11 +96,15 @@ public class PlayerController : MonoBehaviour
         {
             if (inputTimer < AstralPocket.Instance.timeToReset)
             {
+                if(currentGrabObject != null)
+                    UnGrabObject();
                 AstralPocket.Instance.CastAstralPocket();
                 inputTimer = 0;
             }
             else if (inputTimer > AstralPocket.Instance.timeToReset)
             {
+                if (currentGrabObject != null)
+                    UnGrabObject();
                 AstralPocket.Instance.DecastAstralPocket();
                 inputTimer = 0;
             }
@@ -131,6 +136,17 @@ public class PlayerController : MonoBehaviour
         if (OnSlope()) rb.useGravity = false;
         else rb.useGravity = true;
 
+        if(currentGrabObject != null && !IsGrounded() && !colGrabObj)
+        {
+            colGrabObj = true;
+            currentGrabObject.GetComponent<Collider>().enabled = false;
+        }
+        else if(currentGrabObject != null && IsGrounded() && colGrabObj)
+        {
+            colGrabObj = false;
+            currentGrabObject.GetComponent<Collider>().enabled = true;
+        }
+
         if (move.magnitude > .01f)
         {
             if (currentGrabObject != null)
@@ -160,6 +176,8 @@ public class PlayerController : MonoBehaviour
 
         if(inputTimer > AstralPocket.Instance.timeToReset)
         {
+            if (currentGrabObject != null)
+                UnGrabObject();
             AstralPocket.Instance.DecastAstralPocket();
             inputTimer = 0;
             inputRealased = false;
@@ -193,7 +211,7 @@ public class PlayerController : MonoBehaviour
         Move();
 
         if (!IsGrounded())
-            rb.velocity = Vector3.down * fallSpeed;
+            rb.velocity += Vector3.down * fallSpeed;
     }
 
     private void Move()
@@ -347,7 +365,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
-
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
