@@ -193,7 +193,7 @@ public class PlayerController : MonoBehaviour
         Move();
 
         if (!IsGrounded())
-            rb.velocity += Vector3.down * fallSpeed;
+            rb.velocity = Vector3.down * fallSpeed;
     }
 
     private void Move()

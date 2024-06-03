@@ -1401,7 +1401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 5267406712957801112}
-  inGamePanel: {fileID: 0}
+  inGamePanel: {fileID: 2656660966870740716}
   pauseBtt: {fileID: 7335860582500890402}
   grabObj: {fileID: 2806961399819381402}
   grabRotateObj: {fileID: 4105516684103920522}
@@ -2087,7 +2087,7 @@ Transform:
   m_GameObject: {fileID: 6756067873461120274}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 181.40001, y: 28.731218, z: -9.700004}
+  m_LocalPosition: {x: 181.40001, y: 28.73122, z: -9.700004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2133,7 +2133,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 24575
+    m_Bits: 57343
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2466,7 +2466,7 @@ Transform:
   m_GameObject: {fileID: 7438740192596189940}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: 0.35355338, z: -0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 181.40001, y: 28.731218, z: -9.700004}
+  m_LocalPosition: {x: 181.40001, y: 28.73122, z: -9.700004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4643,7 +4643,7 @@ PrefabInstance:
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
       propertyPath: maxFallSpeed
-      value: 10
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
@@ -4668,7 +4668,7 @@ PrefabInstance:
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
       propertyPath: fallSpeedAccel
-      value: 6
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
