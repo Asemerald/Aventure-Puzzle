@@ -43,7 +43,8 @@ public class Interactible : MonoBehaviour
 
     List<EnergyDoor> doorsList = new List<EnergyDoor>();
     MeshRenderer mesh;
-    Collider col;
+    [HideInInspector]
+    public Collider col;
 
     [HideInInspector]
     public bool isGrabed;
@@ -84,6 +85,101 @@ public class Interactible : MonoBehaviour
             energySphere.transform.localScale = Vector3.one * .1f * (energyRadius * 2);
         else if(energySphere != null)
             energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
+    }
+
+    public void SwitchMode()
+    {
+        if (inAstralState)
+        {
+            if (sizeIsModify)
+                ResetSize();
+
+            if (isPortal)
+                ResetPortal();
+
+            switch (astralState)
+            {
+                case ObjectState.None:
+                    Debug.Log(gameObject.name + " : " + "No State : Astral");
+                    break;
+                case ObjectState.Moveable:
+                    MoveableState();
+                    break;
+                case ObjectState.UnMoveable:
+                    UnMoveableState();
+                    break;
+                case ObjectState.NoCollider:
+                    NoColldierState();
+                    break;
+                case ObjectState.EmitEnergy:
+                    EnergyMoveable();
+                    break;
+                case ObjectState.EnergyUnMoveable:
+                    EnergyUnMoveable();
+                    break;
+                case ObjectState.EnergyNoCollider:
+                    EnergyNoCollider();
+                    break;
+                case ObjectState.Size:
+                    Size();
+                    break;
+                case ObjectState.EnergySize:
+                    EnergySize();
+                    break;
+                case ObjectState.Portal:
+                    PortalSwitch();
+                    break;
+                case ObjectState.NPC:
+                    SwitchToNPC();
+                    break;
+            }
+        }
+        else
+        {
+            if (sizeIsModify)
+                ResetSize();
+
+            if (isPortal)
+                ResetPortal();
+
+            switch (worldState)
+            {
+                case ObjectState.None:
+                    Debug.Log(gameObject.name + " : " + "No State : World");
+                    break;
+                case ObjectState.Moveable:
+                    MoveableState();
+                    break;
+                case ObjectState.UnMoveable:
+                    UnMoveableState();
+                    break;
+                case ObjectState.NoCollider:
+                    NoColldierState();
+                    break;
+                case ObjectState.EmitEnergy:
+                    EnergyMoveable();
+                    break;
+                case ObjectState.EnergyUnMoveable:
+                    EnergyUnMoveable();
+                    break;
+                case ObjectState.EnergyNoCollider:
+                    EnergyNoCollider();
+                    break;
+                case ObjectState.Size:
+                    Size();
+                    break;
+                case ObjectState.EnergySize:
+                    EnergySize();
+                    break;
+                case ObjectState.Portal:
+                    PortalSwitch();
+                    break;
+                case ObjectState.NPC:
+                    SwitchToNPC();
+                    break;
+            }
+        }
+
     }
 
     public void SwitchMode(bool astral)
@@ -236,9 +332,9 @@ public class Interactible : MonoBehaviour
         higheringObject = true;
         float elapsedTime = 0;
         if(astraldObj.activeInHierarchy)
-            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 2, 0);
+            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 4, 0);
         else
-            newLocalPos = localPosInit + new Vector3(0, heightToAdd, 0);
+            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 2, 0);
 
         while (elapsedTime < .5f)
         {

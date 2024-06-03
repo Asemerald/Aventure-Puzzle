@@ -46,6 +46,10 @@ public class PlayerController : MonoBehaviour
 
     Quaternion currentGrabInitialRot;
 
+    bool parentCol;
+    bool childCol;
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -139,12 +143,12 @@ public class PlayerController : MonoBehaviour
         if(currentGrabObject != null && !IsGrounded() && !colGrabObj)
         {
             colGrabObj = true;
-            currentGrabObject.GetComponent<Collider>().enabled = false;
+            DeactivateCols(true);
         }
         else if(currentGrabObject != null && IsGrounded() && colGrabObj)
         {
             colGrabObj = false;
-            currentGrabObject.GetComponent<Collider>().enabled = true;
+            DeactivateCols(false);
         }
 
         if (move.magnitude > .01f)
@@ -272,10 +276,15 @@ public class PlayerController : MonoBehaviour
         currentGrabObject.TryGetComponent(out Interactible i);
         i.isGrabed = true;
         i.localPosInit = i.transform.localPosition;
+
+        HandleCols();
     }
 
     void UnGrabObject()
     {
+        colGrabObj = false;
+        DeactivateCols(false);
+
         Rigidbody r = currentGrabObject.AddComponent<Rigidbody>();
         r.mass = 1;
         r.freezeRotation = true;
@@ -290,6 +299,33 @@ public class PlayerController : MonoBehaviour
 
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
+    }
+
+    void HandleCols()
+    {
+        if(currentGrabObject.TryGetComponent(out Interactible col))
+        {
+            parentCol = col.col.enabled;
+            childCol = col.astraldObj.GetComponent<Collider>().enabled;
+        }
+    }
+
+    void DeactivateCols(bool yes)
+    {
+        if (yes)
+        {
+            if(parentCol)
+                currentGrabObject.GetComponent<Collider>().enabled = false;
+            if(childCol)
+                currentGrabObject.GetComponentInChildren<Interactible>().astraldObj.GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            if (parentCol)
+                currentGrabObject.GetComponent<Collider>().enabled = true;
+            if (childCol)
+                currentGrabObject.GetComponentInChildren<Interactible>().astraldObj.GetComponent<Collider>().enabled = true;
+        }
     }
 
     #region Boolean
