@@ -69,6 +69,9 @@ public class Interactible : MonoBehaviour
     bool resetVel = false;
     float timeToResetVel = .5f;
 
+    [Header("Mesh")]
+    [SerializeField] GameObject moveableMesh;
+    [SerializeField] GameObject unMoveableMesh;
 
     private void Start()
     {
@@ -76,6 +79,7 @@ public class Interactible : MonoBehaviour
         col = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
 
+        ResetMesh();
         SwitchMode(false);
 
         if (astralState == ObjectState.Portal)
@@ -89,6 +93,8 @@ public class Interactible : MonoBehaviour
 
     public void SwitchMode()
     {
+        ResetMesh();
+
         if (inAstralState)
         {
             if (sizeIsModify)
@@ -184,6 +190,8 @@ public class Interactible : MonoBehaviour
 
     public void SwitchMode(bool astral)
     {
+        ResetMesh();
+
         if (astral)
         {
             inAstralState = true;
@@ -256,6 +264,19 @@ public class Interactible : MonoBehaviour
                     break;
             } 
         }
+    }
+
+    void ResetMesh()
+    {
+        if(!astraldObj.activeSelf)
+            mesh.enabled = true;
+        if (astraldObj.activeSelf)
+            astraldObj.GetComponent<MeshRenderer>().enabled = true;
+
+        if(moveableMesh != null)
+            moveableMesh.SetActive(false);
+        if(unMoveableMesh != null)
+            unMoveableMesh.SetActive(false);
     }
 
     private void Update()
@@ -449,6 +470,12 @@ public class Interactible : MonoBehaviour
 
         mesh.material = unMoveableMat;
         astraldObj.GetComponent<MeshRenderer>().material = unMoveableMat;
+
+        if (unMoveableMesh != null)
+        {
+            mesh.enabled = false;
+            unMoveableMesh.SetActive(true);
+        }
     }
 
     void MoveableState()
@@ -465,6 +492,12 @@ public class Interactible : MonoBehaviour
 
         mesh.material = moveableMat;
         astraldObj.GetComponent<MeshRenderer>().material = moveableMat;
+
+        if(moveableMesh != null)
+        {
+            mesh.enabled = false;
+            moveableMesh.SetActive(true);
+        }
     }
 
     void EnergyMoveable()
@@ -475,6 +508,8 @@ public class Interactible : MonoBehaviour
 
         mesh.material = emitEnergyMat;
         astraldObj.GetComponent<MeshRenderer>().material = emitEnergyMat;
+
+        ResetMesh();
     }
 
     void EnergyUnMoveable()
@@ -485,6 +520,8 @@ public class Interactible : MonoBehaviour
 
         mesh.material = energyUnMoveableMat;
         astraldObj.GetComponent<MeshRenderer>().material = energyUnMoveableMat;
+
+        ResetMesh();
     }
 
     void EnergyNoCollider()
@@ -495,6 +532,8 @@ public class Interactible : MonoBehaviour
 
         mesh.material = energyNoColliderMat;
         astraldObj.GetComponent<MeshRenderer>().material = energyNoColliderMat;
+
+        ResetMesh();
     }
 
     void Size()
@@ -522,6 +561,8 @@ public class Interactible : MonoBehaviour
             mesh.material = sizeMat;
 
         sizeIsModify = true;
+
+        ResetMesh() ;
     }
 
     void EnergySize()
@@ -551,6 +592,7 @@ public class Interactible : MonoBehaviour
         }
 
         sizeIsModify = false;
+        ResetMesh();
     }
 
     void SwitchToNPC()
@@ -592,6 +634,8 @@ public class Interactible : MonoBehaviour
             astraldObj.GetComponent<MeshRenderer>().material = portalMat;
         else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
             mesh.material = portalMat;
+
+        ResetMesh();
     }
 
     void ResetPortal()
@@ -615,7 +659,8 @@ public class Interactible : MonoBehaviour
             _rb.mass = 100;
             _rb.freezeRotation = true;
         }
-        
+
+        ResetMesh();
     }
 
     #endregion
