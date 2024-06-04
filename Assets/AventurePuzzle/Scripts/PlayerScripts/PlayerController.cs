@@ -42,8 +42,13 @@ public class PlayerController : MonoBehaviour
 
     public bool hasAstralPocket;
     bool inputRealased = true;
+    bool colGrabObj = false;
 
     Quaternion currentGrabInitialRot;
+
+    bool parentCol;
+    bool childCol;
+
 
     private void Awake()
     {
@@ -95,11 +100,15 @@ public class PlayerController : MonoBehaviour
         {
             if (inputTimer < AstralPocket.Instance.timeToReset)
             {
+                if(currentGrabObject != null)
+                    UnGrabObject();
                 AstralPocket.Instance.CastAstralPocket();
                 inputTimer = 0;
             }
             else if (inputTimer > AstralPocket.Instance.timeToReset)
             {
+                if (currentGrabObject != null)
+                    UnGrabObject();
                 AstralPocket.Instance.DecastAstralPocket();
                 inputTimer = 0;
             }
@@ -131,6 +140,17 @@ public class PlayerController : MonoBehaviour
         if (OnSlope()) rb.useGravity = false;
         else rb.useGravity = true;
 
+        if(currentGrabObject != null && !IsGrounded() && !colGrabObj)
+        {
+            colGrabObj = true;
+            DeactivateCols(true);
+        }
+        else if(currentGrabObject != null && IsGrounded() && colGrabObj)
+        {
+            colGrabObj = false;
+            DeactivateCols(false);
+        }
+
         if (move.magnitude > .01f)
         {
             if (currentGrabObject != null)
@@ -160,6 +180,8 @@ public class PlayerController : MonoBehaviour
 
         if(inputTimer > AstralPocket.Instance.timeToReset)
         {
+            if (currentGrabObject != null)
+                UnGrabObject();
             AstralPocket.Instance.DecastAstralPocket();
             inputTimer = 0;
             inputRealased = false;
@@ -254,10 +276,15 @@ public class PlayerController : MonoBehaviour
         currentGrabObject.TryGetComponent(out Interactible i);
         i.isGrabed = true;
         i.localPosInit = i.transform.localPosition;
+
+        HandleCols();
     }
 
     void UnGrabObject()
     {
+        colGrabObj = false;
+        DeactivateCols(false);
+
         Rigidbody r = currentGrabObject.AddComponent<Rigidbody>();
         r.mass = 1;
         r.freezeRotation = true;
@@ -272,6 +299,33 @@ public class PlayerController : MonoBehaviour
 
         currentGrabObject.transform.parent = null;
         currentGrabObject = null;
+    }
+
+    void HandleCols()
+    {
+        if(currentGrabObject.TryGetComponent(out Interactible col))
+        {
+            parentCol = col.col.enabled;
+            childCol = col.astraldObj.GetComponent<Collider>().enabled;
+        }
+    }
+
+    void DeactivateCols(bool yes)
+    {
+        if (yes)
+        {
+            if(parentCol)
+                currentGrabObject.GetComponent<Collider>().enabled = false;
+            if(childCol)
+                currentGrabObject.GetComponentInChildren<Interactible>().astraldObj.GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            if (parentCol)
+                currentGrabObject.GetComponent<Collider>().enabled = true;
+            if (childCol)
+                currentGrabObject.GetComponentInChildren<Interactible>().astraldObj.GetComponent<Collider>().enabled = true;
+        }
     }
 
     #region Boolean
@@ -347,7 +401,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
-
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
