@@ -8,18 +8,8 @@ public class AudioFunctions : MonoBehaviour
 {
     public static AudioFunctions Instance {  get; private set; }
 
-    public void PlayFootSteps1()
+    public void PlayFootStepsRock()
     {
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.FootSteps1, this.transform.position);
-    }
-    
-    public void PlayFootSteps2()
-    {
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.FootSteps2, this.transform.position);
-    }
-    
-    public void PlayFootSteps3()
-    {
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.FootSteps3, this.transform.position);
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.FootStepsRock, this.transform.position);
     }
 }
