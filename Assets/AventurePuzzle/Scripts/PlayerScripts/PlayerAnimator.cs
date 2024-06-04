@@ -66,9 +66,4 @@ public class PlayerAnimator : MonoBehaviour
     {
         _animator.SetBool("AlternativeIdle", true);
     }
-
-    private void Update()
-    {
-        
-    }
 }

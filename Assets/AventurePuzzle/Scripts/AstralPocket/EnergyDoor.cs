@@ -14,6 +14,8 @@ public class EnergyDoor : MonoBehaviour
 
     public bool isOpen;
 
+    int previousCount = 0;
+
     private void Start()
     {
         foreach(var d in interactiblesRequired)
@@ -38,34 +40,35 @@ public class EnergyDoor : MonoBehaviour
 
     private void Update()
     {
-        if(interactiblePowering.Count >= interactiblesRequired.Length && !isOpen)
+        if (interactiblePowering.Count != previousCount)
         {
-            Debug.Log("Energy Door : Door is powered");
-            isOpen = true;
-            gameObject.layer = LayerMask.NameToLayer("EnergyDoorNoCollision");
-            GetComponent<MeshRenderer>().enabled = false;
-        }
-        else if(interactiblePowering.Count < interactiblesRequired.Length && isOpen)
-        {
-            Debug.Log("Energy Door : Door is no longer powered");
-            isOpen = false;
-            gameObject.layer = LayerMask.NameToLayer("EnergyDoor");
-            GetComponent<MeshRenderer>().enabled = true;
-        }
+            if (interactiblePowering.Count >= interactiblesRequired.Length && !isOpen)
+            {
+                Debug.Log("Energy Door : Door is powered");
+                isOpen = true;
+                gameObject.layer = LayerMask.NameToLayer("EnergyDoorNoCollision");
+                GetComponent<MeshRenderer>().enabled = false;
+            }
+            else if (interactiblePowering.Count < interactiblesRequired.Length && isOpen)
+            {
+                Debug.Log("Energy Door : Door is no longer powered");
+                isOpen = false;
+                gameObject.layer = LayerMask.NameToLayer("EnergyDoor");
+                GetComponent<MeshRenderer>().enabled = true;
+            }
 
-        if (interactiblePowering.Count > 0)
             CheckIfInteractibleStillOn();
 
-        for(int i = 0; i < interactiblesRequired.Length; i++)
-        {
-            lockObjects[i].SetActive(true);
+            for(int i = 0; i < interactiblesRequired.Length; i++)
+            {
+                lockObjects[i].SetActive(true);
+            }
+            for(int i = 0; i < interactiblePowering.Count; i++)
+            {
+                if (i >= lockObjects.Count) continue;
+                lockObjects[i].SetActive(false);
+            }
         }
-        for(int i = 0; i < interactiblePowering.Count; i++)
-        {
-            if (i >= lockObjects.Count) continue;
-            lockObjects[i].SetActive(false);
-        }
-
     }
 
     void CheckIfInteractibleStillOn()
@@ -75,6 +78,8 @@ public class EnergyDoor : MonoBehaviour
             if (!interactiblePowering[i].emitEnergy) interactiblePowering.RemoveAt(i);
             if (interactiblePowering.Count == 0) break;
         }
+
+        previousCount = interactiblePowering.Count;
     }
 
     public void RemoveEnergy(Interactible energy)
