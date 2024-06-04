@@ -317,6 +317,9 @@ public class Interactible : MonoBehaviour
         float elapsedTime = 0;
         while (elapsedTime < timeToResetVel)
         {
+            if (_rb == null)
+                break;
+
             elapsedTime += Time.deltaTime;
 
             Vector3 newVel = Vector3.Lerp(_rb.velocity, new Vector3(0,_rb.velocity.y, 0), elapsedTime / .5f);
