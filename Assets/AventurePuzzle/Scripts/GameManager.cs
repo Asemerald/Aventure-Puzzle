@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public bool gameIsPause = false;
-    public bool showMouse = false;
 
     private void Awake()
     {
@@ -19,11 +18,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (!showMouse)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void PauseGame()
@@ -31,42 +27,9 @@ public class GameManager : MonoBehaviour
         gameIsPause = !gameIsPause;
 
         if (gameIsPause)
-        {
-            SelectBtt(HUD.Instance.pauseBtt);
-            HUD.Instance.pausePanel.SetActive(true);
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+            HUD.Instance.Pause();
         else
-        {
-            Resume();
-        }
-    }
-
-    public void SelectBtt(GameObject button)
-    {
-        EventSystem.current.SetSelectedGameObject(null);
-        EventSystem.current.SetSelectedGameObject(button);
-    }
-
-    public void Resume()
-    {
-        gameIsPause = false;
-        HUD.Instance.pausePanel.SetActive(false);
-        Time.timeScale = 1;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
-    public void LoadScene(int levelIndex)
-    {
-        SceneManager.LoadScene(levelIndex);
+            HUD.Instance.Resume();
     }
 }
 
