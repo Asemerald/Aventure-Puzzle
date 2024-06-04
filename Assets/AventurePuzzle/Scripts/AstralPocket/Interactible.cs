@@ -268,10 +268,13 @@ public class Interactible : MonoBehaviour
 
     void ResetMesh()
     {
-        if(!astraldObj.activeSelf)
-            mesh.enabled = true;
-        if (astraldObj.activeSelf)
-            astraldObj.GetComponent<MeshRenderer>().enabled = true;
+        if(astraldObj != null)
+        {
+            if(!astraldObj.activeSelf)
+                mesh.enabled = true;
+            if (astraldObj.activeSelf)
+                astraldObj.GetComponent<MeshRenderer>().enabled = true;
+        }
 
         if(moveableMesh != null)
             moveableMesh.SetActive(false);
