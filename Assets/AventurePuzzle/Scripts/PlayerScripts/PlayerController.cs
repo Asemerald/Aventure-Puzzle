@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour
 {
