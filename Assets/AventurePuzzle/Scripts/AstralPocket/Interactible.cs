@@ -72,6 +72,8 @@ public class Interactible : MonoBehaviour
     [Header("Mesh")]
     [SerializeField] GameObject moveableMesh;
     [SerializeField] GameObject unMoveableMesh;
+    [SerializeField] GameObject energyUnMoveableMesh;
+    [SerializeField] GameObject energyMoveableMesh;
 
     private void Start()
     {
@@ -270,16 +272,26 @@ public class Interactible : MonoBehaviour
     {
         if(astraldObj != null)
         {
-            if(!astraldObj.activeSelf)
+            if (!astraldObj.activeSelf)
+            {
                 mesh.enabled = true;
+                astraldObj.GetComponent<MeshRenderer>().enabled = false;
+            }
             else
+            {
+                mesh.enabled = false;
                 astraldObj.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
 
         if(moveableMesh != null)
             moveableMesh.SetActive(false);
         if(unMoveableMesh != null)
             unMoveableMesh.SetActive(false);
+        if(energyUnMoveableMesh != null)
+            energyUnMoveableMesh.SetActive(false);
+        if(energyMoveableMesh != null)
+            energyMoveableMesh.SetActive(false);
     }
 
     private void Update()
@@ -517,6 +529,8 @@ public class Interactible : MonoBehaviour
         astraldObj.GetComponent<MeshRenderer>().material = emitEnergyMat;
 
         ResetMesh();
+        mesh.enabled = false;
+        energyMoveableMesh.SetActive(true);
     }
 
     void EnergyUnMoveable()
@@ -529,6 +543,8 @@ public class Interactible : MonoBehaviour
         astraldObj.GetComponent<MeshRenderer>().material = energyUnMoveableMat;
 
         ResetMesh();
+        mesh.enabled = false;
+        energyUnMoveableMesh.SetActive(true);
     }
 
     void EnergyNoCollider()
@@ -630,10 +646,7 @@ public class Interactible : MonoBehaviour
         gameObject.layer = LayerMask.NameToLayer("Portal");
         astraldObj.layer = LayerMask.NameToLayer("Portal");
 
-        if (inAstralState) //ça veut dire que c'est la version astrale qui prend l'état de taille et jaune
-            astraldObj.GetComponent<MeshRenderer>().material = portalMat;
-        else //ça veut dire que c'est la version normal qui est à l'état de taille et donc jaune
-            mesh.material = portalMat;
+        astraldObj.GetComponent<MeshRenderer>().material = portalMat;
 
         ResetMesh();
     }
@@ -660,6 +673,7 @@ public class Interactible : MonoBehaviour
         }
 
         ResetMesh();
+
     }
 
     #endregion
