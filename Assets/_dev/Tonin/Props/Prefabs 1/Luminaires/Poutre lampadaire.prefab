@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4676340436327459225
 Transform:
@@ -45,6 +45,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Planche01
+      objectReference: {fileID: 0}
+    - target: {fileID: 3769691024220089877, guid: e883898d37ba6fe43af57e100513687c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 4547354344993698991, guid: e883898d37ba6fe43af57e100513687c,
         type: 3}
@@ -135,6 +140,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lampe Pendule
       objectReference: {fileID: 0}
+    - target: {fileID: 613064626908378393, guid: d64b2896abac9bb4eb65a8283666352c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1927113916929249913, guid: d64b2896abac9bb4eb65a8283666352c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 4572790290695340245, guid: d64b2896abac9bb4eb65a8283666352c,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -199,6 +214,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7164668872063269748, guid: d64b2896abac9bb4eb65a8283666352c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
