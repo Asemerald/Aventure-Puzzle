@@ -141,33 +141,31 @@ public class PlayerController : MonoBehaviour
         if (OnSlope()) rb.useGravity = false;
         else rb.useGravity = true;
 
-        if(currentGrabObject != null && !IsGrounded() && !colGrabObj)
+        if(currentGrabObject != null)
         {
-            colGrabObj = true;
-            DeactivateCols(true);
-        }
-        else if(currentGrabObject != null && IsGrounded() && colGrabObj)
-        {
-            colGrabObj = false;
-            DeactivateCols(false);
-        }
-
-        if (move.magnitude > .01f)
-        {
-            if (currentGrabObject != null)
+            if(!IsGrounded() && !colGrabObj)
             {
-                if (InputsBrain.Instance.rotateGrab.IsPressed())
-                {
-                    currentGrabObject.transform.rotation = currentGrabInitialRot;
-                    var aimVector = Quaternion.LookRotation(move);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
-                }
+                colGrabObj = true;
+                DeactivateCols(true);
             }
-            else
+            else if(IsGrounded() && colGrabObj)
             {
+                colGrabObj = false;
+                DeactivateCols(false);
+            }
+
+            if(move.magnitude > .01f && InputsBrain.Instance.rotateGrab.IsPressed())
+            {
+                currentGrabObject.transform.rotation = currentGrabInitialRot;
                 var aimVector = Quaternion.LookRotation(move);
                 transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
             }
+        }
+
+        if (move.magnitude > .01f && currentGrabObject == null)
+        {
+            var aimVector = Quaternion.LookRotation(move);
+            transform.rotation = Quaternion.Lerp(transform.rotation, aimVector, rotateTime * Time.deltaTime);
         }
     
 
@@ -196,17 +194,17 @@ public class PlayerController : MonoBehaviour
 
         if(CanGrabObject())
             HUD.Instance.grabObj.SetActive(true);
-        else
+        else if(HUD.Instance.grabObj.activeSelf)
             HUD.Instance.grabObj.SetActive(false);
 
         if (currentGrabObject != null)
             HUD.Instance.grabRotateObj.SetActive(true);
-        else
+        else if(HUD.Instance.grabRotateObj.activeSelf)
             HUD.Instance.grabRotateObj.SetActive(false);
 
         if (DisplayInputs() && hasAstralPocket)
             HUD.Instance.astralInputs.SetActive(true);
-        else
+        else if(HUD.Instance.astralInputs.activeSelf)
             HUD.Instance.astralInputs.SetActive(false);
     }
     
