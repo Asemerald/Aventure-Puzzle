@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class ConfinerSwitcher : MonoBehaviour
@@ -9,6 +11,11 @@ public class ConfinerSwitcher : MonoBehaviour
     
     private void Start()
     {
-        _CameraFollowPlayer = GameObject.FindGameObjectWithTag("");
+        _CameraFollowPlayer = GameObject.FindGameObjectWithTag("CameraFollow");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        _CameraFollowPlayer.GetComponent<CinemachineConfiner>().m_BoundingVolume = transform.parent.GetComponent<Collider>();
     }
 }
