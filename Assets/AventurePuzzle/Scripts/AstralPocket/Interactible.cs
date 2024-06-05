@@ -75,11 +75,14 @@ public class Interactible : MonoBehaviour
     [SerializeField] GameObject energyUnMoveableMesh;
     [SerializeField] GameObject energyMoveableMesh;
 
+    Transform parent;
+
     private void Start()
     {
         mesh = GetComponent<MeshRenderer>();
         col = GetComponent<Collider>();
         _rb = GetComponent<Rigidbody>();
+        parent = transform.parent;
 
         ResetMesh();
         SwitchMode(false);
@@ -93,6 +96,7 @@ public class Interactible : MonoBehaviour
             energySphere.transform.localScale = Vector3.one * .1f * energyRadius;
     }
 
+    #region Switch
     public void SwitchMode()
     {
         ResetMesh();
@@ -267,6 +271,8 @@ public class Interactible : MonoBehaviour
             } 
         }
     }
+
+    #endregion
 
     void ResetMesh()
     {
@@ -677,6 +683,11 @@ public class Interactible : MonoBehaviour
     }
 
     #endregion
+
+    public void AttachToParent()
+    {
+        transform.parent = parent;
+    }
 
     bool HittingGround()
     {
