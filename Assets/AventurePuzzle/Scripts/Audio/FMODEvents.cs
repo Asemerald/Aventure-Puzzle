@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class FMODEvents : MonoBehaviour
 {
+
+    [field: Header ("BackGround Wind")]
+    [field: SerializeField] public EventReference WindBlow { get; private set; }
+    
     [field: Header ("Poche SFX")]
     [field: SerializeField] public EventReference PochePose { get; private set; }
     

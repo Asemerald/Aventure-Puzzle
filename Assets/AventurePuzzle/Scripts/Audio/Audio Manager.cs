@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using JetBrains.Annotations;
 using UnityEngine;
 using FMODUnity; 
@@ -10,6 +11,8 @@ using Unity.VisualScripting;
 public class AudioManager : MonoBehaviour
 {
     private List<EventInstance> eventInstances;
+
+    private EventInstance ambianceEventInstance;
     public static AudioManager instance { get; private set;}
         private void Awake()
         {
@@ -46,6 +49,17 @@ public class AudioManager : MonoBehaviour
             }
         }
 
+        private void Start()
+        {
+            InitializeAmbiance(FMODEvents.instance.WindBlow);
+        }
+
+        private void InitializeAmbiance(EventReference ambienceEventReference)
+        {
+            ambianceEventInstance = CreateEventInstance(ambienceEventReference);
+            ambianceEventInstance.start();
+        }
+        
         private void OnDestroy()
         {
             CleanUp();
