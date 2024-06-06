@@ -302,7 +302,7 @@ MonoBehaviour:
     m_Bits: 2560
   energySphere: {fileID: 1362989902393682483}
   astraldObj: {fileID: 7895566878631211928}
-  moveableMat: {fileID: 2100000, guid: d16d4e5b2b494c14ca4ce096e295e224, type: 2}
+  moveableMat: {fileID: 2100000, guid: 8f241e101210fbe459fa6b9b28982ee8, type: 2}
   unMoveableMat: {fileID: 2100000, guid: 63056fc6c0594244c9d6a2c703f4fd35, type: 2}
   noColliderMat: {fileID: 2100000, guid: 17b2b0e9addf29c428ddc788f9551c69, type: 2}
   emitEnergyMat: {fileID: 2100000, guid: ccad1a15efd2988488853cc4fc54a9da, type: 2}
@@ -313,6 +313,7 @@ MonoBehaviour:
   portalMat: {fileID: 0}
   npcMat: {fileID: 0}
   npcEnergyMat: {fileID: 0}
+  col: {fileID: 0}
   isGrabed: 0
   heightToAdd: 0.5
   macDistanceToHigher: 3.5
@@ -323,6 +324,11 @@ MonoBehaviour:
     m_Bits: 64
   localPosInit: {x: 0, y: 0, z: 0}
   placePos: {x: 0, y: 0, z: 0}
+  _rb: {fileID: 0}
+  moveableMesh: {fileID: 0}
+  unMoveableMesh: {fileID: 0}
+  energyUnMoveableMesh: {fileID: 0}
+  energyMoveableMesh: {fileID: 0}
 --- !u!54 &3098118558044938092
 Rigidbody:
   m_ObjectHideFlags: 0

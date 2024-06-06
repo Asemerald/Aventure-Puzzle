@@ -1477,7 +1477,6 @@ GameObject:
   - component: {fileID: 1053420682700410099}
   - component: {fileID: 689498949634899605}
   - component: {fileID: 5124563205464836305}
-  - component: {fileID: 1688077568700047220}
   m_Layer: 0
   m_Name: Eau (3)
   m_TagString: Untagged
@@ -1550,28 +1549,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &1688077568700047220
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2744677977366492144}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2841126644331386572
 GameObject:
   m_ObjectHideFlags: 0
@@ -5349,7 +5326,6 @@ GameObject:
   - component: {fileID: 2733849604744654350}
   - component: {fileID: 1858706969765439654}
   - component: {fileID: 222220220860594095}
-  - component: {fileID: 5541054916142867828}
   m_Layer: 0
   m_Name: Eau (4)
   m_TagString: Untagged
@@ -5422,28 +5398,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &5541054916142867828
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7843777035476172461}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &8061758158778385870
 GameObject:
   m_ObjectHideFlags: 0
@@ -18019,6 +17973,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 18.32
       objectReference: {fileID: 0}
+    - target: {fileID: 5119012453509307701, guid: 19cf4eed200098d43b6090628d4cc70c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5228749130740986677, guid: 19cf4eed200098d43b6090628d4cc70c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -18164,7 +18123,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8993807491579521355, guid: 19cf4eed200098d43b6090628d4cc70c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8366807829773369553, guid: 19cf4eed200098d43b6090628d4cc70c, type: 3}
     - {fileID: 4835855066936216816, guid: 19cf4eed200098d43b6090628d4cc70c, type: 3}
