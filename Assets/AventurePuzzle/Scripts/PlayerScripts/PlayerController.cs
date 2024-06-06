@@ -293,10 +293,9 @@ public class PlayerController : MonoBehaviour
         i.placePos = i.transform.position;
         i.isGrabed = false;
         i._rb = r;
+        i.AttachToParent();
 
         currentGrabObject.transform.rotation = currentGrabInitialRot;
-
-        currentGrabObject.transform.parent = null;
         currentGrabObject = null;
     }
 
