@@ -20,12 +20,12 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
-  m_LockedProperties: _Shadows
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
     - _Astral_stencil:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8600000, guid: a631bf51365daa24b87d76cb79c41076, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -42,10 +42,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Depth: 1.27
+    - _Depth: 1.7
     - _Fresnel_offset: 0.37
-    - _Fresnel_size: 0.354
-    - _Intensity: 6
+    - _Fresnel_size: 0.663
+    - _Intensity: 12
     - _Noise_scale: 21.04
     - _Speed: 0.05
     m_Colors:

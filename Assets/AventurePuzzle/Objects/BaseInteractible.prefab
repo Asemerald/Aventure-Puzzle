@@ -146,6 +146,16 @@ MonoBehaviour:
   portalMat: {fileID: 0}
   npcMat: {fileID: 0}
   npcEnergyMat: {fileID: 0}
+  isGrabed: 0
+  heightToAdd: 0.5
+  macDistanceToHigher: 2
+  distanceToCheckForGround: 0.1
+  timeToResetPos: 4
+  colToHigher:
+    serializedVersion: 2
+    m_Bits: 64
+  localPosInit: {x: 0, y: 0, z: 0}
+  placePos: {x: 0, y: 0, z: 0}
 --- !u!54 &2705102230082238403
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -154,7 +164,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061154298518885311}
   serializedVersion: 4
-  m_Mass: 100
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -171,7 +181,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1 &2516627839768906253
 GameObject:
@@ -308,7 +318,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 146351e12d84e7e4998d28ad662650a7, type: 2}
+  - {fileID: 2100000, guid: 077adfd08011ee24c8adab62e47d5124, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
