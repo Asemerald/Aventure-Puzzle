@@ -57,8 +57,6 @@ public class AstralPocket : MonoBehaviour
 
         AudioManager.instance.PlayOneShot(FMODEvents.instance.PochePose, this.transform.position);
         sphereCasted.Add(Instantiate(astralPocketMesh, newPocketCastPos, Quaternion.identity, transform.parent));
-
-        RotationCards.Instance.SetAngle(maxPocketAvailable - currentPocketNum);
     }
 
     public void DecastAstralPocket()
@@ -76,7 +74,6 @@ public class AstralPocket : MonoBehaviour
         sphereCasted.Clear();
 
         currentPocketNum = 0;
-        RotationCards.Instance.SetAngle(maxPocketAvailable);
     }
 
     private void OnDrawGizmos()

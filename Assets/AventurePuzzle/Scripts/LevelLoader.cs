@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using System.Threading;
 
 public class LevelLoader : MonoBehaviour
 {
@@ -16,10 +14,7 @@ public class LevelLoader : MonoBehaviour
     {
         if(Instance == null)
             Instance = this;
-    }
 
-    private void Start()
-    {
         currentRoom = startingRoom;
 
         for (int i = 0; i < levels.Count; i++)
@@ -35,9 +30,17 @@ public class LevelLoader : MonoBehaviour
                 levels[currentRoom + i].gameObject.SetActive(true);
             }
         }
+
     }
 
-    public void ManageLevels()
+
+    private void Update()
+    {
+        ManageLevels();
+    }
+
+
+    void ManageLevels()
     {
 
         for (int i = -1; i < 2; i++)
@@ -53,7 +56,6 @@ public class LevelLoader : MonoBehaviour
             if (i < (currentRoom - 1) || i > (currentRoom + 1))
                 levels[i].gameObject.SetActive(false);
         }
-
     }
 
     public void ActiveAllLevel()
