@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
-using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,18 +12,18 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance;
     private PlayerAnimator _playerAnimator;
 
-
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
     [SerializeField] private float accel = 1f;
     [SerializeField] private float decel = 1f;
     [SerializeField] private float rotateTime;
 
-    [Header("Jump Settings")]
+    [Header("Ground/Fall Settings")]
     [SerializeField] float maxFallSpeed = 40;
     [SerializeField] float fallSpeedAccel = 35;
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feet;
+    [SerializeField] Vector3 feetSize;
     private float fallSpeed;
 
     private RaycastHit slopeHit;
@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour
     bool parentCol;
     bool childCol;
 
+    public float timeToExitPortal = 2;
+    public bool enteringAPortal;
+    bool coroutinePortal = false;
 
     private void Awake()
     {
@@ -77,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
         MyInputs();
         HUDUpdate();
 
@@ -93,6 +98,8 @@ public class PlayerController : MonoBehaviour
 
         if (GameManager.Instance.gameIsPause) return;
 
+        if (coroutinePortal) return;
+
         if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
             inputTimer += Time.deltaTime;
 
@@ -104,15 +111,14 @@ public class PlayerController : MonoBehaviour
                 if(currentGrabObject != null)
                     UnGrabObject();
                 AstralPocket.Instance.CastAstralPocket();
-                inputTimer = 0;
             }
             else if (inputTimer > AstralPocket.Instance.timeToReset)
             {
                 if (currentGrabObject != null)
                     UnGrabObject();
                 AstralPocket.Instance.DecastAstralPocket();
-                inputTimer = 0;
             }
+            inputTimer = 0;
         }
 
         if (InputsBrain.Instance.pocket.WasReleasedThisFrame()) inputRealased = true;
@@ -131,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
     void CheckMethods()
     {
+        if (enteringAPortal && !coroutinePortal)
+            StartCoroutine(WaitToPortal());
+
         slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
 
         if (!IsGrounded())
@@ -188,6 +197,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    IEnumerator WaitToPortal()
+    {
+        coroutinePortal = true;
+        yield return new WaitForSeconds(timeToExitPortal);
+        enteringAPortal = false;
+        yield return new WaitForSeconds(timeToExitPortal);
+        coroutinePortal = false;
+    }
+
     void HUDUpdate()
     {
         if (HUD.Instance == null) return;
@@ -211,10 +229,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (coroutinePortal) return;
+
         Move();
 
         if (!IsGrounded())
-            rb.velocity += Vector3.down * fallSpeed;
+            rb.AddForce(Vector3.down * fallSpeed, ForceMode.VelocityChange);
     }
 
     private void Move()
@@ -333,7 +353,7 @@ public class PlayerController : MonoBehaviour
         if (slopeHit.normal != Vector3.up)
             angle = Vector3.Angle(Vector3.up, slopeHit.normal);
 
-        return Physics.CheckSphere(feet.position, 0.15f, ground) && angle < 46;
+        return Physics.CheckBox(feet.position, feetSize, Quaternion.identity, ground) && angle < 46;
     }
 
     bool OnSlope()
@@ -402,6 +422,6 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
-        Gizmos.DrawWireSphere(feet.localPosition, 0.15f);
+        Gizmos.DrawCube(feet.localPosition, feetSize);
     }
 }
