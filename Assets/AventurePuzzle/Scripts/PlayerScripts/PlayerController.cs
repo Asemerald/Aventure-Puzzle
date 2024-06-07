@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 move;
 
     public static PlayerController Instance;
-    private PlayerAnimator _playerAnimator;
+    [HideInInspector]
+    public PlayerAnimator _playerAnimator;
 
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
@@ -53,6 +54,8 @@ public class PlayerController : MonoBehaviour
     public float timeToExitPortal = 2;
     public bool enteringAPortal;
     bool coroutinePortal = false;
+    [HideInInspector]
+    public bool playerHasControl = true;
 
     private void Awake()
     {
@@ -81,7 +84,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-
         MyInputs();
         HUDUpdate();
 
@@ -98,6 +100,7 @@ public class PlayerController : MonoBehaviour
 
         if (GameManager.Instance.gameIsPause) return;
 
+        if (!playerHasControl) return;
         if (coroutinePortal) return;
 
         if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
@@ -137,6 +140,8 @@ public class PlayerController : MonoBehaviour
 
     void CheckMethods()
     {
+        if (!playerHasControl) return;
+
         if (enteringAPortal && !coroutinePortal)
             StartCoroutine(WaitToPortal());
 
@@ -210,7 +215,14 @@ public class PlayerController : MonoBehaviour
     {
         if (HUD.Instance == null) return;
 
-        if(CanGrabObject())
+        if (!playerHasControl)
+        {
+            HUD.Instance.inGamePanel.SetActive(false);
+            return;
+        }
+
+
+        if (CanGrabObject())
             HUD.Instance.grabObj.SetActive(true);
         else if(HUD.Instance.grabObj.activeSelf)
             HUD.Instance.grabObj.SetActive(false);
@@ -229,8 +241,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (coroutinePortal) return;
-
         Move();
 
         if (!IsGrounded())
@@ -255,8 +265,11 @@ public class PlayerController : MonoBehaviour
         else
             force = new Vector3(movement.x * acceleration, rb.velocity.y, movement.z * acceleration);
 
-        if (InputsBrain.Instance.rotateGrab.IsPressed())
+        if (InputsBrain.Instance.rotateGrab.IsPressed() && currentGrabObject != null)
             force = Vector3.zero;
+
+        if (!playerHasControl) return;
+        if (coroutinePortal) return;
 
         rb.AddForce(force, ForceMode.Acceleration);
         
