@@ -19,11 +19,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float decel = 1f;
     [SerializeField] private float rotateTime;
 
-    [Header("Jump Settings")]
+    [Header("Ground/Fall Settings")]
     [SerializeField] float maxFallSpeed = 40;
     [SerializeField] float fallSpeedAccel = 35;
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feet;
+    [SerializeField] Vector3 feetSize;
     private float fallSpeed;
 
     private RaycastHit slopeHit;
@@ -333,7 +334,7 @@ public class PlayerController : MonoBehaviour
         if (slopeHit.normal != Vector3.up)
             angle = Vector3.Angle(Vector3.up, slopeHit.normal);
 
-        return Physics.CheckSphere(feet.position, 0.15f, ground) && angle < 46;
+        return Physics.CheckBox(feet.position, feetSize, Quaternion.identity, ground) && angle < 46;
     }
 
     bool OnSlope()
@@ -402,6 +403,6 @@ public class PlayerController : MonoBehaviour
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(interactCenterPoint.localPosition, grabBoxSize);
-        Gizmos.DrawWireSphere(feet.localPosition, 0.15f);
+        Gizmos.DrawCube(feet.localPosition, feetSize);
     }
 }
