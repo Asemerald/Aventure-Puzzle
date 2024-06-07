@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2532833627204449200}
   - component: {fileID: 6598186726426521656}
   - component: {fileID: 9174482691032329612}
+  - component: {fileID: 43138411850922025}
   m_Layer: 13
   m_Name: AstralSphere
   m_TagString: Untagged
@@ -84,6 +85,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &43138411850922025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7661479044235464074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -810813066
+      Data2: 1082504894
+      Data3: 543283074
+      Data4: 1309329930
+    Path: event:/Player/Astral Poche/Poche Exist
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 7
 --- !u!1001 &7012916718264549584
 PrefabInstance:
   m_ObjectHideFlags: 0
