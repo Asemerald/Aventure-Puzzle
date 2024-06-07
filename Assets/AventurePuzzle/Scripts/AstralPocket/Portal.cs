@@ -29,6 +29,8 @@ public class Portal : MonoBehaviour
             //Tp le joueur
             if (linkedPortal.isActive && isActive)
             {
+                PlayerController.Instance.enteringAPortal = true;
+
                 Vector3 dir = PlayerController.Instance.transform.forward;
                 Vector3 pos = linkedPortal.transform.position + dir * distanceToSpawn;
 

@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
-using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
 
     public static PlayerController Instance;
     private PlayerAnimator _playerAnimator;
-
 
     [Header("Move Settings")]
     [SerializeField] private float maxSpeed = 8f;
@@ -51,6 +50,9 @@ public class PlayerController : MonoBehaviour
     bool parentCol;
     bool childCol;
 
+    public float timeToExitPortal = 2;
+    public bool enteringAPortal;
+    bool coroutinePortal = false;
 
     private void Awake()
     {
@@ -78,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
+
         MyInputs();
         HUDUpdate();
 
@@ -93,6 +97,8 @@ public class PlayerController : MonoBehaviour
             GameManager.Instance.PauseGame();
 
         if (GameManager.Instance.gameIsPause) return;
+
+        if (coroutinePortal) return;
 
         if (InputsBrain.Instance.pocket.IsPressed() && hasAstralPocket && inputRealased)
             inputTimer += Time.deltaTime;
@@ -131,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
     void CheckMethods()
     {
+        if (enteringAPortal && !coroutinePortal)
+            StartCoroutine(WaitToPortal());
+
         slopeMove = Vector3.ProjectOnPlane(move, slopeHit.normal);
 
         if (!IsGrounded())
@@ -188,6 +197,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    IEnumerator WaitToPortal()
+    {
+        coroutinePortal = true;
+        yield return new WaitForSeconds(timeToExitPortal);
+        enteringAPortal = false;
+        yield return new WaitForSeconds(timeToExitPortal);
+        coroutinePortal = false;
+    }
+
     void HUDUpdate()
     {
         if (HUD.Instance == null) return;
@@ -211,6 +229,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (coroutinePortal) return;
+
         Move();
 
         if (!IsGrounded())
