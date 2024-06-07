@@ -19,11 +19,6 @@ public class RotationCards : MonoBehaviour
             Instance = this;
     }
 
-    private void Start()
-    {
-        SetAngle(3);
-    }
-
     private void Update()
     {
         RotateCard();
@@ -48,6 +43,10 @@ public class RotationCards : MonoBehaviour
 
             StartCoroutine(SetToPos(new Vector3(x, 0, z), cards[i].transform));
         }
+
+        foreach(var c in cards)
+            if(!c.gameObject.activeSelf)
+                c.transform.localPosition = Vector3.zero;
     }
 
     IEnumerator SetToPos(Vector3 endPos, Transform card)
