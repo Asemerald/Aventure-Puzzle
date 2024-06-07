@@ -64,10 +64,11 @@ public class AstralPocketEnabler : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         //Puis les 3 cartes qui tourne autour du joueur
         PlayerController.Instance.hasAstralPocket = true;
+        RotationCards.Instance.SetAngle(3);
 
+        yield return new WaitForSeconds(1.5F);
 
         secondCam.SetActive(false);
-        yield return new WaitForSeconds(1);
 
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
