@@ -330,6 +330,10 @@ public class Interactible : MonoBehaviour
 
         if(_rb != null)
             ReduceVelocity();
+
+        if(groundMesh != null)
+            if (!isGrabed && groundMesh.activeInHierarchy)
+                groundMesh.SetActive(false);
     }
 
     public void GrabCheck()
@@ -340,6 +344,9 @@ public class Interactible : MonoBehaviour
             higheringObject = false;
             transform.position = placePos;
         }
+
+        if (isGrabed && !groundMesh.activeInHierarchy)
+            groundMesh.SetActive(true);
 
         if (isGrabed && HittingGround())
         {
