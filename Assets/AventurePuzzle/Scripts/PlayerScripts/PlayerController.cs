@@ -105,15 +105,14 @@ public class PlayerController : MonoBehaviour
                 if(currentGrabObject != null)
                     UnGrabObject();
                 AstralPocket.Instance.CastAstralPocket();
-                inputTimer = 0;
             }
             else if (inputTimer > AstralPocket.Instance.timeToReset)
             {
                 if (currentGrabObject != null)
                     UnGrabObject();
                 AstralPocket.Instance.DecastAstralPocket();
-                inputTimer = 0;
             }
+            inputTimer = 0;
         }
 
         if (InputsBrain.Instance.pocket.WasReleasedThisFrame()) inputRealased = true;

@@ -394,9 +394,6 @@ public class Interactible : MonoBehaviour
     {
         higheringObject = true;
         float elapsedTime = 0;
-        if(astraldObj.activeInHierarchy)
-            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 4, 0);
-        else
             newLocalPos = localPosInit + new Vector3(0, heightToAdd / 2, 0);
 
         while (elapsedTime < .5f)
@@ -404,9 +401,7 @@ public class Interactible : MonoBehaviour
             if (!isGrabed) break;
             elapsedTime += Time.deltaTime;
 
-            if(HittingGround() && astraldObj.activeInHierarchy)
-                newLocalPos += new Vector3(0, heightToAdd / 4, 0);
-            else if(HittingGround() && !astraldObj.activeInHierarchy)
+            if(HittingGround())
                 newLocalPos += new Vector3(0, heightToAdd / 2, 0);
 
             if(newLocalPos.y > macDistanceToHigher)
@@ -502,7 +497,7 @@ public class Interactible : MonoBehaviour
         //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         if (TryGetComponent(out Rigidbody rb))
-            rb.isKinematic = false;
+            rb.isKinematic = true;
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
