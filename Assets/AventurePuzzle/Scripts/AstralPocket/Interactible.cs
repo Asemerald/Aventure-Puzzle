@@ -77,6 +77,8 @@ public class Interactible : MonoBehaviour
     [SerializeField] GameObject energyMoveableMesh;
     [SerializeField] GameObject sizeMesh;
 
+    [SerializeField] GameObject groundMesh;
+
     Transform parent;
 
     private void Start()
@@ -328,9 +330,13 @@ public class Interactible : MonoBehaviour
 
         if(_rb != null)
             ReduceVelocity();
+
+        if(groundMesh != null)
+            if (!isGrabed && groundMesh.activeInHierarchy)
+                groundMesh.SetActive(false);
     }
 
-    void GrabCheck()
+    public void GrabCheck()
     {
         if (!isGrabed && higheringObject)
         {
@@ -338,6 +344,9 @@ public class Interactible : MonoBehaviour
             higheringObject = false;
             transform.position = placePos;
         }
+
+        if (isGrabed && !groundMesh.activeInHierarchy)
+            groundMesh.SetActive(true);
 
         if (isGrabed && HittingGround())
         {
@@ -354,7 +363,7 @@ public class Interactible : MonoBehaviour
             resetVel = false;
             return;
         }
-        if(_rb.velocity.x > 0 || _rb.velocity.z > 0 && !resetVel)
+        if(Mathf.Abs(_rb.velocity.x) > 0 || Mathf.Abs(_rb.velocity.z) > 0 && !resetVel)
         {
             StartCoroutine(SetVelocity());
         }
@@ -385,9 +394,6 @@ public class Interactible : MonoBehaviour
     {
         higheringObject = true;
         float elapsedTime = 0;
-        if(astraldObj.activeInHierarchy)
-            newLocalPos = localPosInit + new Vector3(0, heightToAdd / 4, 0);
-        else
             newLocalPos = localPosInit + new Vector3(0, heightToAdd / 2, 0);
 
         while (elapsedTime < .5f)
@@ -395,9 +401,7 @@ public class Interactible : MonoBehaviour
             if (!isGrabed) break;
             elapsedTime += Time.deltaTime;
 
-            if(HittingGround() && astraldObj.activeInHierarchy)
-                newLocalPos += new Vector3(0, heightToAdd / 4, 0);
-            else if(HittingGround() && !astraldObj.activeInHierarchy)
+            if(HittingGround())
                 newLocalPos += new Vector3(0, heightToAdd / 2, 0);
 
             if(newLocalPos.y > macDistanceToHigher)
