@@ -215,7 +215,7 @@ public class PlayerController : MonoBehaviour
         Move();
 
         if (!IsGrounded())
-            rb.velocity += Vector3.down * fallSpeed;
+            rb.AddForce(Vector3.down * fallSpeed, ForceMode.VelocityChange);
     }
 
     private void Move()

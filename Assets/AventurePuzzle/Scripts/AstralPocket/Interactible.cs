@@ -354,7 +354,7 @@ public class Interactible : MonoBehaviour
             resetVel = false;
             return;
         }
-        if(_rb.velocity.x > 0 || _rb.velocity.z > 0 && !resetVel)
+        if(Mathf.Abs(_rb.velocity.x) > 0 || Mathf.Abs(_rb.velocity.z) > 0 && !resetVel)
         {
             StartCoroutine(SetVelocity());
         }
