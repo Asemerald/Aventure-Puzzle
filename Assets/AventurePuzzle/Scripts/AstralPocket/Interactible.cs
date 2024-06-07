@@ -77,6 +77,8 @@ public class Interactible : MonoBehaviour
     [SerializeField] GameObject energyMoveableMesh;
     [SerializeField] GameObject sizeMesh;
 
+    [SerializeField] GameObject groundMesh;
+
     Transform parent;
 
     private void Start()
@@ -330,7 +332,7 @@ public class Interactible : MonoBehaviour
             ReduceVelocity();
     }
 
-    void GrabCheck()
+    public void GrabCheck()
     {
         if (!isGrabed && higheringObject)
         {
@@ -493,7 +495,7 @@ public class Interactible : MonoBehaviour
         //Debug.Log(gameObject.name + " : " + "Unmoveable State : " + (inAstralState ? "Astral" : "World"));
 
         if (TryGetComponent(out Rigidbody rb))
-            rb.isKinematic = true;
+            rb.isKinematic = false;
 
         gameObject.layer = LayerMask.NameToLayer("Interactible");
         astraldObj.layer = LayerMask.NameToLayer("Interactible");
