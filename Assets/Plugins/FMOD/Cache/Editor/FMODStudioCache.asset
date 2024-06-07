@@ -162,7 +162,6 @@ MonoBehaviour:
   - {fileID: -3173468556905144416}
   - {fileID: -4553109238197719744}
   EditorEvents:
-  - {fileID: 8030425945058635738}
   - {fileID: -1637618326106566700}
   - {fileID: -6785096032075265847}
   - {fileID: -5767268753138854065}
@@ -175,7 +174,7 @@ MonoBehaviour:
   - {fileID: -3173468556905144416}
   StringsBanks:
   - {fileID: 3153533342136133746}
-  cacheTime: 638533146135574579
+  cacheTime: 638533176262197469
   cacheVersion: 131618
 --- !u!114 &776660921250286674
 MonoBehaviour:
@@ -192,7 +191,7 @@ MonoBehaviour:
   Path: FMOD Bank/Desktop/Level 1.bank
   Name: Desktop/Level 1
   StudioPath: bank:/Level 1
-  lastModified: 638533146135528834
+  lastModified: 638533125915541285
   FileSizes: []
   Exists: 1
 --- !u!114 &2127401326888644524
@@ -269,33 +268,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5500
---- !u!114 &8030425945058635738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Musics/Envo1/WindBackGround
-  m_EditorClassIdentifier: 
-  Path: event:/Musics/Envo1/WindBackGround
-  Guid:
-    Data1: 586876858
-    Data2: 1078532537
-    Data3: 1690721434
-    Data4: -1099251761
-  Banks:
-  - {fileID: 776660921250286674}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 43362
 --- !u!114 &8824685192144591964
 MonoBehaviour:
   m_ObjectHideFlags: 0
