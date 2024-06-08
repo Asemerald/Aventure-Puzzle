@@ -63,15 +63,15 @@ public class PlayerController : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
-    }
 
-    void Start()
-    {
         if (TryGetComponent(out PlayerAnimator playerAnimator))
             _playerAnimator = playerAnimator;
         else
             Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
+    }
 
+    void Start()
+    {
         if (TryGetComponent(out Rigidbody Rigidbody))
             rb = Rigidbody;
         else
