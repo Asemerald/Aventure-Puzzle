@@ -30,7 +30,7 @@ public class PlayerAnimator : MonoBehaviour
     private void Start()
     {
         
-        if  (_mesh == null)
+        /*if  (_mesh == null)
         {
             Debug.LogError("Mesh not referenced in " + gameObject.name);
             return;
@@ -40,7 +40,7 @@ public class PlayerAnimator : MonoBehaviour
         {
             _animator = animator;
         }
-        else Debug.LogError("No Animator component found on " + _mesh.name);
+        else Debug.LogError("No Animator component found on " + _mesh.name);*/
         
         
         if (TryGetComponent(out PlayerController playerController))
