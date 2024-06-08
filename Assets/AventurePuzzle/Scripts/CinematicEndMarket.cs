@@ -1,23 +1,19 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AstralPocketEnabler : MonoBehaviour
+public class CinematicEndMarket : MonoBehaviour
 {
     public Transform posToReach;
     public bool cinematicPlaying = false;
 
     public GameObject fisrtCam;
-    public GameObject secondCam;
-
-    public Animator cardAnimation;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !cinematicPlaying)
         {
-            cinematicPlaying=true;
+            cinematicPlaying = true;
             StartCoroutine(CinematicAstralPocket());
             //StartCoroutine(HUD.Instance.Tutorial());
         }
@@ -55,23 +51,12 @@ public class AstralPocketEnabler : MonoBehaviour
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
         fisrtCam.SetActive(false);
-        secondCam.SetActive(true);
         yield return new WaitForSeconds(1);
 
-        //Déclencher la cinematique de la caméra qui suit la carte
-
-        cardAnimation.Play("ReceiveCard");
-        yield return new WaitForSeconds(6.5f);
-        //Puis les 3 cartes qui tourne autour du joueur
-        PlayerController.Instance.hasAstralPocket = true;
-        RotationCards.Instance.SetAngle(3);
-
-        yield return new WaitForSeconds(1.5F);
-
-        secondCam.SetActive(false);
 
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
     }
+
 }
