@@ -27,12 +27,12 @@ public class MainMenuButton : MonoBehaviour
         eventSystem = EventSystem.current;
         
     }
-    
-    public void IsHovering(bool isHovering)
+
+    private void Update()
     {
-        card.SetBool("Hover", isHovering);
+        card.SetBool("Hover", eventSystem.currentSelectedGameObject == gameObject);
     }
-    
+
     public void IsClicked()
     {
         card.SetTrigger("Clicked");
