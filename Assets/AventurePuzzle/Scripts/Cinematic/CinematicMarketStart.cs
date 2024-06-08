@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CinematicMarketStart : MonoBehaviour
 {
-    public Transform posToReach;
     public bool cinematicPlaying = false;
 
     public GameObject fisrtCam;
@@ -15,28 +14,22 @@ public class CinematicMarketStart : MonoBehaviour
         StartCoroutine(CinematicAstralPocket());
     }
 
-    public float timeToWalk = 3;
-
     IEnumerator CinematicAstralPocket()
     {
+        PlayerController.Instance.playerHasControl = false;
+        PlayerController.Instance._playerAnimator.SetFall(false);
         //Cinématique de suzie
 
         //Puis VFX Antonin et placer le joueur a un emplacement précis
-        //PlayerController.Instance.transform.position = new Vector3();
-        PlayerController.Instance.playerHasControl = false;
-        fisrtCam.SetActive(true);
-        PlayerController.Instance._playerAnimator.SetSpeed(0);
         HUD.Instance.whiteFade.SetActive(true);
         HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
-        yield return new WaitForSeconds(1);
+        fisrtCam.SetActive(true);
 
-        //Animation de se relever
+        PlayerController.Instance.transform.position = new Vector3(37,5.5f,0);
 
-        PlayerController.Instance._playerAnimator.SetSpeed(0);
-
-        yield return new WaitForSeconds(1);
+        PlayerController.Instance._playerAnimator._animator.Play("ANIM_StandingUp");
+        yield return new WaitForSeconds(5);
         fisrtCam.SetActive(false);
-
 
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
