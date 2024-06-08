@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    private Animator _animator;
+    [HideInInspector]
+    public Animator _animator;
     private PlayerController _playerController;
     private InputsBrain _inputsBrain;
     
@@ -65,5 +66,13 @@ public class PlayerAnimator : MonoBehaviour
     public void AlternativeIdle()
     {
         _animator.SetBool("AlternativeIdle", true);
+    }
+
+    public void SetFall(bool fall)
+    {
+        if (fall)
+            _animator.SetBool("grounded", false);
+        else
+            _animator.SetBool("grounded", true);
     }
 }

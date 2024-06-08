@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CinematicEndMarket : MonoBehaviour
+public class CinematicEndSpace : MonoBehaviour
 {
     public Transform posToReach;
     public bool cinematicPlaying = false;
@@ -57,10 +58,9 @@ public class CinematicEndMarket : MonoBehaviour
         yield return new WaitForSeconds(1);
         fisrtCam.SetActive(false);
 
+        //Charger la cinématique de suzie
 
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
-        HUD.Instance.inGamePanel.SetActive(true);
     }
-
 }
