@@ -10,10 +10,14 @@ public class CinematicEndSpace : MonoBehaviour
 
     public GameObject fisrtCam;
 
-    private void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        cinematicPlaying = true;
-        StartCoroutine(CinematicAstralPocket());
+        if (other.CompareTag("Player") && !cinematicPlaying)
+        {
+            cinematicPlaying = true;
+            StartCoroutine(CinematicAstralPocket());
+            //StartCoroutine(HUD.Instance.Tutorial());
+        }
     }
 
     public float timeToWalk = 3;
