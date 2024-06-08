@@ -183,7 +183,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f2da1030145e79408769f895bf740f1, type: 2}
+  - {fileID: 2100000, guid: 371cc79e70f637845acb47e4c37aaad3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2594,6 +2594,11 @@ PrefabInstance:
       propertyPath: CreditsPanel
       value: 
       objectReference: {fileID: 1622586151}
+    - target: {fileID: 7794310127076054593, guid: 498a6c38b69ed16478f4ba867ef5a82b,
+        type: 3}
+      propertyPath: DeskMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 371cc79e70f637845acb47e4c37aaad3, type: 2}
     - target: {fileID: 7794310127076054593, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
       propertyPath: FadeDuration
