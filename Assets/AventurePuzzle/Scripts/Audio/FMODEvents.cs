@@ -7,8 +7,12 @@ using UnityEngine;
 public class FMODEvents : MonoBehaviour
 {
 
-    [field: Header ("BackGround Wind")]
+    [field: Header ("BackGrounds Sounds")]
     [field: SerializeField] public EventReference WindBlow { get; private set; }
+    
+    [field: Header ("Music")]
+    [field: SerializeField] public EventReference Music1 { get; private set; }
+
     
     [field: Header ("Poche SFX")]
     [field: SerializeField] public EventReference PochePose { get; private set; }
