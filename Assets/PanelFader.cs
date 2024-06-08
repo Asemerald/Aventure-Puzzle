@@ -17,11 +17,19 @@ public class PanelFader : MonoBehaviour
         Panel = GetComponent<CanvasGroup>();
         Panel.alpha = 0;
     }
+    
 
-    private void Start()
+    private void OnEnable()
     {
-        InitialfadeIn = true;
+        Panel.alpha = 0;
+        StartCoroutine(WaitFor1Second());
         FadeOut = false;
+    }
+
+    private IEnumerator WaitFor1Second()
+    {
+        yield return new WaitForSeconds(1);
+        InitialfadeIn = true;
     }
 
     private void Update()
