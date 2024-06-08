@@ -48,10 +48,14 @@ public class CinematicEndMarket : MonoBehaviour
 
             yield return null;
         }
+
+        HUD.Instance.whiteFade.SetActive(true);
+        HUD.Instance.whiteFadeAnim.Play("FadeToWhite");
+
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
-        fisrtCam.SetActive(false);
         yield return new WaitForSeconds(1);
+        fisrtCam.SetActive(false);
 
 
         //Fin de la cinématique le joueur reprend le contrôle
