@@ -19,7 +19,10 @@ public class ConfinerSwitcher : MonoBehaviour
     {
         _cinemachineConfiner = FindObjectOfType<CinemachineConfiner>();
         _cinemachineVirtualCamera = _cinemachineConfiner.GetComponent<CinemachineVirtualCamera>();
-        _cameraTrackedDolly = FindObjectOfType<CinemachinePostProcessing>().gameObject.GetComponent<CinemachineVirtualCamera>();
+        if (FindObjectOfType<CinemachinePostProcessing>())
+        {
+            _cameraTrackedDolly = FindObjectOfType<CinemachinePostProcessing>().gameObject.GetComponent<CinemachineVirtualCamera>();
+        }
     }
 
     private void OnTriggerExit(Collider other)
