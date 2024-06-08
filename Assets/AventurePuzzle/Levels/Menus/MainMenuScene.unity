@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &844668767
 Transform:
   m_ObjectHideFlags: 0
@@ -1069,12 +1069,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2725071449402197568, guid: 7b7fd57c3db2dfd4ba67d874b65b9b7b,
     type: 3}
   m_PrefabInstance: {fileID: 1099744715}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1122527510 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 269654671027270346, guid: 498a6c38b69ed16478f4ba867ef5a82b,
-    type: 3}
-  m_PrefabInstance: {fileID: 6268513573251387870}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1136313484
 GameObject:
@@ -2001,7 +1995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1122527510}
+  m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &2126148592
@@ -2094,9 +2088,9 @@ PrefabInstance:
       objectReference: {fileID: 1358039373}
     - target: {fileID: 7794310127076054593, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
-      propertyPath: duration
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: Cards
+      value: 
+      objectReference: {fileID: 844668766}
     - target: {fileID: 8704155420755980827, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
       propertyPath: m_Pivot.x
