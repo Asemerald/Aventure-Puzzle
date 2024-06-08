@@ -10,17 +10,22 @@ public class MainMenuManager : MonoBehaviour
 {
    
    public static MainMenuManager Instance { get; private set; }
-   [SerializeField] private Button PlayButton;
+   
    [SerializeField] private Material DeskMaterial;
    [SerializeField] private GameObject Cards;
+   
+   [Header("MainMenu Buttons")]
+   [SerializeField] private MainMenuButton PlayButton;
+   [SerializeField] private MainMenuButton OptionsButton;
+   [SerializeField] private MainMenuButton ChapterButton;
+   [SerializeField] private MainMenuButton CreditsButton;
+   [SerializeField] private MainMenuButton QuitButton;
 
    [Header("Initial Fade")] 
    [SerializeField] private CanvasGroup blackScreen;
    [SerializeField] private float duration;
    
    private bool InitialfadeOut;
-   private bool fadeOut;
-   private bool fadeIn;
    
    [Header("Menu Panels")] 
    [SerializeField] private GameObject MainMenuPanel;
@@ -50,13 +55,17 @@ public class MainMenuManager : MonoBehaviour
    private void Start()
    {
       blackScreen.gameObject.SetActive(true);
-      fadeOut = true; 
+      InitialfadeOut = true; 
    }
 
    private void Update()
    {
       InitialFade();
       
+      if (InputsUIBrain.Instance.back.WasPressedThisFrame())
+      {
+         Back();
+      }
       
    }
    
@@ -69,43 +78,20 @@ public class MainMenuManager : MonoBehaviour
       }
       if (blackScreen.alpha == 0)
       {
-         fadeOut = false;
+         InitialfadeOut = false;
          Cards.SetActive(true);
          StartCoroutine(SelectPlayButton());
          //TODO Lights Candles
       }
    }
    
-   private void FadeOutPanels()
-   {
-      if (currentPanel.alpha >= 0)
-      {
-         currentPanel.alpha -= Time.deltaTime / FadeDuration;
-      }
-      if (currentPanel.alpha == 0)
-      {
-         fadeOut = false;
-      }
-   }
-   
-   private void FadeInPanels()
-   {
-      if (currentPanel.alpha <= 1)
-      {
-         currentPanel.alpha += Time.deltaTime / FadeDuration;
-      }
-      if (currentPanel.alpha >= 1)
-      {
-         fadeIn = false;
-      }
-   }
    
    
    
    private IEnumerator SelectPlayButton()
    {
       yield return new WaitForSeconds(2);
-      EventSystem.current.SetSelectedGameObject(PlayButton.gameObject);
+      EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
    }
 
    public void OpenMenuPanel(float MenuId)
@@ -113,19 +99,22 @@ public class MainMenuManager : MonoBehaviour
       switch (MenuId)
       {
          case 0:
-            MainMenuPanel.SetActive(true);
-            OptionsPanel.SetActive(false);   
-            ChapterPanel.SetActive(false);
-            CreditsPanel.SetActive(false);
+            MainMenuPanel.GetComponent<PanelFader>().Hide();
+            OptionsPanel.GetComponent<PanelFader>().Hide();   
+            ChapterPanel.GetComponent<PanelFader>().Hide();
+            CreditsPanel.GetComponent<PanelFader>().Hide();
             QuitPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
             break;
          case 1:
             OptionsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(OptionsFirstButton.gameObject);
             break;
          case 2:
             ChapterPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(ChapterFirstButton.gameObject);
             break;
          case 3:
             MainMenuPanel.SetActive(false);
@@ -134,12 +123,14 @@ public class MainMenuManager : MonoBehaviour
          case 4:
             CreditsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(CreditsFirstButton.gameObject);
             break;
          case 5:
             QuitPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(QuitFirstButton.gameObject);
             break;
-            
+         
       }
    }
    
@@ -148,6 +139,34 @@ public class MainMenuManager : MonoBehaviour
    {
       //TODO Load Scene
       Debug.Log("Start Game");
+   }
+
+   private void Back()
+   {
+      if (OptionsPanel.activeInHierarchy)
+      {
+         OpenMenuPanel(0);
+         OptionsButton.BackPress();
+      }
+      if (ChapterPanel.activeInHierarchy)
+      {
+         OpenMenuPanel(0);
+         ChapterButton.BackPress();
+      }
+      if(CreditsPanel.activeInHierarchy)
+      {
+         OpenMenuPanel(0);
+         CreditsButton.BackPress();
+      }
+      if(QuitPanel.activeInHierarchy)
+      {
+         OpenMenuPanel(0);
+         QuitButton.BackPress();
+      }
+      if(MainMenuPanel.activeInHierarchy)
+      {
+         OpenMenuPanel(5);
+      }
    }
    
 }

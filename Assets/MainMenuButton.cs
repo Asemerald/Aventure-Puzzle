@@ -36,27 +36,11 @@ public class MainMenuButton : MonoBehaviour
     public void IsClicked()
     {
         card.SetTrigger("Clicked");
-        
-        if (isOptionsButton)
-        {
-           MainMenuManager.Instance.OpenMenuPanel(1);
-        }
-        else if (isChapterButton)
-        {
-            MainMenuManager.Instance.OpenMenuPanel(2);
-        }
-        else if (isPlayButton)
-        {
-            MainMenuManager.Instance.OpenMenuPanel(3);
-        }
-        else if (isCreditsButton)
-        {
-            MainMenuManager.Instance.OpenMenuPanel(4);
-        }
-        else if (isQuitButton)
-        {
-            MainMenuManager.Instance.OpenMenuPanel(5);
-        }
+    }
+
+    public void BackPress()
+    {
+        card.SetTrigger("Back");
     }
     
     
