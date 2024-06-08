@@ -2,21 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CinematicEndMarket : MonoBehaviour
+public class CinematicSpace : MonoBehaviour
 {
     public Transform posToReach;
     public bool cinematicPlaying = false;
 
     public GameObject fisrtCam;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player") && !cinematicPlaying)
-        {
-            cinematicPlaying = true;
-            StartCoroutine(CinematicAstralPocket());
-            //StartCoroutine(HUD.Instance.Tutorial());
-        }
+        cinematicPlaying = true;
+        StartCoroutine(CinematicAstralPocket());
     }
 
     public float timeToWalk = 3;
@@ -26,6 +22,8 @@ public class CinematicEndMarket : MonoBehaviour
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
+        HUD.Instance.whiteFade.SetActive(true);
+        HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
         yield return new WaitForSeconds(1);
 
         //Le joueur perd le contrôle
@@ -49,9 +47,6 @@ public class CinematicEndMarket : MonoBehaviour
             yield return null;
         }
 
-        HUD.Instance.whiteFade.SetActive(true);
-        HUD.Instance.whiteFadeAnim.Play("FadeToWhite");
-
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
         yield return new WaitForSeconds(1);
@@ -62,5 +57,4 @@ public class CinematicEndMarket : MonoBehaviour
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
     }
-
 }

@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CinematicSpace : MonoBehaviour
+public class CinematicEndMarket : MonoBehaviour
 {
     public Transform posToReach;
     public bool cinematicPlaying = false;
 
     public GameObject fisrtCam;
 
-    /*private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !cinematicPlaying)
         {
@@ -17,12 +18,6 @@ public class CinematicSpace : MonoBehaviour
             StartCoroutine(CinematicAstralPocket());
             //StartCoroutine(HUD.Instance.Tutorial());
         }
-    }*/
-
-    private void Start()
-    {
-        cinematicPlaying = true;
-        StartCoroutine(CinematicAstralPocket());
     }
 
     public float timeToWalk = 3;
@@ -32,8 +27,6 @@ public class CinematicSpace : MonoBehaviour
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
-        HUD.Instance.whiteFade.SetActive(true);
-        HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
         yield return new WaitForSeconds(1);
 
         //Le joueur perd le contrôle
@@ -57,14 +50,21 @@ public class CinematicSpace : MonoBehaviour
             yield return null;
         }
 
+        HUD.Instance.whiteFade.SetActive(true);
+        HUD.Instance.whiteFadeAnim.Play("FadeToWhite");
+
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
         yield return new WaitForSeconds(1);
         fisrtCam.SetActive(false);
 
 
+
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
+
+        SceneManager.LoadScene(2);
     }
+
 }
