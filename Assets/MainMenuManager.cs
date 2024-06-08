@@ -3,39 +3,54 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-   [SerializeField] private bool PlayButton;
+   [SerializeField] private Button PlayButton;
    [SerializeField] private Material DeskMaterial;
+   [SerializeField] private GameObject Cards;
 
-   [Header("Emissive Settings")] 
+   [Header("Initial Fade")] 
+   [SerializeField] private CanvasGroup blackScreen;
    [SerializeField] private float duration;
-   [SerializeField] private float targetIntensity = 1f;
-   [SerializeField] private Color EmissiveColor;
-   
-   private float startTime;
+
+   private bool fadeIn;
+   private bool fadeOut;
 
 
    private void Start()
    {
-      StartCoroutine(ChangeEmissionIntensity());
+      blackScreen.gameObject.SetActive(true);
+      fadeOut = true; 
    }
 
-   //make the intensity go from 0 to 1 over time
-   private IEnumerator ChangeEmissionIntensity()
+   private void Update()
    {
-      while (Time.time - startTime < duration)
+      if (fadeOut)
       {
-         float t = (Time.time - startTime) / duration;
-         float currentIntensity = Mathf.Lerp(0f, targetIntensity, t);
-         Color newEmissionColor = EmissiveColor * currentIntensity;
-         DeskMaterial.SetColor("_EmissionColor", newEmissionColor);
-         yield return null;
+         if (blackScreen.alpha >= 0)
+         {
+            blackScreen.alpha -= Time.deltaTime / duration;
+         }
+         if (blackScreen.alpha == 0)
+         {
+            fadeOut = false;
+            Cards.SetActive(true);
+            //TODO Lights Candles
+         }
       }
-
-      // Ensure the final intensity is set exactly
-      DeskMaterial.SetColor("_EmissionColor", Color.yellow * targetIntensity);
+      if (fadeIn)
+      {
+         if (blackScreen.alpha < 1)
+         {
+            blackScreen.alpha += Time.deltaTime / duration;
+         }
+         if (blackScreen.alpha >= 1)
+         {
+            fadeIn = false;
+         }
+      }
    }
-
 }
