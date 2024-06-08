@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5757391477473518066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: 
+  Guid:
+    Data1: -327372645
+    Data2: 1271636612
+    Data3: 1772508800
+    Data4: -1077673869
+  Banks:
+  - {fileID: 8565932676506229952}
+  - {fileID: 3333435125064559344}
+  - {fileID: -4671507995731472780}
+  - {fileID: -4671507995731472780}
+  - {fileID: -4671507995731472780}
+  - {fileID: -4671507995731472780}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 410
 --- !u!114 &-5753991934142820859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +102,7 @@ MonoBehaviour:
   Path: FMOD Bank/Bank/Desktop/Snapshots.bank
   Name: Bank/Desktop/Snapshots
   StudioPath: 
-  lastModified: 638534611420468375
+  lastModified: 638534611376314786
   FileSizes: []
   Exists: 1
 --- !u!114 &-4671507995731472780
@@ -88,7 +120,7 @@ MonoBehaviour:
   Path: FMOD Bank/Bank/Desktop/SFX.bank
   Name: Bank/Desktop/SFX
   StudioPath: bank:/SFX
-  lastModified: 638534611420448390
+  lastModified: 638534611376274809
   FileSizes: []
   Exists: 1
 --- !u!114 &-4542202557212630854
@@ -106,7 +138,7 @@ MonoBehaviour:
   Path: FMOD Bank/Desktop/Level 1.bank
   Name: Desktop/Level 1
   StudioPath: 
-  lastModified: 638534611420488362
+  lastModified: 638534611376369856
   FileSizes: []
   Exists: 1
 --- !u!114 &-3517914778631834516
@@ -164,34 +196,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5500
---- !u!114 &-2939003804724456887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Path: 
-  Guid:
-    Data1: -327372645
-    Data2: 1271636612
-    Data3: 1772508800
-    Data4: -1077673869
-  Banks:
-  - {fileID: -4671507995731472780}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 410
---- !u!114 &-2724335735880941909
+--- !u!114 &-1780427253558063046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,11 +308,11 @@ MonoBehaviour:
   - {fileID: 2330951124559240826}
   - {fileID: -3517914778631834516}
   - {fileID: -5753991934142820859}
-  - {fileID: -2939003804724456887}
   - {fileID: 483085177304943296}
   - {fileID: 8258753884363808036}
   - {fileID: 7590847295344299669}
-  - {fileID: -2724335735880941909}
+  - {fileID: -5757391477473518066}
+  - {fileID: -1780427253558063046}
   EditorParameters:
   - {fileID: 1035516123745193131}
   MasterBanks:
@@ -315,7 +320,7 @@ MonoBehaviour:
   - {fileID: 3333435125064559344}
   StringsBanks:
   - {fileID: 632351905993081984}
-  cacheTime: 638534611420608298
+  cacheTime: 638534611376369856
   cacheVersion: 131618
 --- !u!114 &483085177304943296
 MonoBehaviour:
@@ -336,7 +341,6 @@ MonoBehaviour:
     Data3: 1772508800
     Data4: -1077673869
   Banks:
-  - {fileID: -4671507995731472780}
   - {fileID: -4671507995731472780}
   IsStream: 0
   Is3D: 0
@@ -387,7 +391,7 @@ MonoBehaviour:
   Path: FMOD Bank/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638534611420528338
+  lastModified: 638533677685968585
   FileSizes:
   - Name: 
     Value: 1258
@@ -460,7 +464,7 @@ MonoBehaviour:
   Path: FMOD Bank/Bank/Desktop/Master.bank
   Name: Bank/Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638534611420338450
+  lastModified: 638534611376134887
   FileSizes: []
   Exists: 1
 --- !u!114 &3663926733914347439
@@ -478,7 +482,7 @@ MonoBehaviour:
   Path: FMOD Bank/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638534611420508350
+  lastModified: 638533677685938600
   FileSizes: []
   Exists: 1
 --- !u!114 &6402456131169023210
@@ -496,7 +500,7 @@ MonoBehaviour:
   Path: FMOD Bank/Desktop/SFX.bank
   Name: Desktop/SFX
   StudioPath: bank:/SFX
-  lastModified: 638534611420608298
+  lastModified: 638533677686128498
   FileSizes: []
   Exists: 1
 --- !u!114 &7590847295344299669
@@ -518,9 +522,6 @@ MonoBehaviour:
     Data3: 1772508800
     Data4: -1077673869
   Banks:
-  - {fileID: 8565932676506229952}
-  - {fileID: 3333435125064559344}
-  - {fileID: -4671507995731472780}
   - {fileID: -4671507995731472780}
   - {fileID: -4671507995731472780}
   - {fileID: -4671507995731472780}
@@ -552,7 +553,6 @@ MonoBehaviour:
   Banks:
   - {fileID: -4671507995731472780}
   - {fileID: -4671507995731472780}
-  - {fileID: -4671507995731472780}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -575,6 +575,6 @@ MonoBehaviour:
   Path: FMOD Bank/Bank/Desktop/Level 1.bank
   Name: Bank/Desktop/Level 1
   StudioPath: bank:/Level 1
-  lastModified: 638534611420308468
+  lastModified: 638534611376104904
   FileSizes: []
   Exists: 1
