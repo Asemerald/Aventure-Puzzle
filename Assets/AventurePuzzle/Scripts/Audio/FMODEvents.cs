@@ -16,6 +16,9 @@ public class FMODEvents : MonoBehaviour
     [field: Header ("FootStepsRock")]
     [field: SerializeField] public EventReference FootStepsRock { get; private set; }
     
+    [field: Header ("Landing")]
+    [field: SerializeField] public EventReference Landing { get; private set; }
+    
     public static FMODEvents instance { get; private set; }
 
     private void Awake()
