@@ -26,8 +26,8 @@ public class MainMenuButton : MonoBehaviour
     private void Update()
     {
         card.SetBool("Hover", eventSystem.currentSelectedGameObject == gameObject);
-
         
-
     }
+    
+    
 }
