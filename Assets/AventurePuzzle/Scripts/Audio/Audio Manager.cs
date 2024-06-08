@@ -68,6 +68,12 @@ public class AudioManager : MonoBehaviour
             musicEventInstance = CreateEventInstance(musicEventReference);
             musicEventInstance.start();
         }
+
+        public void SetMusicArea(MusicArea area)
+        {
+            musicEventInstance.setParameterByName("area", (float) area);
+        }
+        
         private void OnDestroy()
         {
             CleanUp();
