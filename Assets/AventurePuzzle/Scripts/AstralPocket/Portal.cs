@@ -7,6 +7,7 @@ public class Portal : MonoBehaviour
     [Header("Link Portal Settings")]
     public Portal linkedPortal;
     public Transform spawnPoint;
+    public float distanceToSpawn;
 
     public bool isActive;
 
@@ -28,7 +29,12 @@ public class Portal : MonoBehaviour
             //Tp le joueur
             if (linkedPortal.isActive && isActive)
             {
-                PlayerController.Instance.transform.position = linkedPortal.spawnPoint.position;
+                PlayerController.Instance.enteringAPortal = true;
+
+                Vector3 dir = PlayerController.Instance.transform.forward;
+                Vector3 pos = linkedPortal.transform.position + dir * distanceToSpawn;
+
+                PlayerController.Instance.transform.position = pos;
             }
         }
     }

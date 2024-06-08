@@ -10,7 +10,10 @@ public class LevelRoom : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.CompareTag("Player"))
+        {
             LevelLoader.Instance.currentRoom = roomNum;
+            LevelLoader.Instance.ManageLevels();
+        }
     }
 
     private void OnTriggerStay(Collider collision)

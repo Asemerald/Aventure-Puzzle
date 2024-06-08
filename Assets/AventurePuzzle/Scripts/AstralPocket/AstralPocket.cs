@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using FMODUnity;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class AstralPocket : MonoBehaviour
 {
     public static AstralPocket Instance {  get; private set; }
-
+    
     [Header("Settings")]
     public float sphereRadius = 5f; // Adjust the radius as needed
     public LayerMask interactibleMask;
@@ -53,7 +55,10 @@ public class AstralPocket : MonoBehaviour
             }
         }
 
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.PochePose, this.transform.position);
         sphereCasted.Add(Instantiate(astralPocketMesh, newPocketCastPos, Quaternion.identity, transform.parent));
+
+        RotationCards.Instance.SetAngle(maxPocketAvailable - currentPocketNum);
     }
 
     public void DecastAstralPocket()
@@ -71,6 +76,7 @@ public class AstralPocket : MonoBehaviour
         sphereCasted.Clear();
 
         currentPocketNum = 0;
+        RotationCards.Instance.SetAngle(maxPocketAvailable);
     }
 
     private void OnDrawGizmos()
