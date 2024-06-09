@@ -12,8 +12,7 @@ public class MusicChangeTrigger : MonoBehaviour
     {
         if (other.tag.Equals("Player"))
         {
-            //AudioManager.instance.SetMusicArea(area);
-            Debug.Log(area);
+            AudioManager.instance.SetMusicArea(area);
         }
     }
 }
