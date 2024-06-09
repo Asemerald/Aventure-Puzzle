@@ -23,6 +23,7 @@ public class AstralPocket : MonoBehaviour
     Vector3 newPocketCastPos;
 
     public GameObject astralPocketMesh;
+    public GameObject AstralPocketFeedback;
 
     List<GameObject> sphereCasted = new List<GameObject>();
 
@@ -77,6 +78,10 @@ public class AstralPocket : MonoBehaviour
 
         currentPocketNum = 0;
         RotationCards.Instance.SetAngle(maxPocketAvailable);
+        if (AstralPocketFeedback != null && AstralPocketFeedback.GetComponent<AstralResetEffect>())
+        {
+            AstralPocketFeedback.GetComponent<AstralResetEffect>().Play();
+        }
     }
 
     private void OnDrawGizmos()

@@ -16,6 +16,10 @@ public class NPC_Controller : MonoBehaviour
     int currentWaypoint;
 
     public bool inAstralMode;
+    public bool randomizeSpeed = false;
+    public Vector2 randomSpeedRange = new Vector2(1, 4);
+    public bool randomizeInspect = false;
+    public Vector2 randomInspectRange = new Vector2(1, 6);
 
     void Start()
     {
@@ -23,6 +27,8 @@ public class NPC_Controller : MonoBehaviour
         agent = _agent;
 
         agent.velocity = Vector3.zero;
+        if (randomizeInspect) { timeToInspect = Random.Range(randomInspectRange.x, randomInspectRange.y); }
+        if (randomizeSpeed) { wanderSpeed = Random.Range(randomSpeedRange.x, randomSpeedRange.y); }
     }
 
     void Update()
