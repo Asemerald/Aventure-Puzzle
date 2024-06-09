@@ -22,6 +22,9 @@ public class HUD : MonoBehaviour
     public Slider astralSlider;
     public GameObject astralInputs;
 
+    [Header("White Fade")]
+    public GameObject whiteFade;
+    public Animator whiteFadeAnim;
 
     [Header("Tutorial")]
     [SerializeField] GameObject tutorialHolder;

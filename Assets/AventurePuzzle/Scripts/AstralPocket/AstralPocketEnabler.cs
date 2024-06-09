@@ -61,7 +61,7 @@ public class AstralPocketEnabler : MonoBehaviour
         //Déclencher la cinematique de la caméra qui suit la carte
 
         cardAnimation.Play("ReceiveCard");
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(6.5f);
         //Puis les 3 cartes qui tourne autour du joueur
         PlayerController.Instance.hasAstralPocket = true;
         RotationCards.Instance.SetAngle(3);
