@@ -90,7 +90,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3333328595564714068}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2788712553722921654}
+        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
+        m_MethodName: IsClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7794310127076054593}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuPanel
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 3
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3333328595564714068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,7 +122,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 269654671027270346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -735,6 +759,8 @@ GameObject:
   - component: {fileID: 8666736895828305598}
   - component: {fileID: 4617951505265743925}
   - component: {fileID: 2175038441167796061}
+  - component: {fileID: 4868645516814429949}
+  - component: {fileID: 840513873804175021}
   m_Layer: 5
   m_Name: ChaptersMenuPanel
   m_TagString: Untagged
@@ -801,6 +827,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &4868645516814429949
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523156655924564243}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &840513873804175021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523156655924564243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6734f9478183e664ea919f08cc4f7de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4625466636393574662
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,7 +941,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7027274075767073030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 752014370861471260}
+        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
+        m_MethodName: IsClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7794310127076054593}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuPanel
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7027274075767073030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -899,7 +973,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4625466636393574662}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1030,7 +1104,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4322323608904065444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 95172280465986409}
+        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
+        m_MethodName: IsClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7794310127076054593}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuPanel
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4322323608904065444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1038,7 +1136,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4839584523269495991}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -1224,6 +1322,8 @@ GameObject:
   - component: {fileID: 4277800977445949370}
   - component: {fileID: 8115994042863485286}
   - component: {fileID: 3599220401857832889}
+  - component: {fileID: 8650435164326117193}
+  - component: {fileID: 7607299606080948990}
   m_Layer: 5
   m_Name: QuitMenuPanel
   m_TagString: Untagged
@@ -1290,6 +1390,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &8650435164326117193
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212669515172245377}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &7607299606080948990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5212669515172245377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6734f9478183e664ea919f08cc4f7de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5301125387062626520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,6 +1425,8 @@ GameObject:
   - component: {fileID: 3649661408724137927}
   - component: {fileID: 3110942135316196950}
   - component: {fileID: 4569326138830836684}
+  - component: {fileID: 3856327873941237922}
+  - component: {fileID: 3502563614633251424}
   m_Layer: 5
   m_Name: CreditsMenuPanel
   m_TagString: Untagged
@@ -1367,6 +1493,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3856327873941237922
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301125387062626520}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &3502563614633251424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5301125387062626520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6734f9478183e664ea919f08cc4f7de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6620187948806366999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,7 +1875,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3769964803460268650}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4099564481806710772}
+        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
+        m_MethodName: IsClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7794310127076054593}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuPanel
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3769964803460268650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1733,7 +1907,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7232857964800377205}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2293,7 +2467,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6260644983593255676}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5252631295989703419}
+        m_TargetAssemblyTypeName: MainMenuButton, Assembly-CSharp
+        m_MethodName: IsClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7794310127076054593}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: OpenMenuPanel
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 4
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6260644983593255676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2301,7 +2499,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7817894192076966119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2353,6 +2551,8 @@ GameObject:
   - component: {fileID: 7585215688493360569}
   - component: {fileID: 5969645580950462776}
   - component: {fileID: 3913118398200970030}
+  - component: {fileID: 1938384566717540814}
+  - component: {fileID: 1893107969768279458}
   m_Layer: 5
   m_Name: OptionMenuPanel
   m_TagString: Untagged
@@ -2419,6 +2619,30 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1938384566717540814
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125745341414106898}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1893107969768279458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8125745341414106898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6734f9478183e664ea919f08cc4f7de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8157724997498459584
 GameObject:
   m_ObjectHideFlags: 0
@@ -2598,17 +2822,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7e7739e1dcf55c45ad1c589ae5df4d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayButton: {fileID: 8069669449746353742}
-  DeskMaterial: {fileID: 2100000, guid: 5f2da1030145e79408769f895bf740f1, type: 2}
+  DeskMaterial: {fileID: 2100000, guid: 371cc79e70f637845acb47e4c37aaad3, type: 2}
   Cards: {fileID: 0}
+  PlayButton: {fileID: 2788712553722921654}
+  OptionsButton: {fileID: 752014370861471260}
+  ChapterButton: {fileID: 95172280465986409}
+  CreditsButton: {fileID: 5252631295989703419}
+  QuitButton: {fileID: 4099564481806710772}
   blackScreen: {fileID: 2195816304649979904}
-  duration: 2
-  MainMenuPanel: {fileID: 0}
-  OptionsPanel: {fileID: 0}
-  ChapterPanel: {fileID: 0}
-  CreditsPanel: {fileID: 0}
-  QuitPanel: {fileID: 0}
-  FadeDuration: 0
+  duration: 3
+  MainMenuPanel: {fileID: 7392724073196154993}
+  OptionsPanel: {fileID: 8125745341414106898}
+  ChapterPanel: {fileID: 4523156655924564243}
+  CreditsPanel: {fileID: 5301125387062626520}
+  QuitPanel: {fileID: 5212669515172245377}
+  FadeDuration: 1
   MainMenuFirstButton: {fileID: 8069669449746353742}
   OptionsFirstButton: {fileID: 8650389585461852258}
   ChapterFirstButton: {fileID: 3574505034707189095}
