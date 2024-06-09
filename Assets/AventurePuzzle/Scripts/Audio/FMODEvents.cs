@@ -23,6 +23,17 @@ public class FMODEvents : MonoBehaviour
     [field: Header ("Landing")]
     [field: SerializeField] public EventReference Landing { get; private set; }
     
+    [field: Header ("BlockPickUp")]
+    [field: SerializeField] public EventReference PickUpBlock { get; private set; }
+    
+    [field: Header ("BlockUnPickUp")]
+    [field: SerializeField] public EventReference UnPickUpBlock { get; private set; }
+    
+    [field: Header ("PortalSound")]
+    [field: SerializeField] public EventReference PortalSFX { get; private set; }
+
+
+    
     public static FMODEvents instance { get; private set; }
 
     private void Awake()
