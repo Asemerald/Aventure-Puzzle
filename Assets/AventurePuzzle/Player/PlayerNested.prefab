@@ -5429,7 +5429,7 @@ PrefabInstance:
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
       propertyPath: feetSize.y
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 1068249869095101493, guid: 69f5a7b0a301cd54a8a46f8ac75502f3,
         type: 3}
@@ -5623,10 +5623,10 @@ MonoBehaviour:
     m_Bits: 5504
   timeToReset: 0.5
   maxPocketAvailable: 3
+  resetAstralVFX: {fileID: 7956161732210065993}
   ShowAstralPocket: 0
   astralPocketMesh: {fileID: 7661479044235464074, guid: 692877db3e40e26489442c1e20be5a5c,
     type: 3}
-  AstralPocketFeedback: {fileID: 8044589626783979044}
 --- !u!114 &1127090446567729897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5722,14 +5722,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7327464640997007436, guid: a0ea906de5ce5f544bb152effeeceb40,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ea906de5ce5f544bb152effeeceb40, type: 3}
---- !u!1 &8044589626783979044 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2030651744077679229, guid: a0ea906de5ce5f544bb152effeeceb40,
+--- !u!198 &7956161732210065993 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2153769922121391632, guid: a0ea906de5ce5f544bb152effeeceb40,
     type: 3}
   m_PrefabInstance: {fileID: 8325551128943483993}
   m_PrefabAsset: {fileID: 0}
