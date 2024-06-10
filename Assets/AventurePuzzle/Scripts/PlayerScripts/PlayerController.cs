@@ -68,6 +68,8 @@ public class PlayerController : MonoBehaviour
             _playerAnimator = playerAnimator;
         else
             Debug.LogWarning("No PlayerAnimator component found on " + gameObject.name);
+
+        CameraOffset();
     }
 
     void Start()
@@ -78,7 +80,6 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("No Rigidbody component found on " + gameObject.name);
 
         rb.freezeRotation = true;
-        CameraOffset();
     }
 
     void Update()
