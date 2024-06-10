@@ -27,6 +27,7 @@ public class ConfinerSwitcher : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (!other.CompareTag("Player")) return;
         
         if (_cinemachineVirtualCamera.Priority != 10)
         {
@@ -56,6 +57,8 @@ public class ConfinerSwitcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.CompareTag("Player")) return;
+
         if (SwitchToDollyTrack)
         {
             _cinemachineVirtualCamera.Priority = 0;
