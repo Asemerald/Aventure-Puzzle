@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class Interactible : MonoBehaviour
 {
-    /* None -> Aucun état
-     * Moveable -> l'objet à une collision et peut être déplacer
-     * UnMoveable -> l'objet à une collision et ne peut pas être déplacer
-     * NoCollider -> l'objet n'a pas de collision et ne peut pas être déplacer
-     * EmitEnergy -> l'objet est dans l'état Moveable et émet de l'energie dans un rayon autour de lui
-     * EnergyUnMoveable -> l'objet émet de l'energie dans un rayon autour de lui, à une collision et ne peut pas être déplacer
-     * EnergyNoCollider -> l'objet émet de l'energie dans un rayon autour de lui, n'a pas de collision et ne peut pas être déplacer
-     * Size -> l'objet change de taille/de forme et à une collision
-     * EnergySize -> l'objet change de taille/de forme et à une collision et émet de l'energie dans un rayon autour de lui
+    /* None -> Aucun ï¿½tat
+     * Moveable -> l'objet ï¿½ une collision et peut ï¿½tre dï¿½placer
+     * UnMoveable -> l'objet ï¿½ une collision et ne peut pas ï¿½tre dï¿½placer
+     * NoCollider -> l'objet n'a pas de collision et ne peut pas ï¿½tre dï¿½placer
+     * EmitEnergy -> l'objet est dans l'ï¿½tat Moveable et ï¿½met de l'energie dans un rayon autour de lui
+     * EnergyUnMoveable -> l'objet ï¿½met de l'energie dans un rayon autour de lui, ï¿½ une collision et ne peut pas ï¿½tre dï¿½placer
+     * EnergyNoCollider -> l'objet ï¿½met de l'energie dans un rayon autour de lui, n'a pas de collision et ne peut pas ï¿½tre dï¿½placer
+     * Size -> l'objet change de taille/de forme et ï¿½ une collision
+     * EnergySize -> l'objet change de taille/de forme et ï¿½ une collision et ï¿½met de l'energie dans un rayon autour de lui
      * Portal -> l'objet se transforme en portail
      */
 
@@ -113,7 +113,8 @@ public class Interactible : MonoBehaviour
 
         if (inAstralState)
         {
-            particule.Play();
+            if(particule != null)
+                particule.Play();
 
             if (sizeIsModify)
                 ResetSize();
@@ -160,7 +161,8 @@ public class Interactible : MonoBehaviour
         }
         else
         {
-            particule.Stop();
+            if(particule != null)
+                particule.Stop();
 
             if (sizeIsModify)
                 ResetSize();
@@ -214,7 +216,8 @@ public class Interactible : MonoBehaviour
 
         if (astral)
         {
-            particule.Play();
+            if(particule != null)
+                particule.Play();
 
             inAstralState = true;
 
@@ -252,7 +255,8 @@ public class Interactible : MonoBehaviour
         }
         else
         {
-            particule.Stop();
+            if(particule != null)
+                particule.Stop();
 
             inAstralState = false;
 
