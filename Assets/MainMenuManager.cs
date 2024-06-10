@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,6 +45,12 @@ public class MainMenuManager : MonoBehaviour
    [SerializeField] private Button CreditsFirstButton;
    [SerializeField] private Button QuitFirstButton;
    
+   [Header("Additionals Buttons")]
+   [SerializeField] private Toggle FullScreenToggle;
+   [SerializeField] private Slider MusicVolumeSlider;
+   [SerializeField] private Slider SFXVolumeSlider;
+   [SerializeField] private TMP_Dropdown ResolutionDropdown;
+   
    private CanvasGroup currentPanel;
    
 
@@ -64,6 +72,7 @@ public class MainMenuManager : MonoBehaviour
       
       if (InputsUIBrain.Instance.back.WasPressedThisFrame())
       {
+         Debug.Log("Back Pressed");
          Back();
       }
       
@@ -94,26 +103,44 @@ public class MainMenuManager : MonoBehaviour
       EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
    }
 
-   public void OpenMenuPanel(float MenuId)
+   public async void OpenMenuPanel(float MenuId)
    {
       switch (MenuId)
       {
          case 0:
-            MainMenuPanel.GetComponent<PanelFader>().Hide();
-            OptionsPanel.GetComponent<PanelFader>().Hide();   
-            ChapterPanel.GetComponent<PanelFader>().Hide();
-            CreditsPanel.GetComponent<PanelFader>().Hide();
-            QuitPanel.SetActive(false);
+            MainMenuPanel.SetActive(true);
+            if (OptionsPanel.activeInHierarchy)
+            {
+               OptionsPanel.GetComponent<PanelFader>().Hide();
+            }
+
+            if (ChapterPanel.activeInHierarchy)
+            {
+               ChapterPanel.GetComponent<PanelFader>().Hide();
+            }
+            
+            if (CreditsPanel.activeInHierarchy)
+            {
+               CreditsPanel.GetComponent<PanelFader>().Hide();
+            }
+            
+            if (QuitPanel.activeInHierarchy)
+            {
+               QuitPanel.GetComponent<PanelFader>().Hide();
+            }
+            await WaitFor1Second();
             EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
             break;
          case 1:
             OptionsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            await WaitFor1Second();
             EventSystem.current.SetSelectedGameObject(OptionsFirstButton.gameObject);
             break;
          case 2:
             ChapterPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            await WaitFor1Second();
             EventSystem.current.SetSelectedGameObject(ChapterFirstButton.gameObject);
             break;
          case 3:
@@ -123,11 +150,13 @@ public class MainMenuManager : MonoBehaviour
          case 4:
             CreditsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            await WaitFor1Second();
             EventSystem.current.SetSelectedGameObject(CreditsFirstButton.gameObject);
             break;
          case 5:
             QuitPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
+            await WaitFor1Second();
             EventSystem.current.SetSelectedGameObject(QuitFirstButton.gameObject);
             break;
          
@@ -141,31 +170,71 @@ public class MainMenuManager : MonoBehaviour
       Debug.Log("Start Game");
    }
 
-   private void Back()
+   public async void Back()
    {
       if (OptionsPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
+         await WaitFor1Second();
          OptionsButton.BackPress();
       }
-      if (ChapterPanel.activeInHierarchy)
+      else if (ChapterPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
+         await WaitFor1Second();
          ChapterButton.BackPress();
       }
-      if(CreditsPanel.activeInHierarchy)
+      else if(CreditsPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
+         await WaitFor1Second();
          CreditsButton.BackPress();
       }
-      if(QuitPanel.activeInHierarchy)
+      else if(QuitPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
+         await WaitFor1Second();
          QuitButton.BackPress();
       }
-      if(MainMenuPanel.activeInHierarchy)
+      else if(MainMenuPanel.activeInHierarchy)
       {
          OpenMenuPanel(5);
+      }
+   }
+   
+   private Task WaitFor1Second()
+   {
+      return Task.Delay(1000);
+   }
+   
+   public void ToggleFullScreen()
+   {
+      Screen.fullScreen = FullScreenToggle.isOn;
+   }
+   
+   public void SetMusicVolume()
+   {
+      //TODO Set Music Volume
+   }
+   
+   public void SetSFXVolume()
+   {
+      //TODO Set SFX Volume
+   }
+   
+   public void SetResolution()
+   {
+      if (ResolutionDropdown.value == 0)
+      {
+         Screen.SetResolution(1920, 1080, Screen.fullScreen);
+      }
+      else if (ResolutionDropdown.value == 1)
+      {
+         Screen.SetResolution(1280, 720, Screen.fullScreen);
+      }
+      else if (ResolutionDropdown.value == 2)
+      {
+         Screen.SetResolution(800, 600, Screen.fullScreen);
       }
    }
    
