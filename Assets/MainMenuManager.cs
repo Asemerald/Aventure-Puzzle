@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -43,6 +44,12 @@ public class MainMenuManager : MonoBehaviour
    [SerializeField] private Button ChapterFirstButton;
    [SerializeField] private Button CreditsFirstButton;
    [SerializeField] private Button QuitFirstButton;
+   
+   [Header("Additionals Buttons")]
+   [SerializeField] private Toggle FullScreenToggle;
+   [SerializeField] private Slider MusicVolumeSlider;
+   [SerializeField] private Slider SFXVolumeSlider;
+   [SerializeField] private TMP_Dropdown ResolutionDropdown;
    
    private CanvasGroup currentPanel;
    
@@ -163,7 +170,7 @@ public class MainMenuManager : MonoBehaviour
       Debug.Log("Start Game");
    }
 
-   private async void Back()
+   public async void Back()
    {
       if (OptionsPanel.activeInHierarchy)
       {
@@ -198,6 +205,37 @@ public class MainMenuManager : MonoBehaviour
    private Task WaitFor1Second()
    {
       return Task.Delay(1000);
+   }
+   
+   public void ToggleFullScreen()
+   {
+      Screen.fullScreen = FullScreenToggle.isOn;
+   }
+   
+   public void SetMusicVolume()
+   {
+      //TODO Set Music Volume
+   }
+   
+   public void SetSFXVolume()
+   {
+      //TODO Set SFX Volume
+   }
+   
+   public void SetResolution()
+   {
+      if (ResolutionDropdown.value == 0)
+      {
+         Screen.SetResolution(1920, 1080, Screen.fullScreen);
+      }
+      else if (ResolutionDropdown.value == 1)
+      {
+         Screen.SetResolution(1280, 720, Screen.fullScreen);
+      }
+      else if (ResolutionDropdown.value == 2)
+      {
+         Screen.SetResolution(800, 600, Screen.fullScreen);
+      }
    }
    
 }

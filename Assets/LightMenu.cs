@@ -27,8 +27,8 @@ public class LightMenu : MonoBehaviour
     {
         if (FadeIn)
         {
-            light.intensity += Time.deltaTime ;
-            if (light.intensity >= 5)
+            light.intensity += Time.deltaTime * 10;
+            if (light.intensity >= 17)
             {
                 FadeIn = false;
                 GetComponent<LightFlickering>().enabled = true;

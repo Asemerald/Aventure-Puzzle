@@ -6,6 +6,7 @@ using UnityEngine;
 public class LightFlickering : MonoBehaviour
 {
 
+    public bool isMainMenuLight;
     private float _defaultIntensity;
     private int seedX = 0;
     private int seedY = 0;
@@ -30,6 +31,17 @@ public class LightFlickering : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isMainMenuLight)
+        {
+            if (noiseRange.x >= -5)
+            {
+                noiseRange.x -= 0.05f;
+            }
+            if (noiseRange.y <= 5)
+            {
+                noiseRange.y += 0.05f;
+            }
+        }
         
         lightRef.intensity = _defaultIntensity + Map(Mathf.PerlinNoise(noiseSample.x+seedX, noiseSample.y+seedY), 0, 1, noiseRange.x, noiseRange.y);
         noiseSample.x += noiseSpeed * Time.deltaTime;

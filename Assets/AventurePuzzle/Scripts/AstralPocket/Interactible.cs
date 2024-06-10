@@ -23,10 +23,12 @@ public class Interactible : MonoBehaviour
     public ObjectState worldState;
     public ObjectState astralState;
     public bool sizeIsModify;
-
     public bool inAstralState;
     public bool isMoveable;
     public bool isPortal;
+
+    [Header("Particle")]
+    public ParticleSystem particule;
 
     [Header("Energy Emition")]
     public bool emitEnergy;
@@ -111,6 +113,8 @@ public class Interactible : MonoBehaviour
 
         if (inAstralState)
         {
+            particule.Play();
+
             if (sizeIsModify)
                 ResetSize();
 
@@ -156,6 +160,8 @@ public class Interactible : MonoBehaviour
         }
         else
         {
+            particule.Stop();
+
             if (sizeIsModify)
                 ResetSize();
 
@@ -208,6 +214,8 @@ public class Interactible : MonoBehaviour
 
         if (astral)
         {
+            particule.Play();
+
             inAstralState = true;
 
             if (sizeIsModify)
@@ -244,6 +252,8 @@ public class Interactible : MonoBehaviour
         }
         else
         {
+            particule.Stop();
+
             inAstralState = false;
 
             if (sizeIsModify)
