@@ -317,6 +317,8 @@ public class PlayerController : MonoBehaviour
         i.localPosInit = i.transform.localPosition;
 
         HandleCols();
+        
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.PickUpBlock, this.transform.position);
     }
 
     void UnGrabObject()
@@ -337,6 +339,8 @@ public class PlayerController : MonoBehaviour
 
         currentGrabObject.transform.rotation = currentGrabInitialRot;
         currentGrabObject = null;
+        
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.UnPickUpBlock, this.transform.position);
     }
 
     void HandleCols()
