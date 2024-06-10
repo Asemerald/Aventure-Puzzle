@@ -18,7 +18,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2980
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -33,6 +33,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _NormalWater:
         m_Texture: {fileID: 2800000, guid: f0509e0b5a264734290a6b1566ec51c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ReflectionMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RippleTex:
@@ -66,7 +70,7 @@ Material:
     - _DistortionAmount: 5
     - _DstBlend: 10
     - _NormalStrength: 1
-    - _QueueControl: 0
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Reflection_displacement_strength: 0.02

@@ -9,22 +9,29 @@ public class AstralResetEffect : MonoBehaviour
     public float duration = 1f;
     public AnimationCurve amplitudeCurve;
     public AnimationCurve frequencyCurve;
-    public bool play;
 
     // Private fields
     [SerializeField] private float elapsedTime = 0f;
+    private ParticleSystem PS;
+    private MeshRenderer renderer;
     #endregion
 
-    void Update()
+    private void Start()
     {
-        if (play)
-        {
-            StartCoroutine(Play());
-            play = false;
-        }
+        if (GetComponent<ParticleSystem >() != null) { PS = GetComponent<ParticleSystem>(); }
+        if (GetComponent<MeshRenderer>() != null)    { renderer = GetComponent<MeshRenderer>(); }
     }
 
-    IEnumerator Play()
+    public void Play()
+    {
+        if (PS != null) { PS.Play(); }
+        if (renderer != null) { renderer.enabled = true; }
+        StartCoroutine(PlayShaderAnim());
+        
+
+    }
+
+    IEnumerator PlayShaderAnim()
     {
         elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -35,5 +42,6 @@ public class AstralResetEffect : MonoBehaviour
             waveMat.SetFloat("_ElapsedTime", elapsedTime);
             yield return null;
         }
+        if (renderer != null) { renderer.enabled = false; }
     }
 }
