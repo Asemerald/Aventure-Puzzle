@@ -12,4 +12,9 @@ public class AudioFunctions : MonoBehaviour
     {
         AudioManager.instance.PlayOneShot(FMODEvents.instance.FootStepsRock, this.transform.position);
     }
+
+    public void PlayLandingSFX()
+    {
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.Landing, this.transform.position);
+    }
 }

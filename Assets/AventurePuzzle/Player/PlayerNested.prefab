@@ -2665,7 +2665,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.5
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -5720,6 +5720,11 @@ PrefabInstance:
     - target: {fileID: 2039306089214839247, guid: a0ea906de5ce5f544bb152effeeceb40,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7327464640997007436, guid: a0ea906de5ce5f544bb152effeeceb40,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
