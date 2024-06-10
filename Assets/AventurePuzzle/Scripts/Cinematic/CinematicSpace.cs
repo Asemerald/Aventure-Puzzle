@@ -21,6 +21,8 @@ public class CinematicSpace : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
+        PlayerController.Instance.transform.position = new Vector3(-56.5f, -6, 0);
+        PlayerController.Instance._playerAnimator.SetFall(false);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
         HUD.Instance.whiteFade.SetActive(true);
         HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
