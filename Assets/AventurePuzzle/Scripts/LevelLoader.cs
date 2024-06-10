@@ -49,7 +49,7 @@ public class LevelLoader : MonoBehaviour
         {
             if ((currentRoom + i) >= 0 && (currentRoom + i) < levels.Count)
             {
-                if (!levels[i].gameObject.activeSelf)
+                if (!levels[currentRoom + i].gameObject.activeSelf)
                     levels[currentRoom + i].gameObject.SetActive(true);
             }
         }

@@ -39,7 +39,7 @@ public class NPC_Controller : MonoBehaviour
         agent.speed = wanderSpeed;
         agent.SetDestination(waypoints[currentWaypoint].position);
 
-        if (Vector3.Distance(agent.transform.position, waypoints[currentWaypoint].position) < .5f)
+        if (Vector3.Distance(agent.transform.position, waypoints[currentWaypoint].position) < 1.5f)
         {
             if (waitForInspect <= timeToInspect)
             {
