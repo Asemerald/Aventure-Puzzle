@@ -16,6 +16,13 @@ public class NPC_Controller : MonoBehaviour
     int currentWaypoint;
 
     public bool inAstralMode;
+    public bool randomizeSpeed = false;
+    public Vector2 randomSpeedRange = new Vector2(1, 4);
+    public bool randomizeInspect = false;
+    public Vector2 randomInspectRange = new Vector2(1, 6);
+
+    public Animator animator;
+    public float turnRotSpeed;
 
     void Start()
     {
@@ -23,6 +30,8 @@ public class NPC_Controller : MonoBehaviour
         agent = _agent;
 
         agent.velocity = Vector3.zero;
+        if (randomizeInspect) { timeToInspect = Random.Range(randomInspectRange.x, randomInspectRange.y); }
+        if (randomizeSpeed) { wanderSpeed = Random.Range(randomSpeedRange.x, randomSpeedRange.y); }
     }
 
     void Update()
@@ -36,22 +45,33 @@ public class NPC_Controller : MonoBehaviour
         agent.speed = wanderSpeed;
         agent.SetDestination(waypoints[currentWaypoint].position);
 
-        if (Vector3.Distance(agent.transform.position, waypoints[currentWaypoint].position) < 2f)
+        if (Vector3.Distance(agent.transform.position, waypoints[currentWaypoint].position) < 1.5f)
         {
             if (waitForInspect <= timeToInspect)
             {
                 waitForInspect += 1 * Time.deltaTime;
+                animator.SetBool("Moving", false);
             }
             if (waitForInspect >= timeToInspect)
             {
+                animator.SetBool("Moving", true);
                 currentWaypoint++;
                 waitForInspect = 0;
             }
+
         }
 
         if (currentWaypoint >= waypoints.Length)
             currentWaypoint = 0;
         
+            //RotateToward();
+    }
+
+    void RotateToward()
+    {
+        Vector3 direction = (waypoints[currentWaypoint].position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnRotSpeed);
     }
 
     public void SwitchAstralState(bool astral)
