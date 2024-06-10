@@ -16,6 +16,8 @@ public class AstralPocket : MonoBehaviour
     public float timeToReset = 2;
     public int maxPocketAvailable = 3;
 
+    [SerializeField] ParticleSystem resetAstralVFX;
+
     int currentPocketNum;
 
     [HideInInspector] public bool ShowAstralPocket = false;
@@ -77,6 +79,7 @@ public class AstralPocket : MonoBehaviour
 
         currentPocketNum = 0;
         RotationCards.Instance.SetAngle(maxPocketAvailable);
+        resetAstralVFX.Play();
     }
 
     private void OnDrawGizmos()
