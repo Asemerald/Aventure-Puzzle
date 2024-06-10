@@ -5623,6 +5623,7 @@ MonoBehaviour:
     m_Bits: 5504
   timeToReset: 0.5
   maxPocketAvailable: 3
+  resetAstralVFX: {fileID: 7956161732210065993}
   ShowAstralPocket: 0
   astralPocketMesh: {fileID: 7661479044235464074, guid: 692877db3e40e26489442c1e20be5a5c,
     type: 3}
@@ -5726,6 +5727,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0ea906de5ce5f544bb152effeeceb40, type: 3}
+--- !u!198 &7956161732210065993 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2153769922121391632, guid: a0ea906de5ce5f544bb152effeeceb40,
+    type: 3}
+  m_PrefabInstance: {fileID: 8325551128943483993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8054510574957385110 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2039306089214839247, guid: a0ea906de5ce5f544bb152effeeceb40,
