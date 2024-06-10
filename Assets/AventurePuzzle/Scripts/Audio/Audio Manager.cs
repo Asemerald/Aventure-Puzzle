@@ -13,6 +13,8 @@ public class AudioManager : MonoBehaviour
     private List<EventInstance> eventInstances;
 
     private EventInstance ambianceEventInstance;
+    private EventInstance musicEventInstance;
+    
     public static AudioManager instance { get; private set;}
         private void Awake()
         {
@@ -52,12 +54,24 @@ public class AudioManager : MonoBehaviour
         private void Start()
         {
             InitializeAmbiance(FMODEvents.instance.WindBlow);
+            InitializeMusic(FMODEvents.instance.Music1);
         }
 
         private void InitializeAmbiance(EventReference ambienceEventReference)
         {
             ambianceEventInstance = CreateEventInstance(ambienceEventReference);
             ambianceEventInstance.start();
+        }
+
+        private void InitializeMusic(EventReference musicEventReference)
+        {
+            musicEventInstance = CreateEventInstance(musicEventReference);
+            musicEventInstance.start();
+        }
+
+        public void SetMusicArea(MusicArea area)
+        {
+            musicEventInstance.setParameterByName("area", (float) area);
         }
         
         private void OnDestroy()
