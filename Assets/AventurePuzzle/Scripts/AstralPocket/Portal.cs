@@ -35,8 +35,6 @@ public class Portal : MonoBehaviour
                 Vector3 pos = linkedPortal.transform.position + dir * distanceToSpawn;
 
                 PlayerController.Instance.transform.position = pos;
-                
-                AudioManager.instance.PlayOneShot(FMODEvents.instance.PortalSFX, this.transform.position);
             }
         }
     }
