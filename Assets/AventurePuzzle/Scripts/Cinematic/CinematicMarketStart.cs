@@ -8,6 +8,8 @@ public class CinematicMarketStart : MonoBehaviour
 
     public GameObject fisrtCam;
     public ParticleSystem crashParticles;
+    
+    public Transform StartPos;
 
     public bool testAnim;
 
@@ -21,6 +23,7 @@ public class CinematicMarketStart : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         PlayerController.Instance._playerAnimator.SetFall(false);
+        transform.position = StartPos.position + new Vector3(-37.5f, -5.5f, 0f);
         //Cin�matique de suzie
 
         fisrtCam.SetActive(true);
@@ -35,11 +38,8 @@ public class CinematicMarketStart : MonoBehaviour
         AudioManager.instance.PlayOneShot(FMODEvents.instance.ChuteMeteore, this.transform.position);
 
         yield return new WaitForSeconds(4.5f);
-        
-        PlayerController.Instance.transform.position = new Vector3(37,5.5f,0);
-        //AudioManager.instance.PlayOneShot(FMODEvents.instance.Crash, this.transform.position);
-        
-        
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.Crash, this.transform.position);
+        PlayerController.Instance.transform.position = StartPos.position;
         PlayerController.Instance._playerAnimator._animator.Play("ANIM_StandingUp");
 
         yield return new WaitForSeconds(5);
