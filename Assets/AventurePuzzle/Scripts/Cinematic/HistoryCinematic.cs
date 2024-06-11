@@ -21,9 +21,11 @@ public class HistoryCinematic : MonoBehaviour
     private void Start()
     {
         startPos = cam.position;
+        StartCoroutine(CameraMoving());
+        StartCoroutine(Text());
     }
 
-    private void Update()
+    /*private void Update()
     {
         if(startTraveling)
         {
@@ -31,7 +33,7 @@ public class HistoryCinematic : MonoBehaviour
             StartCoroutine(CameraMoving());
             StartCoroutine(Text());
         }
-    }
+    }*/
 
     IEnumerator CameraMoving()
     {
