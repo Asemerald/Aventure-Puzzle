@@ -188,6 +188,7 @@ public class MainMenuManager : MonoBehaviour
             break;
          case 3:
             MainMenuPanel.SetActive(false);
+            await WaitForSeconds(1);
             StartGame();
             break;
          case 4:

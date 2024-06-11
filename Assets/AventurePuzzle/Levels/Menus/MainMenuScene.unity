@@ -2312,6 +2312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bbc2cd484b31874f8c2d6872ff7ad0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChapterToLoad: 0
 --- !u!4 &979398941
 Transform:
   m_ObjectHideFlags: 0
@@ -5846,7 +5847,7 @@ PrefabInstance:
     - target: {fileID: 4523156655924564243, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5032482650885175465, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
@@ -6016,6 +6017,11 @@ PrefabInstance:
         type: 3}
       propertyPath: duration
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794310127076054593, guid: 498a6c38b69ed16478f4ba867ef5a82b,
+        type: 3}
+      propertyPath: SceneToLoad
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7794310127076054593, guid: 498a6c38b69ed16478f4ba867ef5a82b,
         type: 3}
