@@ -37,11 +37,6 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        ManageLevels();
-    }
-
     public void ManageLevels()
     {
 
@@ -49,16 +44,14 @@ public class LevelLoader : MonoBehaviour
         {
             if ((currentRoom + i) >= 0 && (currentRoom + i) < levels.Count)
             {
-                if (!levels[currentRoom + i].gameObject.activeSelf)
-                    levels[currentRoom + i].gameObject.SetActive(true);
+                levels[currentRoom + i].gameObject.SetActive(true);
             }
         }
 
         for (int i = 0; i < levels.Count; i++)
         {
             if (i < (currentRoom - 1) || i > (currentRoom + 1))
-                if(levels[i].gameObject.activeSelf)
-                    levels[i].gameObject.SetActive(false);
+                levels[i].gameObject.SetActive(false);
         }
 
     }

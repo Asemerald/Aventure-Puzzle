@@ -26,7 +26,6 @@ public class CinematicEndMarket : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
-        PlayerController.Instance._playerAnimator.SetFall(false);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
         yield return new WaitForSeconds(1);
 
