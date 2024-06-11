@@ -18,7 +18,7 @@ public class ChapterLoaderIndex : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-        Debug.Log("ChaptertoLoad: " + ChapterLoader.Instance.ChapterToLoad);
+        
         
         if (ChapterLoader.Instance.ChapterToLoad == 0) return;
         
