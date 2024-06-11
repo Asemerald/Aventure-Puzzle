@@ -44,7 +44,7 @@ public class MainMenuManager : MonoBehaviour
    
    [Header("First Buttons")] 
    [SerializeField] private Button MainMenuFirstButton;
-   [SerializeField] private Button OptionsFirstButton;
+   [SerializeField] private Toggle OptionsFirstButton;
    [SerializeField] private Button ChapterFirstButton;
    [SerializeField] private Button CreditsFirstButton;
    [SerializeField] private Button QuitFirstButton;
