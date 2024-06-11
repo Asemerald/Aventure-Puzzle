@@ -12,7 +12,6 @@ public class Discord_Controller : MonoBehaviour
 
     public long applicationID;
     public string details = "Explore le marché";
-    public string state = "En jeu";
     [Space]
     public string largeImage = "game_logo";
     public string largeText = "The Last Arcana";
@@ -68,7 +67,6 @@ public class Discord_Controller : MonoBehaviour
             var activity = new Activity
             {
                 Details = details,
-                State = "En jeu",
                 Timestamps =
                 {
                     Start = time

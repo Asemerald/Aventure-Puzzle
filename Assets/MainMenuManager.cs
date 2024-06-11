@@ -66,11 +66,22 @@ public class MainMenuManager : MonoBehaviour
 
    private void Start()
    {
+      //Hide and lock cursor
+      Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
+      
       blackScreen.gameObject.SetActive(true);
       InitialfadeOut = true; 
       FadeOutQuit = false;
       
       DeskMaterial.SetColor("_EmissionColor", EmissiveColor * EmissiveIntensity);
+   }
+   
+   //on application focus, lock cursor
+   private void OnApplicationFocus(bool hasFocus)
+   {
+      Cursor.lockState = CursorLockMode.Locked;
+      Cursor.visible = false;
    }
 
    private void Update()
