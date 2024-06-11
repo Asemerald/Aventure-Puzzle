@@ -283,7 +283,7 @@ public class MainMenuManager : MonoBehaviour
    }
    
    [Header("Scene to Load")]
-   [SerializeField] private string SceneToLoad;
+   [SerializeField] private int SceneToLoad;
    
    
    private bool FadeOutQuit;

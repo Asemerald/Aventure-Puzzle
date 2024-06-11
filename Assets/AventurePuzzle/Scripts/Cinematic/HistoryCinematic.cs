@@ -100,11 +100,6 @@ public class HistoryCinematic : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         text.text = "";
-        yield return new WaitForSeconds(3);
-        
-        SceneManager.LoadScene( /*this scene index + 1*/ SceneManager.GetActiveScene().buildIndex + 1);
-
-        yield return new WaitForSeconds(2);
 
         SceneManager.LoadScene(indexSceneToLoad);
     }
