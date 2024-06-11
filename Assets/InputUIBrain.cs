@@ -21,7 +21,7 @@ public class InputsUIBrain : MonoBehaviour
     private void OnEnable()
     {
        click = inputs.UI.Click;
-       back = inputs.UI.Back;
+       back = inputs.UI.Cancel;
 
         inputs.Enable();
     }
