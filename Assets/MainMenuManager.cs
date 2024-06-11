@@ -188,6 +188,7 @@ public class MainMenuManager : MonoBehaviour
             break;
          case 3:
             MainMenuPanel.SetActive(false);
+            await WaitForSeconds(1);
             StartGame();
             break;
          case 4:
@@ -282,7 +283,7 @@ public class MainMenuManager : MonoBehaviour
    }
    
    [Header("Scene to Load")]
-   [SerializeField] private string SceneToLoad;
+   [SerializeField] private int SceneToLoad;
    
    
    private bool FadeOutQuit;

@@ -10,6 +10,8 @@ public class CinematicEndMarket : MonoBehaviour
 
     public GameObject fisrtCam;
 
+    public int indexSceneToLoad;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !cinematicPlaying)
@@ -65,7 +67,7 @@ public class CinematicEndMarket : MonoBehaviour
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(indexSceneToLoad);
     }
 
 }
