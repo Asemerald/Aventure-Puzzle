@@ -2406,6 +2406,7 @@ GameObject:
   - component: {fileID: 1032584689}
   - component: {fileID: 1032584688}
   - component: {fileID: 1032584691}
+  - component: {fileID: 1032584692}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2531,6 +2532,19 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1032584692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032584687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &1186272533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2978,6 +2992,374 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1361739944}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1431914393
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5561124324480544898, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6022617318872543585, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Crash>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Music1>k__BackingField.Path
+      value: event:/SX/Musics/Intro/Musique Intro
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Landing>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <WindBlow>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PochePose>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PortalSFX>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardDeplace>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardReceive>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Crash>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Crash>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Crash>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Crash>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PickUpBlock>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <ChuteMeteore>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Music1>k__BackingField.Guid.Data1
+      value: -1830911221
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Music1>k__BackingField.Guid.Data2
+      value: 1336276365
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Music1>k__BackingField.Guid.Data3
+      value: 584725638
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Music1>k__BackingField.Guid.Data4
+      value: -1641483731
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <FootStepsRock>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Landing>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Landing>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Landing>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <Landing>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <UnPickUpBlock>k__BackingField.Path
+      value: event:/GROKK
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <WindBlow>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <WindBlow>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <WindBlow>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <WindBlow>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PochePose>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PochePose>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PochePose>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PochePose>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PortalSFX>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PortalSFX>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PortalSFX>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PortalSFX>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardDeplace>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardDeplace>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardDeplace>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardDeplace>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardReceive>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardReceive>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardReceive>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <CardReceive>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PickUpBlock>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PickUpBlock>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PickUpBlock>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <PickUpBlock>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <ChuteMeteore>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <ChuteMeteore>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <ChuteMeteore>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <ChuteMeteore>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <FootStepsRock>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <FootStepsRock>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <FootStepsRock>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <FootStepsRock>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <UnPickUpBlock>k__BackingField.Guid.Data1
+      value: 670229718
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <UnPickUpBlock>k__BackingField.Guid.Data2
+      value: 1317669217
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <UnPickUpBlock>k__BackingField.Guid.Data3
+      value: 873834117
+      objectReference: {fileID: 0}
+    - target: {fileID: 7493669870879296222, guid: 9e00e1229cf250b478d76e6d4250a3bf,
+        type: 3}
+      propertyPath: <UnPickUpBlock>k__BackingField.Guid.Data4
+      value: 1026674474
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9e00e1229cf250b478d76e6d4250a3bf, type: 3}
 --- !u!1001 &1633038909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4642,3 +5024,4 @@ SceneRoots:
   - {fileID: 1843748907}
   - {fileID: 948711725}
   - {fileID: 719915901}
+  - {fileID: 1431914393}
