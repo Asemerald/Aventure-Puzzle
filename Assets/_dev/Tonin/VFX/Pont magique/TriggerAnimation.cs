@@ -5,10 +5,15 @@ using UnityEngine;
 public class TriggerAnimation : MonoBehaviour
 {
     public float triggerDistance = 2f;
+    [SerializeField] private float _playerDistance = 0;
+
+    [Header("Alternative trigger object")]
+    public bool alternativeTrigger = false;
+    public GameObject triggerObject;
 
     private Animation _anim;
     private bool _isTriggered = false;
-    [SerializeField] private float _playerDistance = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +29,12 @@ public class TriggerAnimation : MonoBehaviour
         _playerDistance = Vector3.Distance(PlayerController.Instance.transform.position, gameObject.transform.position);
         if (_anim != null && !_isTriggered)
         {
-            if (_playerDistance < triggerDistance)
+            if (_playerDistance < triggerDistance && !alternativeTrigger)
+            {
+                _isTriggered = true;
+                _anim.Play();
+            }
+            else if(triggerObject != null && Vector3.Distance(triggerObject.transform.position, gameObject.transform.position) < triggerDistance && !alternativeTrigger)
             {
                 _isTriggered = true;
                 _anim.Play();
