@@ -32,8 +32,8 @@ public class ChapterLoader : MonoBehaviour
     private IEnumerator LoadChapterAsync(int index)
     {
         var player = GameObject.FindGameObjectWithTag("Player");
-        
-        
+
+        yield return null;
     }
     
     

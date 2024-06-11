@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HistoryCinematic : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class HistoryCinematic : MonoBehaviour
     Vector3 startPos;
 
     public TextMeshProUGUI text;
+
+    public int indexSceneToLoad;
 
     private void Start()
     {
@@ -96,6 +99,9 @@ public class HistoryCinematic : MonoBehaviour
 
         text.text = "";
 
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene(indexSceneToLoad);
     }
 
 }
