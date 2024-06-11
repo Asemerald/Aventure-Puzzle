@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Cinemachine;
 using Cinemachine.PostFX;
 using UnityEngine;
@@ -8,32 +9,24 @@ using UnityEngine;
 public class ConfinerSwitcher : MonoBehaviour
 {
     
-    private CinemachineConfiner _cinemachineConfiner;
-    private CinemachineVirtualCamera _cameraTrackedDolly;
+    [SerializeField] private CinemachineConfiner _cinemachineConfiner;
     
-    private CinemachineVirtualCamera _cinemachineVirtualCamera;
-
-    [SerializeField] private bool SwitchToDollyTrack;
+    
      
-    private void Start()
+    private void Awake()
     {
-        _cinemachineConfiner = FindObjectOfType<CinemachineConfiner>();
-        _cinemachineVirtualCamera = _cinemachineConfiner.GetComponent<CinemachineVirtualCamera>();
-        if (FindObjectOfType<CinemachinePostProcessing>())
-        {
-            _cameraTrackedDolly = FindObjectOfType<CinemachinePostProcessing>().gameObject.GetComponent<CinemachineVirtualCamera>();
-        }
+        //_cinemachineConfiner = FindObjectOfType<CinemachineConfiner>();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
         
-        if (_cinemachineVirtualCamera.Priority != 10)
-        {
-            _cinemachineVirtualCamera.Priority = 10;   
-        }
-        
+        SwitchConfiner();
+    }
+
+    public void SwitchConfiner()
+    {
         
         //TRY GET collider in parent, if no collider found get mesh collider in parent
        
@@ -54,18 +47,7 @@ public class ConfinerSwitcher : MonoBehaviour
             StartCoroutine(ResetDamping());
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-
-        if (SwitchToDollyTrack)
-        {
-            _cinemachineVirtualCamera.Priority = 0;
-            //switch _cinemachineConfiner.GetComponent<CinemachineVirtualCamera>() to dolly track
-            _cameraTrackedDolly.GetComponent<CinemachineTrackedDolly>().m_Path = transform.parent.GetComponent<CinemachinePath>();
-        }
-    }
+    
 
     private IEnumerator ResetDamping()
     {
