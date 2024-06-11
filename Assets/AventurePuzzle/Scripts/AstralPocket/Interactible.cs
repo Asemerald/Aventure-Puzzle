@@ -300,7 +300,7 @@ public class Interactible : MonoBehaviour
     {
         if(astraldObj != null)
         {
-            if (!astraldObj.activeSelf)
+            /*if (!astraldObj.activeSelf)
             {
                 mesh.enabled = true;
                 astralRenderer.enabled = false;
@@ -309,8 +309,10 @@ public class Interactible : MonoBehaviour
             {
                 mesh.enabled = false;
                 astralRenderer.enabled = true;
-            }
+            }*/
         }
+        mesh.enabled = false;
+        astralRenderer.enabled = false;
 
         if (moveableMesh != null)
             moveableMesh.SetActive(false);
