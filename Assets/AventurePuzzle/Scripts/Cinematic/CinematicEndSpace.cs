@@ -10,6 +10,8 @@ public class CinematicEndSpace : MonoBehaviour
 
     public GameObject fisrtCam;
 
+    public int indexSceneToLoad;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !cinematicPlaying)
@@ -62,5 +64,7 @@ public class CinematicEndSpace : MonoBehaviour
 
         //Fin de la cinématique le joueur reprend le contrôle
         PlayerController.Instance.playerHasControl = true;
+
+        SceneManager.LoadScene(indexSceneToLoad);
     }
 }

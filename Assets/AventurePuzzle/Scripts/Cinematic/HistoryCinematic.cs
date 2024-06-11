@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HistoryCinematic : MonoBehaviour
 {
@@ -15,12 +16,16 @@ public class HistoryCinematic : MonoBehaviour
 
     public TextMeshProUGUI text;
 
+    public int indexSceneToLoad;
+
     private void Start()
     {
         startPos = cam.position;
+        StartCoroutine(CameraMoving());
+        StartCoroutine(Text());
     }
 
-    private void Update()
+    /*private void Update()
     {
         if(startTraveling)
         {
@@ -28,7 +33,7 @@ public class HistoryCinematic : MonoBehaviour
             StartCoroutine(CameraMoving());
             StartCoroutine(Text());
         }
-    }
+    }*/
 
     IEnumerator CameraMoving()
     {
@@ -95,7 +100,13 @@ public class HistoryCinematic : MonoBehaviour
         yield return new WaitForSeconds(4);
 
         text.text = "";
+        yield return new WaitForSeconds(3);
+        
+        SceneManager.LoadScene( /*this scene index + 1*/ SceneManager.GetActiveScene().buildIndex + 1);
 
+        yield return new WaitForSeconds(2);
+
+        SceneManager.LoadScene(indexSceneToLoad);
     }
 
 }
