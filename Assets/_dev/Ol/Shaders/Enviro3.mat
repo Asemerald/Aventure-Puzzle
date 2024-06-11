@@ -18,7 +18,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 2980
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:
@@ -28,11 +28,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 355c523f240caff4ea8656d37cd7ea2a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalWater:
-        m_Texture: {fileID: 2800000, guid: 177ac3119914e4843895ab7637895e61, type: 3}
+        m_Texture: {fileID: 2800000, guid: f0509e0b5a264734290a6b1566ec51c2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflectionMap:
@@ -69,26 +69,26 @@ Material:
     - _Cull: 2
     - _DistortionAmount: 5
     - _DstBlend: 10
-    - _NormalStrength: 5
-    - _QueueControl: 0
+    - _NormalStrength: 1
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Reflection_amount: 0.522
-    - _Refraction: 0.23
+    - _Reflection_displacement_strength: 0.02
+    - _Refraction: 5
     - _RippleTex: 1
-    - _Smoothness: 1
+    - _Scale: 0.1
+    - _Smoothness: 0.848
     - _SrcBlend: 5
     - _Surface: 1
-    - _Water_Lerp: 0.425
+    - _Water_Lerp: 0.354
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 0
     - _ZWriteControl: 0
-    - _normal_strength: 0.1
-    - _reflection_refraction: 0.53
+    - _normal_strength: 0.56
     m_Colors:
-    - _UV1: {r: 1, g: 1, b: 0, a: 0}
-    - _UV2: {r: 1, g: 1, b: 0, a: 0}
+    - _UV1: {r: 4, g: 4, b: 0, a: 0}
+    - _UV2: {r: 5, g: 5, b: 0, a: 0}
     - _Water_Speed_1: {r: 0.03, g: 0.03, b: 0, a: 0}
     - _Water_Speed_2: {r: -0.03, g: 0.03, b: 0, a: 0}
   m_BuildTextureStacks: []

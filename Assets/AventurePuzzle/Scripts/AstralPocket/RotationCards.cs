@@ -19,6 +19,12 @@ public class RotationCards : MonoBehaviour
             Instance = this;
     }
 
+    private void Start()
+    {
+        if (PlayerController.Instance.hasAstralPocket)
+            SetAngle(3);
+    }
+
     private void Update()
     {
         RotateCard();

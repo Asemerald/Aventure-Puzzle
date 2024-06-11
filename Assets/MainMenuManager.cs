@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
@@ -14,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
    public static MainMenuManager Instance { get; private set; }
    
    [SerializeField] private Material DeskMaterial;
+   [SerializeField] private GameObject Desk;
    [SerializeField] private GameObject Cards;
    
    [Header("MainMenu Buttons")]
@@ -26,6 +28,8 @@ public class MainMenuManager : MonoBehaviour
    [Header("Initial Fade")] 
    [SerializeField] private CanvasGroup blackScreen;
    [SerializeField] private float duration;
+   [SerializeField] private Color EmissiveColor;
+   [SerializeField] private float EmissiveIntensity;
    
    private bool InitialfadeOut;
    
@@ -68,6 +72,9 @@ public class MainMenuManager : MonoBehaviour
       
       blackScreen.gameObject.SetActive(true);
       InitialfadeOut = true; 
+      FadeOutQuit = false;
+      
+      DeskMaterial.SetColor("_EmissionColor", EmissiveColor * EmissiveIntensity);
    }
    
    //on application focus, lock cursor
@@ -80,6 +87,7 @@ public class MainMenuManager : MonoBehaviour
    private void Update()
    {
       InitialFade();
+      FadeOutOnQuit();
       
       if (InputsUIBrain.Instance.back.WasPressedThisFrame())
       {
@@ -89,7 +97,7 @@ public class MainMenuManager : MonoBehaviour
       
    }
    
-   private void InitialFade()
+   private async void InitialFade()
    {
       if (!InitialfadeOut) return;
       if (blackScreen.alpha >= 0)
@@ -99,18 +107,42 @@ public class MainMenuManager : MonoBehaviour
       if (blackScreen.alpha == 0)
       {
          InitialfadeOut = false;
-         Cards.SetActive(true);
          StartCoroutine(SelectPlayButton());
-         //TODO Lights Candles
+         StartCoroutine(FadeEmissiveOut());
+         await WaitForSeconds(2);
+         Cards.SetActive(true);
       }
    }
    
-   
+   private IEnumerator FadeEmissiveOut()
+   {
+      Debug.LogWarning("Fading Emissive Out");
+      Color startColor = DeskMaterial.GetColor("_EmissionColor");
+      Color targetColor = new Color(0f, 0f, 0f); // Black (no emission)
+      float elapsedTime = 0f;
+
+      while (elapsedTime < 2f)
+      {
+         elapsedTime += Time.deltaTime;
+         float t = Mathf.Clamp01(elapsedTime / 2f);
+         Color newColor = Color.Lerp(startColor, targetColor, t);
+
+         // Set the emissive color
+         DeskMaterial.SetColor("_EmissionColor", newColor);
+         yield return null; // Wait for the next frame
+      }
+
+      // Ensure the final color is exactly the target color
+      DeskMaterial.SetColor("_EmissionColor", targetColor);
+   }
+
+
+
    
    
    private IEnumerator SelectPlayButton()
    {
-      yield return new WaitForSeconds(2);
+      yield return new WaitForSeconds(4);
       EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
    }
 
@@ -139,19 +171,19 @@ public class MainMenuManager : MonoBehaviour
             {
                QuitPanel.GetComponent<PanelFader>().Hide();
             }
-            await WaitFor1Second();
+            await WaitForSeconds(1);
             EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
             break;
          case 1:
             OptionsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
-            await WaitFor1Second();
+            await WaitForSeconds(1);
             EventSystem.current.SetSelectedGameObject(OptionsFirstButton.gameObject);
             break;
          case 2:
             ChapterPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
-            await WaitFor1Second();
+            await WaitForSeconds(1);
             EventSystem.current.SetSelectedGameObject(ChapterFirstButton.gameObject);
             break;
          case 3:
@@ -161,13 +193,13 @@ public class MainMenuManager : MonoBehaviour
          case 4:
             CreditsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
-            await WaitFor1Second();
+            await WaitForSeconds(1);
             EventSystem.current.SetSelectedGameObject(CreditsFirstButton.gameObject);
             break;
          case 5:
             QuitPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
-            await WaitFor1Second();
+            await WaitForSeconds(1);
             EventSystem.current.SetSelectedGameObject(QuitFirstButton.gameObject);
             break;
          
@@ -177,8 +209,7 @@ public class MainMenuManager : MonoBehaviour
    
    private void StartGame()
    {
-      //TODO Load Scene
-      Debug.Log("Start Game");
+      SceneManager.LoadScene(SceneToLoad);
    }
 
    public async void Back()
@@ -186,25 +217,25 @@ public class MainMenuManager : MonoBehaviour
       if (OptionsPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
-         await WaitFor1Second();
+         await WaitForSeconds(1);
          OptionsButton.BackPress();
       }
       else if (ChapterPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
-         await WaitFor1Second();
+         await WaitForSeconds(1);
          ChapterButton.BackPress();
       }
       else if(CreditsPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
-         await WaitFor1Second();
+         await WaitForSeconds(1);
          CreditsButton.BackPress();
       }
       else if(QuitPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
-         await WaitFor1Second();
+         await WaitForSeconds(1);
          QuitButton.BackPress();
       }
       else if(MainMenuPanel.activeInHierarchy)
@@ -213,10 +244,11 @@ public class MainMenuManager : MonoBehaviour
       }
    }
    
-   private Task WaitFor1Second()
+   private Task WaitForSeconds(int seconds)
    {
-      return Task.Delay(1000);
+      return Task.Delay(seconds * 1000);
    }
+   
    
    public void ToggleFullScreen()
    {
@@ -249,4 +281,35 @@ public class MainMenuManager : MonoBehaviour
       }
    }
    
+   [Header("Scene to Load")]
+   [SerializeField] private string SceneToLoad;
+   
+   
+   private bool FadeOutQuit;
+   private void FadeOutOnQuit()
+   {
+      //make dark screen fade in
+      
+      if (FadeOutQuit)
+      {
+         if (blackScreen.alpha <= 1)
+         {
+            blackScreen.alpha += Time.deltaTime / 1;
+         }
+         if (blackScreen.alpha >= 1)
+         {
+            FadeOutQuit = false;
+            //Quit
+            Application.Quit();
+            Debug.Log("Quit Game");
+         }
+      }
+      
+   }
+
+   public void Quit()
+   {
+      //make dark screen fade in and then quit
+      FadeOutQuit = true;
+   }
 }
