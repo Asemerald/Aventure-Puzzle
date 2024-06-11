@@ -95,7 +95,7 @@ public class HistoryCinematic : MonoBehaviour
         
         yield return new WaitForSeconds(.5f);
         
-        text.text = "Dernier Arcane que la Création appelera, cet engeance nouvelle aura le pouvoir de faire le lien entre les Divins Arcanes et les Mortelles Etoiles.";
+        text.text = "Dernier Arcane que la Création appelera, cette engeance nouvelle aura le pouvoir de faire le lien entre les Divins Arcanes et les Mortelles Etoiles.";
 
         yield return new WaitForSeconds(4);
 
