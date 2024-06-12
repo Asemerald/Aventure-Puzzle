@@ -48,16 +48,19 @@ public class ChapterLoaderIndex : MonoBehaviour
         if (ChapterLoader.Instance.ChapterToLoad == 4)
         {
             ScriptToChange.posToTp = _chapters[3].transform;
+            ScriptToChange.DoCinematic = false;
         }
         
         if (ChapterLoader.Instance.ChapterToLoad == 5)
         {
             ScriptToChange.posToTp = _chapters[4].transform;
+            ScriptToChange.DoCinematic = false;
         }
         
         if (ChapterLoader.Instance.ChapterToLoad == 6)
         {
             ScriptToChange.posToTp = _chapters[5].transform;
+            ScriptToChange.DoCinematic = false;
         }
     }
     
