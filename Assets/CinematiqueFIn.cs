@@ -1,23 +1,22 @@
-using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CinematiqueFin : MonoBehaviour
+public class CinematicFIn : MonoBehaviour
 {
     public Transform posToReach;
     public bool cinematicPlaying = false;
 
     public GameObject fisrtCam;
-    public GameObject secondCam;
 
-    public Animator cardAnimation;
+    public GameObject EndUI;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !cinematicPlaying)
         {
-            cinematicPlaying=true;
+            cinematicPlaying = true;
             StartCoroutine(CinematicAstralPocket());
             //StartCoroutine(HUD.Instance.Tutorial());
         }
@@ -29,11 +28,12 @@ public class CinematiqueFin : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
+        PlayerController.Instance._playerAnimator.SetFall(false);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
         yield return new WaitForSeconds(1);
 
-        //Le joueur perd le contr�le
-        //Cin�matique Cam�ra qui suit lejoueur a la statue
+        //Le joueur perd le contrôle
+        //Cinématique Caméra qui suit lejoueur a la statue
         float elapsedTime = 0;
         float distanceFromPos = Vector3.Distance(PlayerController.Instance.transform.position, posToReach.position);
         float speed = (distanceFromPos / timeToWalk) / 14.5f;
@@ -52,28 +52,19 @@ public class CinematiqueFin : MonoBehaviour
 
             yield return null;
         }
+        
+
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
-        fisrtCam.SetActive(false);
-        secondCam.SetActive(true);
         yield return new WaitForSeconds(1);
+        
 
-        //D�clencher la cinematique de la cam�ra qui suit la carte
-
-        cardAnimation.Play("ReceiveCard");
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.CardDeplace, this.transform.position);
-        yield return new WaitForSeconds(6.5f);
-        //Puis les 3 cartes qui tourne autour du joueur
-        PlayerController.Instance.hasAstralPocket = true;
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.CardReceive, this.transform.position);
-        RotationCards.Instance.SetAngle(3);
-
-        yield return new WaitForSeconds(1.5F);
-
-        secondCam.SetActive(false);
-
-        //Fin de la cin�matique le joueur reprend le contr�le
-        PlayerController.Instance.playerHasControl = true;
-        HUD.Instance.inGamePanel.SetActive(true);
+        //Fin de la cinématique le joueur reprend le contrôle
+        
+        
+        EndUI.SetActive(true);
+        
+        
     }
+
 }
