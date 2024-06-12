@@ -9,6 +9,8 @@ public class CinematicSpace : MonoBehaviour
 
     public GameObject fisrtCam;
 
+    public Transform posToTp;
+
     private void Start()
     {
         cinematicPlaying = true;
@@ -21,7 +23,18 @@ public class CinematicSpace : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         fisrtCam.SetActive(true);
-        PlayerController.Instance.transform.position = new Vector3(-56.5f, -6, 0);
+
+        if (posToTp != null)
+        {
+            PlayerController.Instance.transform.position = new Vector3(-56.5f, -6, 0);
+            
+        }
+        else
+        {
+            PlayerController.Instance.transform.position = posToTp.position;
+            posToReach.position = posToTp.position + new Vector3(-5f, 0, 0);
+        }
+        
         PlayerController.Instance._playerAnimator.SetFall(false);
         PlayerController.Instance._playerAnimator.SetSpeed(0);
         HUD.Instance.whiteFade.SetActive(true);
