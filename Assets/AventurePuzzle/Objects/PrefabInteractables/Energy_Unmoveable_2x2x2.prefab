@@ -900,8 +900,49 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4886595240371027534}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fcef86de542c0e4494a10e81c90cbdd,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8024711673563308352}
   m_SourcePrefab: {fileID: 100100000, guid: 6fcef86de542c0e4494a10e81c90cbdd, type: 3}
+--- !u!1 &2326651397274658534 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6fcef86de542c0e4494a10e81c90cbdd,
+    type: 3}
+  m_PrefabInstance: {fileID: 3208960761354640311}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8024711673563308352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2326651397274658534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -818525359
+      Data2: 1308881459
+      Data3: -124644942
+      Data4: -453438329
+    Path: event:/SX/Player/Astral Poche/Poche Existe
+  Event: 
+  PlayEvent: 1
+  StopEvent: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  AllowNonRigidbodyDoppler: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 5
 --- !u!4 &3099107332459117660 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6fcef86de542c0e4494a10e81c90cbdd,
@@ -920,6 +961,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "Lanterne_Avec_Cha\xEEnes"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1319321297310172060, guid: 9cf671894e637f448868c0672f51e62a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1802841824045799718, guid: 9cf671894e637f448868c0672f51e62a,
         type: 3}
@@ -1084,6 +1130,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "Lanterne_Sans Cha\xEEnes"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6433071193947443776, guid: bd5365c6d50784e4796ddbe2e01ed1a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -34,11 +34,10 @@ public class CinematicMarketStart : MonoBehaviour
         PlayerController.Instance.transform.position = new Vector3(0, 0, 0);
 
         yield return new WaitForSeconds(.5f);
-        crashParticles.Play();
         AudioManager.instance.PlayOneShot(FMODEvents.instance.ChuteMeteore, this.transform.position);
-
+        crashParticles.Play();
         yield return new WaitForSeconds(4.5f);
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.Crash, this.transform.position);
+    
         PlayerController.Instance.transform.position = StartPos.position;
         PlayerController.Instance._playerAnimator._animator.Play("ANIM_StandingUp");
 

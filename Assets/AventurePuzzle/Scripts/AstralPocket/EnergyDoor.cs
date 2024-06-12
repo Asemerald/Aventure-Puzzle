@@ -48,12 +48,14 @@ public class EnergyDoor : MonoBehaviour
             isOpen = true;
             gameObject.layer = LayerMask.NameToLayer("EnergyDoorNoCollision");
             PlayAnimation(0);
+            
         }
         else if (interactiblePowering.Count < interactiblesRequired.Length && isOpen)
         {
             Debug.Log("Energy Door : Door is no longer powered");
             isOpen = false;
             gameObject.layer = LayerMask.NameToLayer("EnergyDoor");
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.PorteOpen, this.transform.position);
             PlayAnimation(1);
         }
 
@@ -109,6 +111,7 @@ public class EnergyDoor : MonoBehaviour
         if (!interactiblePowering.Contains(energy))
         {
             interactiblePowering.Add(energy);
+            AudioManager.instance.PlayOneShot(FMODEvents.instance.PorteAddEnergy, this.transform.position);
         }
     }
 }

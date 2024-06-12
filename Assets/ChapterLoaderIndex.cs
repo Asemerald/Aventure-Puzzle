@@ -12,6 +12,8 @@ public class ChapterLoaderIndex : MonoBehaviour
     [SerializeField] private GameObject[] _cameraConfiners;
     [SerializeField] private int[] _spawnRoomsNumbers;
     
+    [SerializeField] private CinematicSpace ScriptToChange;
+    
     public static ChapterLoaderIndex Instance { get; private set; }
 
     private void Awake()
@@ -41,6 +43,21 @@ public class ChapterLoaderIndex : MonoBehaviour
             _cameraConfiners[2].GetComponentInChildren<ConfinerSwitcher>().SwitchConfiner();
             VFXStart.StartPos = _chapters[2].transform;
             RoomLoader.startingRoom = _spawnRoomsNumbers[2];
+        }
+        
+        if (ChapterLoader.Instance.ChapterToLoad == 4)
+        {
+            ScriptToChange.posToTp = _chapters[3].transform;
+        }
+        
+        if (ChapterLoader.Instance.ChapterToLoad == 5)
+        {
+            ScriptToChange.posToTp = _chapters[4].transform;
+        }
+        
+        if (ChapterLoader.Instance.ChapterToLoad == 6)
+        {
+            ScriptToChange.posToTp = _chapters[5].transform;
         }
     }
     
