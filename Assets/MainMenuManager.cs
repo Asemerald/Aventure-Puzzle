@@ -46,7 +46,6 @@ public class MainMenuManager : MonoBehaviour
    [SerializeField] private Button MainMenuFirstButton;
    [SerializeField] private Toggle OptionsFirstButton;
    [SerializeField] private Button ChapterFirstButton;
-   [SerializeField] private Button CreditsFirstButton;
    [SerializeField] private Button QuitFirstButton;
    
    [Header("Additionals Buttons")]
@@ -155,24 +154,30 @@ public class MainMenuManager : MonoBehaviour
             if (OptionsPanel.activeInHierarchy)
             {
                OptionsPanel.GetComponent<PanelFader>().Hide();
+               await WaitForSeconds(1);
+               EventSystem.current.SetSelectedGameObject(OptionsButton.gameObject);
             }
 
             if (ChapterPanel.activeInHierarchy)
             {
                ChapterPanel.GetComponent<PanelFader>().Hide();
+               await WaitForSeconds(1);
+               EventSystem.current.SetSelectedGameObject(ChapterButton.gameObject);
             }
             
             if (CreditsPanel.activeInHierarchy)
             {
-               CreditsPanel.GetComponent<PanelFader>().Hide();
+               CreditsPanel.SetActive(false);
+               EventSystem.current.SetSelectedGameObject(CreditsButton.gameObject);
             }
             
             if (QuitPanel.activeInHierarchy)
             {
                QuitPanel.GetComponent<PanelFader>().Hide();
+               await WaitForSeconds(1);
+               EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
             }
-            await WaitForSeconds(1);
-            EventSystem.current.SetSelectedGameObject(MainMenuFirstButton.gameObject);
+            
             break;
          case 1:
             OptionsPanel.SetActive(true);
@@ -194,8 +199,8 @@ public class MainMenuManager : MonoBehaviour
          case 4:
             CreditsPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
-            await WaitForSeconds(1);
-            EventSystem.current.SetSelectedGameObject(CreditsFirstButton.gameObject);
+            await WaitForSeconds(57);
+            OpenMenuPanel(0);
             break;
          case 5:
             QuitPanel.SetActive(true);
@@ -231,17 +236,12 @@ public class MainMenuManager : MonoBehaviour
       {
          OpenMenuPanel(0);
          await WaitForSeconds(1);
-         CreditsButton.BackPress();
       }
       else if(QuitPanel.activeInHierarchy)
       {
          OpenMenuPanel(0);
          await WaitForSeconds(1);
          QuitButton.BackPress();
-      }
-      else if(MainMenuPanel.activeInHierarchy)
-      {
-         OpenMenuPanel(5);
       }
    }
    
