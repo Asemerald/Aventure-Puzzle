@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HistoryCinematic : MonoBehaviour
+public class HistoryCinematic2 : MonoBehaviour
 {
 
     public Transform cam;
@@ -57,38 +57,15 @@ public class HistoryCinematic : MonoBehaviour
     {
         yield return null;
 
-        text.text = "Ainsi son Choix est fait.";
+        text.text = "Ainsi son choix est fait.";
 
-        yield return new WaitForSeconds(8);
-
-        text.text = "";
-
-        yield return new WaitForSeconds(.5f);
-
-        text.text = "L'Être des Prophéties a renversé la table d'Arcana";
-
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5);
 
         text.text = "";
 
         yield return new WaitForSeconds(.5f);
-        
-        text.text = "Il a brisé les lois fondatrices de son monde d'accueil";
 
-        yield return new WaitForSeconds(4);
-
-        text.text = "";
-
-        yield return new WaitForSeconds(.5f);
-        
-        text.text = "Les liens entre Arcanes et Etoiles sont rompus à jamais";
-
-        yield return new WaitForSeconds(4);
-
-        text.text = "";
-
-        yield return new WaitForSeconds(.5f);
-        text.text = "C'est la mort d'un Monde mais la naissance d'un peuple éphémère et libéré, les Etoiles.";
+        text.text = "L'Être à décidé de conserver l'Ordre d'Arcana";
 
         yield return new WaitForSeconds(4);
 
@@ -96,11 +73,33 @@ public class HistoryCinematic : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
-        text.text = "Un royaume capable de prendre son Destin en Main, c'est le Nouvel Age d'Arcana";
+        text.text = "De lueur d'espoir pour un monde nouveau, l'Être de la Prophétie est devenu l'instrument de l'ancien.";
+
+        yield return new WaitForSeconds(4);
+
+        text.text = "";
+
+        yield return new WaitForSeconds(.5f);
+
+        text.text = "Il vint ajouter sa carte pour devenir la 22 ème Arcane";
 
         yield return new WaitForSeconds(4);
         
         text.text = "";
+
+        yield return new WaitForSeconds(.5f);
+
+        text.text = "Cela scella donc le destin d'Arcana restant sans fin sous la coupe de ses Maîtres..";
+        
+        yield return new WaitForSeconds(4);
+        
+        text.text = "";
+        
+        yield return new WaitForSeconds(.5f);
+        
+        text.text = "Les Etoiles prient et implorent mais seul le silence du cosmos saura leur répondre..";
+
+        yield return new WaitForSeconds(4);
         
         SceneManager.LoadScene(indexSceneToLoad);
     }
