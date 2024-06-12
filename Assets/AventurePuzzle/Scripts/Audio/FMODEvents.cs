@@ -46,6 +46,12 @@ public class FMODEvents : MonoBehaviour
      
      [field: Header ("PNJ Steps")]
      [field: SerializeField] public EventReference PNJSteps { get; private set; }
+     
+     [field: Header ("Porte Charge")]
+     [field: SerializeField] public EventReference PorteAddEnergy { get; private set; }
+     
+     [field: Header ("Porte Open")]
+     [field: SerializeField] public EventReference PorteOpen { get; private set; }
 
 
 
