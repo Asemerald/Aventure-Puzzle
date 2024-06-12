@@ -11,8 +11,15 @@ public class CinematicSpace : MonoBehaviour
 
     public Transform posToTp;
 
+    public bool DoCinematic = true;
+
     private void Start()
     {
+        if (!DoCinematic)
+        {
+            PlayerController.Instance.transform.position = posToTp.position;
+            return;
+        }
         cinematicPlaying = true;
         StartCoroutine(CinematicAstralPocket());
     }
