@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,23 +18,23 @@ public class HistoryCinematic : MonoBehaviour
     public TextMeshProUGUI text;
 
     public int indexSceneToLoad;
+    private bool hasFinishedMoving;
 
     private void Start()
     {
         startPos = cam.position;
         StartCoroutine(CameraMoving());
         StartCoroutine(Text());
+        hasFinishedMoving = false;
     }
 
-    /*private void Update()
+    private void Update()
     {
-        if(startTraveling)
+        if (hasFinishedMoving)
         {
-            startTraveling = false;
-            StartCoroutine(CameraMoving());
-            StartCoroutine(Text());
+            SceneManager.LoadScene(indexSceneToLoad);
         }
-    }*/
+    }
 
     IEnumerator CameraMoving()
     {
@@ -48,6 +49,7 @@ public class HistoryCinematic : MonoBehaviour
 
             yield return null;
         }
+        hasFinishedMoving = true;
 
     }
 
