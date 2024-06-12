@@ -35,9 +35,10 @@ public class CinematicMarketStart : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
         crashParticles.Play();
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.ChuteMeteore, this.transform.position);
 
         yield return new WaitForSeconds(4.5f);
-
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.Crash, this.transform.position);
         PlayerController.Instance.transform.position = StartPos.position;
         PlayerController.Instance._playerAnimator._animator.Play("ANIM_StandingUp");
 

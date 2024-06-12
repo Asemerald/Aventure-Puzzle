@@ -28,8 +28,8 @@ public class CinematicSpace : MonoBehaviour
         HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
         yield return new WaitForSeconds(1);
 
-        //Le joueur perd le contrôle
-        //Cinématique Caméra qui suit lejoueur a la statue
+        //Le joueur perd le contrï¿½le
+        //Cinï¿½matique Camï¿½ra qui suit lejoueur a la statue
         float elapsedTime = 0;
         float distanceFromPos = Vector3.Distance(PlayerController.Instance.transform.position, posToReach.position);
         float speed = (distanceFromPos / timeToWalk) / 14.5f;
@@ -48,14 +48,13 @@ public class CinematicSpace : MonoBehaviour
 
             yield return null;
         }
-
         PlayerController.Instance._playerAnimator.SetSpeed(0);
 
         yield return new WaitForSeconds(1);
         fisrtCam.SetActive(false);
 
 
-        //Fin de la cinématique le joueur reprend le contrôle
+        //Fin de la cinï¿½matique le joueur reprend le contrï¿½le
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
     }

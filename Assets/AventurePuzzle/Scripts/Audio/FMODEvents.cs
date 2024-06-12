@@ -12,7 +12,8 @@ public class FMODEvents : MonoBehaviour
     
     [field: Header ("Music")]
     [field: SerializeField] public EventReference Music1 { get; private set; }
-
+    
+    
     
     [field: Header ("Poche SFX")]
     [field: SerializeField] public EventReference PochePose { get; private set; }
@@ -31,6 +32,18 @@ public class FMODEvents : MonoBehaviour
     
     [field: Header ("PortalSound")]
     [field: SerializeField] public EventReference PortalSFX { get; private set; }
+    
+     [field: Header ("CardReceive")]
+        [field: SerializeField] public EventReference CardReceive { get; private set; }
+    
+     [field: Header ("CardDeplace")]
+        [field: SerializeField] public EventReference CardDeplace { get; private set; }
+     
+     [field: Header ("Crash")]
+     [field: SerializeField] public EventReference Crash { get; private set; }
+     
+     [field: Header ("ChuteMeteore")]
+     [field: SerializeField] public EventReference ChuteMeteore { get; private set; }
 
 
     

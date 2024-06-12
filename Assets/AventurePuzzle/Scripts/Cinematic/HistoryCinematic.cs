@@ -55,7 +55,15 @@ public class HistoryCinematic : MonoBehaviour
     {
         yield return null;
 
-        text.text = "Les cartes, medium qui permet de voir à travers les fils de notre destin.";
+        text.text = "Les Cartes.";
+
+        yield return new WaitForSeconds(5);
+
+        text.text = "";
+
+        yield return new WaitForSeconds(.5f);
+
+        text.text = "De leur force infinie les Arcanes ont crÃ©Ã© Arcana, un monde sur lequel rÃ©gner";
 
         yield return new WaitForSeconds(4);
 
@@ -63,7 +71,7 @@ public class HistoryCinematic : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
-        text.text = "Qui sont tissés par les 21 Arcanes majeurs créatrice des cartes du tarot.";
+        text.text = "Pour remplir ce monde ils l'ont peuplÃ©s d'Etoiles pour asseoir leur volontÃ©...";
 
         yield return new WaitForSeconds(4);
 
@@ -71,7 +79,23 @@ public class HistoryCinematic : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
-        text.text = "De leurs mains, les Arcanes ont créé le monde d’Arcana, et des étoiles filantes elles ont créé les habitants.";
+        text.text = "Il est dit que de cet Ã©quilibre instable va naÃ®tre un Ãªtre...DiffÃ©rent ";
+
+        yield return new WaitForSeconds(4);
+        
+        text.text = "";
+
+        yield return new WaitForSeconds(.5f);
+
+        text.text = "Un ÃŠtre dont la nature Ã  Ã©tÃ© annoncÃ©e comme symbole du Renouveau d'Arcana...";
+        
+        yield return new WaitForSeconds(4);
+        
+        text.text = "";
+        
+        yield return new WaitForSeconds(.5f);
+        
+        text.text = "Dernier Arcane que la CrÃ©ation appelera, cette engeance nouvelle aura le pouvoir de faire le lien entre les Divins Arcanes et les Mortelles Etoiles.";
 
         yield return new WaitForSeconds(4);
 
@@ -79,23 +103,7 @@ public class HistoryCinematic : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
 
-        text.text = "Elle contrôle le monde depuis leur palais et attendent l’étoile capable de surpasser son destin, celle dont l’arriver a été prédit par les cartes : Le dernier Arcane.";
-
-        yield return new WaitForSeconds(4);
-
-        text.text = "";
-
-        yield return new WaitForSeconds(.5f);
-
-        text.text = "Elle prendra forme à partir d’une étoile écrasée dans le monde d’Arcana, et aura le pouvoir de lier les deux mondes qui sépare les arcanes majeurs de leur création.";
-
-        yield return new WaitForSeconds(4);
-
-        text.text = "";
-
-        yield return new WaitForSeconds(.5f);
-
-        text.text = "Décidant à elle seule du destin des Arcanes et des habitants.";
+        text.text = "Tenant dans ses mains le Destin d'Arcana";
 
         yield return new WaitForSeconds(4);
 
