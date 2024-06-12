@@ -32,8 +32,8 @@ public class CinematicEndMarket : MonoBehaviour
         PlayerController.Instance._playerAnimator.SetSpeed(0);
         yield return new WaitForSeconds(1);
 
-        //Le joueur perd le contrôle
-        //Cinématique Caméra qui suit lejoueur a la statue
+        //Le joueur perd le contrï¿½le
+        //Cinï¿½matique Camï¿½ra qui suit lejoueur a la statue
         float elapsedTime = 0;
         float distanceFromPos = Vector3.Distance(PlayerController.Instance.transform.position, posToReach.position);
         float speed = (distanceFromPos / timeToWalk) / 14.5f;
@@ -53,6 +53,7 @@ public class CinematicEndMarket : MonoBehaviour
             yield return null;
         }
 
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.PortalSFX, this.transform.position);
         HUD.Instance.whiteFade.SetActive(true);
         HUD.Instance.whiteFadeAnim.Play("FadeToWhite");
 
@@ -63,7 +64,7 @@ public class CinematicEndMarket : MonoBehaviour
 
 
 
-        //Fin de la cinématique le joueur reprend le contrôle
+        //Fin de la cinï¿½matique le joueur reprend le contrï¿½le
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
 

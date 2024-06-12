@@ -109,6 +109,7 @@ public class EnergyDoor : MonoBehaviour
         if (!interactiblePowering.Contains(energy))
         {
             interactiblePowering.Add(energy);
+            //AudioManager.instance.PlayOneShot(FMODEvents.instance.PorteAddEnergy, this.transform.position);
         }
     }
 }
