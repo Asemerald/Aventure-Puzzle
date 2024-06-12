@@ -20,6 +20,6 @@ public class AudioFunctions : MonoBehaviour
 
     public void PlayPNJFootSteps()
     {
-        AudioManager.instance.PlayOneShot(FMODEvents.instance.FootStepsRock, this.transform.position);
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.PNJSteps, this.transform.position);
     }
 }
