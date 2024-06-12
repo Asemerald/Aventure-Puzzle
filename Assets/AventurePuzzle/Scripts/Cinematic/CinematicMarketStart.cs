@@ -8,6 +8,8 @@ public class CinematicMarketStart : MonoBehaviour
 
     public GameObject fisrtCam;
     public ParticleSystem crashParticles;
+    
+    public Transform StartPos;
 
     public bool testAnim;
 
@@ -21,10 +23,11 @@ public class CinematicMarketStart : MonoBehaviour
     {
         PlayerController.Instance.playerHasControl = false;
         PlayerController.Instance._playerAnimator.SetFall(false);
-        //Cinématique de suzie
+        transform.position = StartPos.position + new Vector3(-37.5f, -5.5f, 0f);
+        //Cinï¿½matique de suzie
 
         fisrtCam.SetActive(true);
-        //Puis VFX Antonin et placer le joueur a un emplacement précis
+        //Puis VFX Antonin et placer le joueur a un emplacement prï¿½cis
         HUD.Instance.whiteFade.SetActive(true);
         HUD.Instance.whiteFadeAnim.Play("FadeToScreen");
 
@@ -35,13 +38,13 @@ public class CinematicMarketStart : MonoBehaviour
 
         yield return new WaitForSeconds(4.5f);
 
-        PlayerController.Instance.transform.position = new Vector3(37,5.5f,0);
+        PlayerController.Instance.transform.position = StartPos.position;
         PlayerController.Instance._playerAnimator._animator.Play("ANIM_StandingUp");
 
         yield return new WaitForSeconds(5);
         fisrtCam.SetActive(false);
 
-        //Fin de la cinématique le joueur reprend le contrôle
+        //Fin de la cinï¿½matique le joueur reprend le contrï¿½le
         PlayerController.Instance.playerHasControl = true;
         HUD.Instance.inGamePanel.SetActive(true);
     }
