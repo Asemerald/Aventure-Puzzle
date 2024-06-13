@@ -1,0 +1,189 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1669116089336482075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984460273535167924}
+  - component: {fileID: 8889030293754028309}
+  - component: {fileID: 73784753993899726}
+  m_Layer: 0
+  m_Name: GameManager MainMenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984460273535167924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669116089336482075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 11271310215898839}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8889030293754028309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669116089336482075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e7ebdf47c5d024880f92d90951da28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameIsPause: 0
+--- !u!114 &73784753993899726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669116089336482075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b996ba6bcbad834aa4e91cf662ac66a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6452805883331643246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11271310215898839}
+  - component: {fileID: 6297934187817181107}
+  m_Layer: 0
+  m_Name: AudioBank
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &11271310215898839
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6452805883331643246}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 984460273535167924}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6297934187817181107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6452805883331643246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f6190aea44aa741996f86cce5b2332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <WindBlow>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <Music1>k__BackingField:
+    Guid:
+      Data1: -67579106
+      Data2: 1263699970
+      Data3: -487026245
+      Data4: 54569831
+    Path: event:/SX/Musics/MainMenu/MusicMenu
+  <PochePose>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <FootStepsRock>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <Landing>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <PickUpBlock>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <UnPickUpBlock>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <PortalSFX>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <CardReceive>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <CardDeplace>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <Crash>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK
+  <ChuteMeteore>k__BackingField:
+    Guid:
+      Data1: 670229718
+      Data2: 1317669217
+      Data3: 873834117
+      Data4: 1026674474
+    Path: event:/GROKK

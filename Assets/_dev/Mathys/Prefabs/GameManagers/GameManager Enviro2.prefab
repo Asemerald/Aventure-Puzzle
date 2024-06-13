@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &404220655411203962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1079782424964620045}
+  - component: {fileID: 7486297172722232004}
+  - component: {fileID: 2327829129015328497}
+  m_Layer: 0
+  m_Name: GameManager Enviro2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1079782424964620045
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404220655411203962}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4951564755936491512}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7486297172722232004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404220655411203962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92e7ebdf47c5d024880f92d90951da28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerSnapShotPause: {fileID: 0}
+  gameIsPause: 0
+--- !u!114 &2327829129015328497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404220655411203962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b996ba6bcbad834aa4e91cf662ac66a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &3330702983985614654
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4951564755936491512}
+  - component: {fileID: 5866779645794478637}
+  m_Layer: 0
+  m_Name: AudioBank
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4951564755936491512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330702983985614654}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1079782424964620045}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5866779645794478637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3330702983985614654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95f6190aea44aa741996f86cce5b2332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <WindBlow>k__BackingField:
+    Guid:
+      Data1: 1579809690
+      Data2: 1304021419
+      Data3: 471325058
+      Data4: -1071560146
+    Path: event:/SX/Musics/Envo1/WindBackGround
+  <Music1>k__BackingField:
+    Guid:
+      Data1: -1337437759
+      Data2: 1260075054
+      Data3: 1379258249
+      Data4: -318035171
+    Path: event:/SX/Musics/Envo1/Music Level 1
+  <PochePose>k__BackingField:
+    Guid:
+      Data1: 1308363611
+      Data2: 1235271422
+      Data3: 1937747587
+      Data4: 162790729
+    Path: event:/SX/Player/Astral Poche/Poche Pose
+  <FootStepsRock>k__BackingField:
+    Guid:
+      Data1: -327372645
+      Data2: 1271636612
+      Data3: 1772508800
+      Data4: -1077673869
+    Path: event:/SX/Player/FootSteps/PFootsteps
+  <Landing>k__BackingField:
+    Guid:
+      Data1: -1809986784
+      Data2: 1224220706
+      Data3: -1840274251
+      Data4: 225456068
+    Path: event:/SX/Player/FootSteps/Landing
+  <PickUpBlock>k__BackingField:
+    Guid:
+      Data1: -1212308233
+      Data2: 1306605588
+      Data3: 1962031754
+      Data4: -1577816026
+    Path: event:/SX/Player/Blocks/BlockPickUp
+  <UnPickUpBlock>k__BackingField:
+    Guid:
+      Data1: 2082419896
+      Data2: 1328789398
+      Data3: 1063302034
+      Data4: -407123557
+    Path: event:/SX/Player/Blocks/BlockUnPickUp
+  <PortalSFX>k__BackingField:
+    Guid:
+      Data1: -376743520
+      Data2: 1341616933
+      Data3: -1365444208
+      Data4: 1769051456
+    Path: "event:/SX/D\xE9cor/LD/PortalTP"
+  <CardReceive>k__BackingField:
+    Guid:
+      Data1: 217802805
+      Data2: 1213526633
+      Data3: -1670185300
+      Data4: -1278049376
+    Path: event:/SX/Player/FootSteps/CardReceive
+  <CardDeplace>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <Crash>k__BackingField:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  <ChuteMeteore>k__BackingField:
+    Guid:
+      Data1: 886331409
+      Data2: 1301306725
+      Data3: -2139132487
+      Data4: -1504732167
+    Path: "event:/SX/Player/FootSteps/Chute M\xE9teore"
