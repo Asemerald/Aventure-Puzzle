@@ -1,74 +1,88 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading.Tasks;
-using System.Threading;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader Instance { get; private set; }
-
-    [SerializeField] List<LevelRoom> levels;
-    public int startingRoom;
+    
+    [SerializeField] private List<AssetReferenceGameObject> levelReferences;
+    private Dictionary<int, GameObject> loadedLevels = new Dictionary<int, GameObject>();
     public int currentRoom;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
             Instance = this;
     }
 
     private void Start()
     {
-        currentRoom = startingRoom;
-
-        for (int i = 0; i < levels.Count; i++)
-        {
-            levels[i].roomNum = i;
-            levels[i].gameObject.SetActive(false);
-        }
-
-        for (int i = -1; i < 2; i++)
-        {
-            if (currentRoom + i >= 0 && currentRoom + i < levels.Count)
-            {
-                levels[currentRoom + i].gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void Update()
-    {
-        ManageLevels();
+        currentRoom = 0;
+        LoadLevelsAround(currentRoom);
     }
 
     public void ManageLevels()
     {
+        LoadLevelsAround(currentRoom);
 
-        for (int i = -1; i < 2; i++)
+        foreach (var key in new List<int>(loadedLevels.Keys))
         {
-            if ((currentRoom + i) >= 0 && (currentRoom + i) < levels.Count)
+            if (key < currentRoom - 2 || key > currentRoom + 2)
             {
-                if (!levels[currentRoom + i].gameObject.activeSelf)
-                    levels[currentRoom + i].gameObject.SetActive(true);
+                UnloadLevel(key);
+            }
+            else
+            {
+                loadedLevels[key].SetActive(key >= currentRoom - 1 && key <= currentRoom + 1);
             }
         }
-
-        for (int i = 0; i < levels.Count; i++)
-        {
-            if (i < (currentRoom - 1) || i > (currentRoom + 1))
-                if(levels[i].gameObject.activeSelf)
-                    levels[i].gameObject.SetActive(false);
-        }
-
     }
 
-    public void ActiveAllLevel()
+    private void LoadLevelsAround(int index)
     {
-        for (int i = 0; i < levels.Count; i++)
+        for (int i = -2; i <= 2; i++)
         {
-            levels[i].gameObject.SetActive(true);
+            int targetIndex = index + i;
+            if (targetIndex >= 0 && targetIndex < levelReferences.Count)
+            {
+                if (!loadedLevels.ContainsKey(targetIndex))
+                {
+                    LoadLevel(targetIndex);
+                }
+            }
         }
+    }
 
+    private void LoadLevel(int index)
+    {
+        if (index < 0 || index >= levelReferences.Count) return;
+
+        levelReferences[index].LoadAssetAsync<GameObject>().Completed += handle =>
+        {
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                GameObject levelInstance = Instantiate(handle.Result);
+                levelInstance.SetActive(index >= currentRoom - 1 && index <= currentRoom + 1);
+                loadedLevels[index] = levelInstance;
+
+                LevelRoom levelRoom = levelInstance.GetComponent<LevelRoom>();
+                if (levelRoom != null)
+                {
+                    levelRoom.roomNum = index;
+                }
+            }
+        };
+    }
+
+    private void UnloadLevel(int index)
+    {
+        if (loadedLevels.ContainsKey(index))
+        {
+            Destroy(loadedLevels[index]);
+            loadedLevels.Remove(index);
+            levelReferences[index].ReleaseAsset();
+        }
     }
 }
